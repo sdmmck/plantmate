@@ -6,12 +6,12 @@ from plantmateApp.forms import BusinessForm
 
 def home(request):
     context_dict = {}
-    return render(request, 'plantmateApp/home.html', context=context_dict)
+    return render(request, 'plantmate/home.html', context=context_dict)
 
 
 def businesslist(request):
     context_dict = {}
-    return render(request, 'plantmateApp/business-list.html', context=context_dict)
+    return render(request, 'plantmate/business-list.html', context=context_dict)
 
 
 def show_business(request):
@@ -27,7 +27,7 @@ def show_business(request):
     # except Business.DoesNotExist:
     #     context_dict['business'] = None
 
-    return render(request, 'plantmateApp/business.html', context_dict)
+    return render(request, 'plantmate/business.html', context_dict)
 
 
 def add_business(request):
@@ -42,7 +42,7 @@ def add_business(request):
             return home(request)
         else:
             print(form.errors)
-    return render(request, 'plantmateApp/add-business', {'form': form})
+    return render(request, 'plantmate/add-business.html', {'form': form})
 
 
 
@@ -60,7 +60,7 @@ def signup(request):
 
 def plant(request):
     context_dict = {'boldmessage': "PLANT!"}
-    return render(request,'plantmate/plant.html', context=context_dict)
+    return render(request, 'plantmate/plant.html', context=context_dict)
 
 def login(request):
     return HttpResponse("This is the login page")
