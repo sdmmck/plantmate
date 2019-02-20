@@ -15,3 +15,16 @@ def login(request):
 
 def signup(request):
     return HttpResponse("signup save")
+  
+def plant(request):
+    return HttpResponse("This is a plant!")
+
+
+def plantList(request):
+    return HttpResponse("This is a list of plants!")
+
+
+
+
+
+
