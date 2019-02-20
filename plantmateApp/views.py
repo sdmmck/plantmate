@@ -45,6 +45,17 @@ def add_business(request):
 
 
 
+def quiz(request):
+    return HttpResponse("plantmate quiz")
+
+def recommendations(request):
+    return HttpResponse("recommendations")
+
+def login(request):
+    return HttpResponse("login save")
+
+def signup(request):
+    return HttpResponse("signup save")
   
 def plant(request):
     context_dict = {'boldmessage': "PLANT!"}
