@@ -3,4 +3,5 @@ from plantmateApp import views
 
 urlpatterns = [
     url(r'^$', views.home, name='home'),
+    url(r'^plant', views.plant, name='plant'),   
 ]
