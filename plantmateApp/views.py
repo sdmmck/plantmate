@@ -9,11 +9,11 @@ def plant(request):
     return HttpResponse("This is a plant!")
 
 
-def plant_list(request):
+def plantList(request):
+    return HttpResponse("This is a list of plants!")
 
 
 
 
 
 
-# Create your views here.
