@@ -36,6 +36,7 @@ def add_business(request):
     if request.method == 'POST':
         form = BusinessForm(request.POST)
 
+
         if form.is_valid():
             form.save(commit=True)
             return home(request)
@@ -56,10 +57,22 @@ def login(request):
 
 def signup(request):
     return HttpResponse("signup save")
-  
+
 def plant(request):
     context_dict = {'boldmessage': "PLANT!"}
     return render(request,'plantmate/plant.html', context=context_dict)
+
+def login(request):
+    return HttpResponse("This is the login page")
+
+def signup(request):
+    return HttpResponse("This is the signup page")
+
+def contact(request):
+    return HttpResponse("This is the contact page")
+
+def myaccount(request):
+    return HttpResponse("This is your account page")
 
 
 def plant_list(request):
