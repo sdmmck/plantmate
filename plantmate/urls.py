@@ -5,7 +5,6 @@ from plantmateApp import views
 
 urlpatterns = [
     url(r'^$', views.home, name='home'),
-    url(r'^$', views.quiz, name='quiz'),
     url(r'^admin/', admin.site.urls),
     url(r'^', include('plantmateApp.urls')),
 
