@@ -1,18 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Plant</title>
-</head>
-<body>
-    <h1>This is a page for a... </h1>
-    <div>
-        <strong>{{ boldmessage }}</strong><br />
-    </div>
-    <div>
-        <a href="/plant-list/">See the A-Z of plants</a><br />
-        <a href="{% url 'home' %}">plantmate home</a><br />
+{% extends "plantmate/base.html" %}
+{% load staticfiles %}
 
-    </div>
-</body>
-</html>
+{% block title_block %}
+    plant
+{% endblock %}
+
+{% block body_block %}
+    <h1>this is a page for pllllants</h1>
+    <a href="/plant-list/">See the A-Z of plants</a><br />
+    <a href="{% url 'home' %}">plantmate home</a><br />
+{% endblock %}
