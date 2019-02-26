@@ -46,7 +46,8 @@ def add_business(request):
 
 
 def quiz(request):
-    return HttpResponse("plantmate quiz")
+    context_dict = {}
+    return render(request, 'plantmate/quiz.html', context=context_dict)
 
 
 def recommendations(request):
