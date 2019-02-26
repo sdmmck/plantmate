@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Business Name</title>
-</head>
-<body>
+{% extends "plantmate/base.html" %}
+{% load staticfiles %}
 
-<h1>Business Name</h1>
-<a href="{% url 'home' %}">Home</a><br />
+{% block title_block %}
+    Business Name
+{% endblock %}
 
-</body>
-</html>
+{% block body_block %}
+    <h1>Business</h1>
+    stuff here <br />
+{% endblock %}
