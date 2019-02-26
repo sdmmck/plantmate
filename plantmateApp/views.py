@@ -53,28 +53,29 @@ def recommendations(request):
     return HttpResponse("recommendations")
 
 
-def signup(request):
-    return HttpResponse("signup save")
-
-
 def plant(request):
     context_dict = {'boldmessage': "PLANT!"}
     return render(request, 'plantmate/plant.html', context=context_dict)
 
 
 def login(request):
-    return render(request, 'plantmate/login.html')
+    context_dict = {}
+    return render(request, 'plantmate/login.html', context=context_dict)
+
 
 def signup(request):
-    return HttpResponse("This is the signup page")
+    context_dict = {}
+    return render(request, 'plantmate/signup.html', context=context_dict)
 
 
 def contact(request):
-    return HttpResponse("This is the contact page")
+    context_dict = {}
+    return render(request, 'plantmate/contact.html', context=context_dict)
 
 
 def myaccount(request):
-    return HttpResponse("This is your account page")
+    context_dict = {}
+    return render(request, 'plantmate/myaccount.html', context=context_dict)
 
 
 def plant_list(request):

@@ -1,10 +1,14 @@
 <!DOCTYPE html>
+
+{% load staticfiles %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+</head>
 
-    <body>
+<body>
 <h1>Home</h1>
 <a href="/business-list">Local Business List</a><br />
 <a href="/plant-list">Plant A-Z</a><br />
@@ -13,10 +17,15 @@
 <a href="/sign-up">sign up</a><br />
 <a href="/contact">contact us</a><br />
 
-</div> </body>
+</div>
+
+<div>
+    <img src="{% static "images/test.jpg" %}"
+    alt ="test picture" />
+</div></body>
 
 
-</head>
+
 <body>
 
 </body>
