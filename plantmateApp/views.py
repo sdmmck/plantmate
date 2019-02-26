@@ -45,31 +45,33 @@ def add_business(request):
     return render(request, 'plantmate/add-business.html', {'form': form})
 
 
-
 def quiz(request):
     return HttpResponse("plantmate quiz")
+
 
 def recommendations(request):
     return HttpResponse("recommendations")
 
-def login(request):
-    return HttpResponse("login save")
 
 def signup(request):
     return HttpResponse("signup save")
+
 
 def plant(request):
     context_dict = {'boldmessage': "PLANT!"}
     return render(request, 'plantmate/plant.html', context=context_dict)
 
+
 def login(request):
-    return HttpResponse("This is the login page")
+    return render(request, 'plantmate/login.html')
 
 def signup(request):
     return HttpResponse("This is the signup page")
 
+
 def contact(request):
     return HttpResponse("This is the contact page")
+
 
 def myaccount(request):
     return HttpResponse("This is your account page")
