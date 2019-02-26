@@ -60,7 +60,7 @@ def signup(request):
 
 def plant(request):
     context_dict = {'boldmessage': "PLANT!"}
-    return render(request,'plantmate/plant.html', context=context_dict)
+    return render(request, 'plantmate/plant.html', context=context_dict)
 
 def login(request):
     return HttpResponse("This is the login page")
