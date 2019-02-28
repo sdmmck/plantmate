@@ -23,8 +23,10 @@
                 <li><a href="{% url 'recommendations' %}">recommended plants</a></li>
                 <li><a href="{% url 'wishlist' %}">wishlist</a> </li>
                 <li><a href="{% url 'wishlist' %}">my plants</a> </li>
+                <li><a href="{% url 'register' %}">Sign Up</a></li>
             {% else %}
                 <li><a href="{% url 'login' %}">Sign In</a></li>
+
                 
             {% endif %}
                 <li><a href="{% url 'add_business' %}">add a business</a></li>

@@ -16,5 +16,6 @@ urlpatterns = [
     url(r'^plant-list/$', views.plant_list, name='plant_list'),
     url(r'^myaccount/wishlist/$', views.wishlist, name='wishlist'),
     url(r'^myaccount/my-plants/$', views.my_plants, name='my_plants'),
+    url(r'^register/$', views.register, name='register'),
 
 ]
