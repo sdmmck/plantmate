@@ -9,7 +9,9 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
@@ -29,12 +31,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'registration',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'plantmateApp',
 ]
 
@@ -68,6 +72,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'plantmate.wsgi.application'
 
+SITE_ID = 1
+
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -97,6 +103,19 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+# Authorisation
+# if true, users can register
+REGISTRATION_OPEN = True
+# one week activation window
+ACCOUNT_ACTIVATION_DAYS = 7
+# if true, users will be automatically logged in
+REGISTRATION_AUTO_LOGIN = True
+# page that users will arrive at after successful login
+LOGIN_REDIRECT_URL = '/'
+# where users will go if not logged in and trying to access pages requiring authentication
+LOGIN_URL = '/accounts/login/'
 
 
 # Internationalization
