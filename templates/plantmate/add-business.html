@@ -2,13 +2,13 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    Business Name
+    Add a Business
 {% endblock %}
 
 {% block body_block %}
         <h1>add a Business</h1>
         <div>
-            <form id="page_form" method="post" action="/business/add-business/" %}>
+            <form id="business_form" method="post" action="{% url 'add_business' %}">
             {% csrf_token %}
             {% for hidden in form.hidden_fields %}
                 {{ hidden }}
@@ -19,4 +19,6 @@
                 {{ field }}
             {% endfor %}
             <input type="submit" name="submit" value="Add business"/>
+            </form>
+        </div>
 {% endblock %}
