@@ -3,7 +3,7 @@ from plantmateApp import views
 
 urlpatterns = [
     url(r'^$', views.home, name='home'),
-    url(r'^login/', views.login, name='login'),
+    # url(r'^login/', views.login, name='login'),
     url(r'^sign-up/', views.signup, name='signup'),
     url(r'^contact/', views.contact, name='contact'),
     url(r'^myaccount/$', views.myaccount, name='myaccount'),
@@ -21,4 +21,3 @@ urlpatterns = [
         name='show_business'),
     url(r'^add-plant/$', views.add_plant, name='add_plant'),
 ]
-

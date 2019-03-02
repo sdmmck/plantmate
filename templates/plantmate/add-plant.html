@@ -6,9 +6,9 @@
 {% endblock %}
 
 {% block body_block %}
-        <h1>add a Plant</h1>
+    <h1 xmlns="http://www.w3.org/1999/html">add a Plant</h1>
         <div>
-            <form id="plant_form" method="post" action="{% url 'add_plant' %}">
+            <form role ="form" id="plant_form" method="post" action="{% url 'add_plant' %}">
             {% csrf_token %}
             {% for hidden in form.hidden_fields %}
                 {{ hidden }}
@@ -18,7 +18,7 @@
                 {{ field.help_text }}
                 {{ field }}
             {% endfor %}
-            <input type="submit" name="submit" value="Add plant"/>
+                <button class="btn btn-primary" type="submit" name="submit" value="Add plant"/>add plant</button>
             </form>
         </div>
 {% endblock %}
