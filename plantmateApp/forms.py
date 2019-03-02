@@ -21,17 +21,22 @@ class PlantForm(forms.ModelForm):
                            help_text="Please enter the Plant name: ")
     latin_name = forms.CharField(max_length=128,
                            help_text="Please enter the plant's latin name: ")
-    plant_size = forms.CharField(max_length=128,
-                           help_text="Please enter the size the plant will grow to: ")
-    plant_characteristics = forms.Select(choices=(("a","Easy to care for"),("b", "Air purifying"),
-                                                  ("c","Trailing/Hanging")))
+    size = forms.ChoiceField(required=False, widget=forms.Select,
+                                        help_text="Size this plant will grow to: ",
+                                        choices=Plant.size_choices)
+    climate = forms.ChoiceField(required=False, widget=forms.Select,
+                                        help_text="Does this plant prefer warm or cool rooms? ",
+                                        choices=Plant.climate_choices)
+    light = forms.ChoiceField(required=False, widget=forms.Select,
+                                        help_text="Does this plant like it sunny or shady? ",
+                                        choices=Plant.light_choices)
 
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
 
         model = Plant
-        fields = ('name', 'latin_name',)
+        fields = ('name', 'latin_name', 'size', 'climate', 'light')
 
 
 class UserForm(forms.ModelForm):

@@ -2,15 +2,22 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    plant
+    {{ slug }}
 {% endblock %}
 
 {% block body_block %}
      {% if plant %}
         <h1>{{ plant.name }}</h1><br />
          <h2>{{ plant.latin_name }}</h2><br />
-         <h2>{{ plant.plant_size }}</h2><br />
-         <h2>{{ plant.plant_characteristic }}</h2><br />
+         <h2>{{ plant.size }}</h2><br />
+         <h2>{{ plant.climate }}</h2><br />
+         <h2>{{ plant.light }}</h2><br />
+         {% if plant.characteristics %}
+              <h2>{{ plant.characteristics }}</h2><br />
+         {% endif %}
+         {% if plant.pet %}
+              <h2>{{ plant.pet }}</h2><br />
+         {% endif %}
     {% else %}
         This plant has not been added yet!
     {% endif %}
