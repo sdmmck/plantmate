@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from plantmateApp.models import Business
-from plantmateApp.forms import BusinessForm, UserForm, UserProfileForm
+from plantmateApp.models import Business, Plant
+from plantmateApp.forms import BusinessForm, UserForm, UserProfileForm, PlantForm
+from django.template.defaultfilters import slugify
 
 
 def home(request):
@@ -29,6 +30,7 @@ def show_business(request, business_name_slug):
 
 
 def add_business(request):
+
     form = BusinessForm()
 
     if request.method == 'POST':
@@ -36,10 +38,41 @@ def add_business(request):
 
         if form.is_valid():
             form.save(commit=True)
-            return home(request)
+            return show_business(request, slugify(form.__getitem__('name').value()))
+
         else:
             print(form.errors)
     return render(request, 'plantmate/add-business.html', {'form': form})
+
+
+def show_plant(request, plant_name_slug):
+
+    context_dict = {}
+
+    try:
+        plant = Plant.objects.get(slug=plant_name_slug)
+        context_dict['plant'] = plant
+
+    except Plant.DoesNotExist:
+        context_dict['plant'] = None
+
+    return render(request, 'plantmate/plant.html', context_dict)
+
+
+def add_plant(request):
+
+    form = PlantForm()
+
+    if request.method == 'POST':
+        form = PlantForm(request.POST)
+
+        if form.is_valid():
+            form.save(commit=True)
+            return show_plant(request, slugify(form.__getitem__('name').value()))
+
+        else:
+            print(form.errors)
+    return render(request, 'plantmate/add-plant.html', {'form': form})
 
 
 def quiz(request):
