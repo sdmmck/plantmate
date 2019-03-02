@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^recommendations/', views.recommendations, name='recommendations'),
     url(r'^business-list/$', views.businesslist, name='business-list'),
     url(r'^add-business/$', views.add_business, name='add_business'),
-    url(r'^plant-list/plant', views.plant, name='plant'),
+    url(r'^plant-list/(?P<plant_name_slug>[\w\-]+)/$', views.show_plant, name='plant'),
     url(r'^plant-list/$', views.plant_list, name='plant_list'),
     url(r'^myaccount/wishlist/$', views.wishlist, name='wishlist'),
     url(r'^myaccount/my-plants/$', views.my_plants, name='my_plants'),
@@ -20,4 +20,5 @@ urlpatterns = [
         views.show_business,
         name='show_business'),
     url(r'^add-plant/$', views.add_plant, name='add_plant'),
+
 ]

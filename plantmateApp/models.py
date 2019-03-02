@@ -20,11 +20,17 @@ class Business (models.Model):
 
 
 class Plant (models.Model):
+    size_choices = (("small", "Small"), ("medium", "Medium"), ("large", "Large"))
+    climate_choices = (("cool", "cool"), ("warm", "warm"))
+    light_choices = (("sunny", "sunny"), ("shady", "shady"))
+
     name = models.CharField(max_length=128, unique=True)
     latin_name = models.CharField(max_length=128, unique=True)
-    plant_size = models.CharField(max_length=128, unique=False)
-    plant_characteristic = models.CharField(max_length=128, unique=False)
-    url = models.URLField()
+    size = models.CharField(max_length=128, unique=False,  blank=False, default="Small", choices=size_choices)
+    characteristics = models.CharField(max_length=128, unique=False)
+    climate = models.CharField(max_length=128, unique=False, blank=False, default="cool", choices=climate_choices)
+    light = models.CharField(max_length=128, unique=False, blank=False, default="sunny", choices=light_choices)
+    pet = models.CharField(max_length=128, unique=False)
     slug = models.SlugField()
 
     def save(self, *args, **kwargs):

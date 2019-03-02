@@ -84,11 +84,6 @@ def recommendations(request):
     return HttpResponse("recommendations")
 
 
-def plant(request):
-    context_dict = {'boldmessage': "PLANT!"}
-    return render(request, 'plantmate/plant.html', context=context_dict)
-
-
 def login(request):
     context_dict = {}
     return render(request, 'plantmate/login.html', context=context_dict)
@@ -110,7 +105,10 @@ def myaccount(request):
 
 
 def plant_list(request):
-    context_dict = {'boldmessage': "A LIST OF PLANTS!"}
+
+    plant_A_Z = Plant.objects.order_by('-name')[:5]
+    context_dict = {'plants': plant_A_Z}
+
     return render(request, 'plantmate/plantlist.html', context=context_dict)
 
 
