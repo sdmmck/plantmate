@@ -6,6 +6,9 @@
 {% endblock %}
 
 {% block body_block %}
-    <h1>Business</h1>
-    stuff here <br />
+    {% if business %}
+        <h1>{{ business.name }}</h1>
+    {% else %}
+        This business has not been added yet!
+    {% endif %}
 {% endblock %}

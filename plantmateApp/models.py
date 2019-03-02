@@ -19,6 +19,25 @@ class Business (models.Model):
         return self.name
 
 
+class Plant (models.Model):
+    name = models.CharField(max_length=128, unique=True)
+    latin_name = models.CharField(max_length=128, unique=True)
+    plant_size = models.CharField(max_length=128, unique=False)
+    plant_characteristic = models.CharField(max_length=128, unique=False)
+    url = models.URLField()
+    slug = models.SlugField()
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Plant, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name_plural = 'Plants'
+
+    def __str__(self):
+        return self.name
+
+
 class UserProfile(models.Model):
 
     user = models.OneToOneField(User)
