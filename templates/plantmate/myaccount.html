@@ -2,10 +2,23 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    My Account
+    my account
 {% endblock %}
 
 {% block body_block %}
-    <h1>my account</h1>
-    <a href="{% url 'home' %}">Home</a><br />
+    <h1>my plants</h1>
+    hi username!<br>
+    my plants<br><br><br><br>
+    <h2>wishlist</h2>
+    <a href="{% url 'wishlist' %}">view all</a><br /><br><br><br>
+    {#<a href="{% url 'home' %}">Home</a><br />#}
+    <h3>nearest plant shop</h3>
+    name<br>
+    species stocked<br>
+    opening hours<br>
+    view more<br><br><br><br>
+    <img src="{% static "images/profile.jpg" %}" alt ="profile picture" /><br>
+    settings
+    logout
+
 {% endblock %}
