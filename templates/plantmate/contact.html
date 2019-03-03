@@ -1,13 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Contact Us</title>
-</head>
-<body>
-<h1>Contact us</h1>
-<div>
-    <a href="{% url 'home' %}">Home</a><br />
-</div>
-</body>
-</html>
+{% extends "plantmate/base.html" %}
+{% load staticfiles %}
+
+{% block title_block %}
+    contact us at plantmate
+{% endblock %}
+
+{% block body_block %}
+        <h1>contact us</h1>
+        plantmate@gmail.com<br>
+        0141 557 1110<br><br>
+        <img src="{% static "images/office1.jpg" %}" alt ="plantmate contact" />
+{% endblock %}
