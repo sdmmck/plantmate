@@ -15,43 +15,6 @@ class Migration(migrations.Migration):
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
-    operations = [
-        migrations.CreateModel(
-            name='Business',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=128, unique=True)),
-                ('url', models.URLField()),
-                ('slug', models.SlugField()),
-            ],
-            options={
-                'verbose_name_plural': 'Businesses',
-            },
-        ),
-        migrations.CreateModel(
-            name='Plant',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=128, unique=True)),
-                ('latin_name', models.CharField(max_length=128, unique=True)),
-                ('size', models.CharField(choices=[('small', 'Small'), ('medium', 'Medium'), ('large', 'Large')], default='Small', max_length=128)),
-                ('characteristics', models.CharField(max_length=128)),
-                ('climate', models.CharField(choices=[('cool', 'cool'), ('warm', 'warm')], default='cool', max_length=128)),
-                ('light', models.CharField(choices=[('sunny', 'sunny'), ('shady', 'shady')], default='sunny', max_length=128)),
-                ('pet', models.CharField(max_length=128)),
-                ('slug', models.SlugField()),
-            ],
-            options={
-                'verbose_name_plural': 'Plants',
-            },
-        ),
-        migrations.CreateModel(
-            name='UserProfile',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('website', models.URLField(blank=True)),
-                ('picture', models.ImageField(blank=True, upload_to='profile_images')),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-            ],
-        ),
-    ]
+
+
+
