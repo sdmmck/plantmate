@@ -1,18 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Plant</title>
-</head>
-<body>
-    <h1>This is a page for a... </h1>
-    <div>
-        <strong>{{ boldmessage }}</strong><br />
-    </div>
-    <div>
-        <a href="/plant-list/">See the A-Z of plants</a><br />
-        <a href="{% url 'home' %}">plantmate home</a><br />
+{% extends "plantmate/base.html" %}
+{% load staticfiles %}
 
-    </div>
-</body>
-</html>
+{% block title_block %}
+    {{ slug }}
+{% endblock %}
+
+{% block body_block %}
+     {% if plant %}
+        <h1>{{ plant.name }}</h1><br />
+         <h2>{{ plant.latin_name }}</h2><br />
+         <h2>{{ plant.size }}</h2><br />
+         <h2>{{ plant.climate }}</h2><br />
+         <h2>{{ plant.light }}</h2><br />
+         {% if plant.characteristics %}
+              <h2>{{ plant.characteristics }}</h2><br />
+         {% endif %}
+         {% if plant.pet %}
+              <h2>{{ plant.pet }}</h2><br />
+         {% endif %}
+    {% else %}
+        This plant has not been added yet!
+    {% endif %}
+    <a href="/plant-list/">See the A-Z of plants</a><br />
+{% endblock %}
