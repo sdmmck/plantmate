@@ -65,10 +65,16 @@
             </li>
             {% if user.is_authenticated %}
                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'myaccount' %}">
+                        my account
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'recommendations' %}">
                        my recommended plants
                     </a>
                 </li>
+                
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'my_plants' %}">
                        my plants
