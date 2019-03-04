@@ -21,8 +21,9 @@ class Business (models.Model):
 
 class Plant (models.Model):
     size_choices = (("small", "Small"), ("medium", "Medium"), ("large", "Large"))
-    climate_choices = (("cool", "cool"), ("warm", "warm"))
-    light_choices = (("sunny", "sunny"), ("shady", "shady"))
+    climate_choices = (("cool", "Cool"), ("warm", "Warm"))
+    light_choices = (("sunny", "Sunny"), ("shady", "Shady"))
+    room_choices = (("Living-room/Bedroom", "living-room/bedroom"), ("Kitchen/Bathroom", "kitchen/bathroom"))
 
     name = models.CharField(max_length=128, unique=True)
     latin_name = models.CharField(max_length=128, unique=True)
@@ -30,6 +31,7 @@ class Plant (models.Model):
     characteristics = models.CharField(max_length=128, unique=False)
     climate = models.CharField(max_length=128, unique=False, blank=False, default="cool", choices=climate_choices)
     light = models.CharField(max_length=128, unique=False, blank=False, default="sunny", choices=light_choices)
+    room = models.CharField(max_length=128, unique=False, blank=False, default="Living-room/Bedroom", choices= room_choices)
     pet = models.CharField(max_length=128, unique=False)
     slug = models.SlugField()
 
