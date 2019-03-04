@@ -81,7 +81,8 @@ def quiz(request):
 
 
 def recommendations(request):
-    return HttpResponse("recommendations")
+    context_dict = {}
+    return render(request, 'plantmate/recommendations.html', context=context_dict)
 
 
 def login(request):
