@@ -115,7 +115,7 @@ def myaccount(request):
 
 def plant_list(request):
 
-    plant_A_Z = Plant.objects.order_by('-name')[:5]
+    plant_A_Z = Plant.objects.order_by('-name')
     context_dict = {'plants': plant_A_Z}
 
     return render(request, 'plantmate/plantlist.html', context=context_dict)
