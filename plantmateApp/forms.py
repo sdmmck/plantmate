@@ -8,12 +8,16 @@ from plantmateApp.models import UserProfile
 class BusinessForm(forms.ModelForm):
     name = forms.CharField(max_length=128,
                            help_text="Please enter the Business name.")
+    address = forms.CharField(max_length=128,
+                              help_text="Enter the Business address.")
+    postcode = forms.CharField(max_length=8,
+                               help_text="Enter the Business postcode.")
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
 
         model = Business
-        fields = ('name',)
+        fields = ('name','address','postcode')
 
 
 class PlantForm(forms.ModelForm):
