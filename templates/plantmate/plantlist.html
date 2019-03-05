@@ -11,7 +11,7 @@
     {% if plants %}
         <ul>
             {% for plant in plants %}
-                <li><a href="{{ plant.url }}">{{ plant.name }}</a></li>
+                <li><a href="{{ plant.slug }}">{{ plant.name }}</a></li>
             {% endfor %}
         </ul>
     {% endif %}
