@@ -175,10 +175,6 @@ def populate():
     for plant in plants:
         add_plant(plant)
 
-    print(Business.objects.all())
-    for c in Business.objects.all():
-        print(c)
-
 
 def add_business(title, url):
     p = Business.objects.get_or_create(name=title)[0]
@@ -194,7 +190,8 @@ def add_plant(plant):
                                         characteristics=plant["characteristics"],
                                         climate=plant["climate"],
                                         light=plant["light"],
-                                        pet=plant["pet"])[0]
+                                        pet=plant["pet"],
+                                        room=plant["room"])[0]
     plant.save()
     return plant
 

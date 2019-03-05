@@ -36,7 +36,7 @@ class PlantForm(forms.ModelForm):
     class Meta:
 
         model = Plant
-        fields = ('name', 'latin_name', 'size', 'climate', 'light')
+        fields = ('name', 'latin_name', 'size', 'climate', 'light', 'room')
 
 
 class UserForm(forms.ModelForm):
