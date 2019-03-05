@@ -12,6 +12,14 @@ def home(request):
 
 def businesslist(request):
     context_dict = {}
+
+    try:
+        business_list = Business.objects.order_by('-name')
+        context_dict = {'businesses': business_list}
+
+    except Plant.DoesNotExist:
+        context_dict['business'] = None
+
     return render(request, 'plantmate/business-list.html', context=context_dict)
 
 

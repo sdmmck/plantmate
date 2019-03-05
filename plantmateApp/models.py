@@ -31,9 +31,11 @@ class Plant (models.Model):
     characteristics = models.CharField(max_length=128, unique=False)
     climate = models.CharField(max_length=128, unique=False, blank=False, default="cool", choices=climate_choices)
     light = models.CharField(max_length=128, unique=False, blank=False, default="sunny", choices=light_choices)
-    room = models.CharField(max_length=128, unique=False, blank=False, default="Living-room/Bedroom", choices= room_choices)
+    room = models.CharField(max_length=128, unique=False, blank=False, default="Living-room/Bedroom", choices=room_choices)
     pet = models.CharField(max_length=128, unique=False)
     slug = models.SlugField()
+
+    url = models.URLField()
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
