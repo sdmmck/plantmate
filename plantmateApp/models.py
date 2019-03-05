@@ -55,3 +55,17 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class Comment(models.Model):
+    plant = models.ForeignKey(Plant)
+    user = models.ForeignKey(UserProfile)
+    text = models.TextField(max_length=300)
+    created_date = models.DateTimeField(auto_now_add=True)
+    approved_comment = models.BooleanField(default=False)
+
+    def approve(self):
+        self.approved_comment = True
+        self.save()
+
+    def __str__(self):
+        return self.text

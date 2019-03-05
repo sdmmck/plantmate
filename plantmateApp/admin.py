@@ -1,6 +1,7 @@
 from django.contrib import admin
 from plantmateApp.models import Business, Plant
 from plantmateApp.models import UserProfile
+from plantmateApp.models import Comment
 
 
 class BusinessAdmin(admin.ModelAdmin):
@@ -14,3 +15,4 @@ class PlantAdmin(admin.ModelAdmin):
 admin.site.register(Plant, PlantAdmin)
 admin.site.register(Business, BusinessAdmin)
 admin.site.register(UserProfile)
+admin.site.register(Comment)
