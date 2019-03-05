@@ -1,7 +1,6 @@
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE',
                       'plantmate.settings')
-
 import django
 django.setup()
 from plantmateApp.models import Business, Plant
