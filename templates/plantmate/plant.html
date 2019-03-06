@@ -6,20 +6,30 @@
 {% endblock %}
 
 {% block body_block %}
-     {% if plant %}
-        <h1>{{ plant.name }}</h1><br />
-         <h2>{{ plant.latin_name }}</h2><br />
-         <h2>{{ plant.size }}</h2><br />
-         <h2>{{ plant.climate }}</h2><br />
-         <h2>{{ plant.light }}</h2><br />
-         {% if plant.characteristics %}
-              <h2>{{ plant.characteristics }}</h2><br />
-         {% endif %}
-         {% if plant.pet %}
-              <h2>{{ plant.pet }}</h2><br />
-         {% endif %}
+    {% if image %}
+        {% for i in image %}
+            <h1>{{ i.name }}</h1>
+            <h2>{{ plant.slug }}</h2>
+            {% ifequal i.plant_name plant.slug %}
+            <img src= "{% static i.name %}"/>
+            {% endifequal %}
+        {% endfor %}
+    {% endif %}
+    {% if plant %}
+        <h1>{{ plant.name }}</h1><br/>
+        <h2>{{ plant.latin_name }}</h2><br/>
+        <h2>{{ plant.size }}</h2><br/>
+        <h2>{{ plant.climate }}</h2><br/>
+        <h2>{{ plant.light }}</h2><br/>
+        {% if plant.characteristics %}
+            <h2>{{ plant.characteristics }}</h2><br/>
+        {% endif %}
+        {% if plant.pet %}
+            <h2>{{ plant.pet }}</h2><br/>
+        {% endif %}
     {% else %}
         This plant has not been added yet!
     {% endif %}
-    <a href="/plant-list/">See the A-Z of plants</a><br />
+    <a href="/plant-list/{{ plant.slug }}/add-image">Add a new image</a><br/>
+    <a href="{% url 'plant_list' %}">See the A-Z of plants</a><br/>
 {% endblock %}

@@ -1,5 +1,5 @@
-from django import forms
-from plantmateApp.models import Business, Plant
+
+from plantmateApp.models import Business, Plant, PlantImage
 from django import forms
 from django.contrib.auth.models import User
 from plantmateApp.models import UserProfile
@@ -37,6 +37,16 @@ class PlantForm(forms.ModelForm):
 
         model = Plant
         fields = ('name', 'latin_name', 'size', 'climate', 'light', 'room')
+
+
+class ImageForm(forms.ModelForm):
+
+    picture = forms.ImageField(required=False)
+    plant_name = forms.HiddenInput()
+
+    class Meta:
+        model = PlantImage
+        fields = ('picture', 'plant_name')
 
 
 class UserForm(forms.ModelForm):
