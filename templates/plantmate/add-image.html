@@ -1,0 +1,30 @@
+{% extends "plantmate/base.html" %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Add an image
+{% endblock %}
+
+{% block body_block %}
+    <h1 xmlns="http://www.w3.org/1999/html">add an image </h1>
+    <div>
+        <form role="form" id="picture" method="post" enctype="multipart/form-data"
+              action="/plant-list/{{ plant.slug }}/add-image">
+            {% csrf_token %}
+            <input type="hidden" id="plant_name" name="plant_name" value={{ plant.slug }}>
+            <input type="file" name="picture" id="picture">
+            {% for field in form.visible_fields %}
+                {{ field.errors }}
+                {{ field.help_text }}
+                {{ field }}
+                </br>
+                </br>
+            {% endfor %}
+{#            {% if uploaded_file_url %}#}
+{#                <p>File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>#}
+{#            {% endif %}#}
+            <button class="btn btn-primary" type="submit" value="submit">add image</button>
+        </form>
+
+    </div>
+{% endblock %}

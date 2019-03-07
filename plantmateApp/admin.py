@@ -1,5 +1,5 @@
 from django.contrib import admin
-from plantmateApp.models import Business, Plant
+from plantmateApp.models import Business, Plant, PlantImage
 from plantmateApp.models import UserProfile
 from plantmateApp.models import Comment
 
@@ -15,4 +15,5 @@ class PlantAdmin(admin.ModelAdmin):
 admin.site.register(Plant, PlantAdmin)
 admin.site.register(Business, BusinessAdmin)
 admin.site.register(UserProfile)
+admin.site.register(PlantImage)
 admin.site.register(Comment)

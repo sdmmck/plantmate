@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="{% static "images/testicon.ico" %}" alt ="test icon">
+    <link rel="icon" href="{% static "images/testicon.ico" %}" alt="test icon">
     <title>
         plantmate
         {% block title_block %}
@@ -39,12 +39,12 @@
     {#    {% endblock %}#}
     {#</div>#}
     {#<hr />#}
-{#<a href="/business-list">Local Business List</a><br />#}
-{#    <a href="/plant-list">Plant A-Z</a><br />#}
-{#    <a href="/quiz">Quiz</a><br />#}
-{#    <a href="/login">login</a><br />#}
-{#    <a href="/sign-up">sign up</a><br />#}
-{#    <a href="/contact">contact us</a><br />#}
+    {#<a href="/business-list">Local Business List</a><br />#}
+    {#    <a href="/plant-list">Plant A-Z</a><br />#}
+    {#    <a href="/quiz">Quiz</a><br />#}
+    {#    <a href="/login">login</a><br />#}
+    {#    <a href="/sign-up">sign up</a><br />#}
+    {#    <a href="/contact">contact us</a><br />#}
 
     <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav mr-auto">
@@ -71,13 +71,13 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'recommendations' %}">
-                       my recommended plants
+                        my recommended plants
                     </a>
                 </li>
-                
+
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'my_plants' %}">
-                       my plants
+                        my plants
                     </a>
                 </li>
                 <li class="nav-item">
@@ -101,16 +101,18 @@
                         log in
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'add_business' %}">
-                       add a business
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'add_plant' %}">
-                       add a plant
-                    </a>
-                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'add_business' %}">
+                            add a business
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'add_plant' %}">
+                            add a plant
+                        </a>
+                    </li>
+                {% endif %}
             {% endif %}
         </ul>
     </div>
@@ -135,9 +137,13 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+        crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="http://v4-alpha.getbootstrap.com/assets/js/vendor/jquery.min.js"><\/script>')</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
 <script src="http://v4-alpha.getbootstrap.com/dist/js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
@@ -147,17 +153,17 @@
 {#<div>#}
 
 {#    <ul>#}
-        {#            {% if user.is_authenticated %}#}
+{#            {% if user.is_authenticated %}#}
 {#        <li><a href="{% url 'recommendations' %}">recommended plants</a></li>#}
 {#        <li><a href="{% url 'wishlist' %}">wishlist</a> </li>#}
 {#        <li><a href="{% url 'my_plants' %}">my plants</a> </li>#}
 {#        <li></li><a href="{% url 'auth_logout' %}?next=/">log out</a></li>#}
-        {#            {% else %}#}
+{#            {% else %}#}
 {#        <li><a href="{% url 'registration_register' %}">register</a></li>#}
 {#        <li><a href="{% url 'auth_login' %}">log In</a></li>#}
 {##}
 {##}
-        {#            {% endif %}#}
+{#            {% endif %}#}
 {#        <li><a href="{% url 'add_business' %}">add a business</a></li>#}
 {#        <li><a href="{% url 'home' %}">home</a></li>#}
 {#    </ul>#}

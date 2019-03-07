@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^business-list/$', views.businesslist, name='business-list'),
     url(r'^add-business/$', views.add_business, name='add_business'),
     url(r'^plant-list/(?P<plant_name_slug>[\w\-]+)/$', views.show_plant, name='plant'),
+    url(r'^plant-list/(?P<plant_name_slug>[\w\-]+)/add-image', views.add_image, name='add_image'),
     url(r'^plant-list/$', views.plant_list, name='plant_list'),
     url(r'^myaccount/wishlist/$', views.wishlist, name='wishlist'),
     url(r'^myaccount/my-plants/$', views.my_plants, name='my_plants'),

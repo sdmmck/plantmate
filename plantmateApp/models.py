@@ -36,7 +36,6 @@ class Plant (models.Model):
     room = models.CharField(max_length=128, unique=False, blank=False, default="Living-room/Bedroom", choices=room_choices)
     pet = models.CharField(max_length=128, unique=False)
     slug = models.SlugField()
-
     url = models.URLField()
 
     def save(self, *args, **kwargs):
@@ -50,6 +49,17 @@ class Plant (models.Model):
         return self.name
 
 
+class PlantImage (models.Model):
+    picture = models.ImageField(upload_to='plant_images', blank=True, null=True)
+    plant_name = models.CharField(max_length=128, unique=False, default=" ")
+
+    def save(self, *args, **kwargs):
+        super(PlantImage, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.plant_name
+
+
 class UserProfile(models.Model):
 
     user = models.OneToOneField(User)
@@ -58,7 +68,9 @@ class UserProfile(models.Model):
     picture = models.ImageField(upload_to='profile_images', blank=True)
 
     def __str__(self):
+
         return self.user.username
+
 
 class Comment(models.Model):
     plant = models.ForeignKey(Plant)
