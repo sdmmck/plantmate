@@ -64,7 +64,7 @@ def show_plant(request, plant_name_slug):
         plant = Plant.objects.get(slug=plant_name_slug)
 
         for i in PlantImage.objects.all():
-            image.add(i.picture)
+            image.add(i)
 
         context_dict['plant'] = plant
         context_dict['image'] = image

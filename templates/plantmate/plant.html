@@ -8,10 +8,8 @@
 {% block body_block %}
     {% if image %}
         {% for i in image %}
-            <h1>{{ i.name }}</h1>
-            <h2>{{ plant.slug }}</h2>
             {% ifequal i.plant_name plant.slug %}
-            <img src= "{% static i.name %}"/>
+            <img src= "{% static i.picture %}"/>
             {% endifequal %}
         {% endfor %}
     {% endif %}
