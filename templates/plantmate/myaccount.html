@@ -10,15 +10,17 @@
 
 
     hi {{ username }}!<br>
-    my plants<br><br><br><br>
+    <h2>my plants</h2>
+
+
+
     <h2>wishlist</h2>
-
     {% if wishlist %}
-
-        {{ wishlist}}
-
+        {% for wish in wishlist %}
+            {{ wish }} </br>
+        {% endfor %}
     {% endif %}
-    
+
 {#    <a href="{% url 'wishlist' %}">view all</a><br /><br><br><br>#}
     {#<a href="{% url 'home' %}">Home</a><br />#}
     <h3>nearest plant shop</h3>
