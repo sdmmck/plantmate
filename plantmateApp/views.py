@@ -151,6 +151,7 @@ def add_plant(request):
             print(form.errors)
     return render(request, 'plantmate/add-plant.html', {'form': form})
 
+
 @login_required
 def remove_wishlist_plant(request):
 
@@ -209,7 +210,7 @@ def add_image(request, plant_name_slug):
 
     return render(request, 'plantmate/add-image.html', context=context_dict)
 
-
+  
 def quiz(request):
     context_dict = {}
     return render(request, 'plantmate/quiz.html', context=context_dict)
