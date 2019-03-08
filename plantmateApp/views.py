@@ -1,8 +1,9 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.db import IntegrityError
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from plantmateApp.models import Business, Plant, PlantImage
-from plantmateApp.forms import BusinessForm, UserForm, UserProfileForm, PlantForm, ImageForm
+from plantmateApp.models import Business, Plant, PlantImage, UserWishlistPlants, UserSavedPlants, UserProfile, User
+from plantmateApp.forms import BusinessForm, UserForm, UserProfileForm, PlantForm, ImageForm, SavePlantForm, WishlistPlantForm
 from django.template.defaultfilters import slugify
 
 
@@ -53,6 +54,39 @@ def add_business(request):
         else:
             print(form.errors)
     return render(request, 'plantmate/add-business.html', {'form': form})
+
+@login_required
+def save_plant(request):
+
+    save_plant_form = SavePlantForm(request.POST)
+    print("no save ----------------------------------------------------------------")
+
+    if save_plant_form.is_valid():
+        save_plant_form.save()
+        print("hiya ----------------------------------------------------------------")
+        return myaccount(request)
+    else:
+        print(save_plant_form.errors)
+        return render(request, 'plantmate/myaccount.html', {'save_plant_form': save_plant_form})
+
+
+@login_required
+def wishlist_plant(request):
+
+    wishlist_plant_form = WishlistPlantForm(request.POST)
+
+    try:
+        if wishlist_plant_form.is_valid():
+            wishlist = wishlist_plant_form.save(commit=False)
+            wishlist.user = request.user
+            wishlist.save()
+            return myaccount(request)
+        else:
+            print(wishlist_plant_form.errors)
+    except IntegrityError:
+        return myaccount(request)
+
+    return render(request, 'plantmate/myaccount.html', {'wishlist_plant_form': wishlist_plant_form})
 
 
 def show_plant(request, plant_name_slug):
@@ -145,7 +179,17 @@ def contact(request):
 
 
 def myaccount(request):
-    context_dict = {}
+
+    wishlistplants = set()
+
+    for i in UserWishlistPlants.objects.all():
+        if i.user == request.user:
+            wishlistplants.add(i.wishlist_plant)
+
+    username = User.objects.get(username=request.user)
+
+    context_dict = {'username': username, 'wishlist': wishlistplants}
+
     return render(request, 'plantmate/myaccount.html', context=context_dict)
 
 

@@ -1,6 +1,8 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class Business (models.Model):
@@ -63,13 +65,36 @@ class PlantImage (models.Model):
 class UserProfile(models.Model):
 
     user = models.OneToOneField(User)
-
     website = models.URLField(blank=True)
     picture = models.ImageField(upload_to='profile_images', blank=True)
 
     def __str__(self):
-
         return self.user.username
+
+
+class UserSavedPlants(models.Model):
+    user = models.ForeignKey(UserProfile)
+    saved_plant = models.CharField(max_length=128, unique=False, default=" ")
+
+    def save(self, *args, **kwargs):
+        super(UserSavedPlants, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.saved_plant
+
+
+class UserWishlistPlants(models.Model):
+    class Meta:
+        unique_together = ('wishlist_plant', 'user')
+
+    user = models.ForeignKey(User)
+    wishlist_plant = models.CharField(max_length=128, unique=False, default=" ")
+
+    def save(self, *args, **kwargs):
+        super(UserWishlistPlants, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.wishlist_plant
 
 
 class Comment(models.Model):

@@ -21,5 +21,8 @@ urlpatterns = [
         views.show_business,
         name='show_business'),
     url(r'^add-plant/$', views.add_plant, name='add_plant'),
+    url(r'^save-plant/$', views.save_plant, name='save_plant'),
+    url(r'^wishlist-plant/$', views.wishlist_plant, name='wishlist_plant'),
+
 
 ]
