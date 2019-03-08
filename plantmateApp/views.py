@@ -153,31 +153,6 @@ def add_plant(request):
             print(form.errors)
     return render(request, 'plantmate/add-plant.html', {'form': form})
 
-@login_required
-def add_image(request, plant_name_slug):
-
-    context_dict = {}
-
-    plant = Plant.objects.get(slug=plant_name_slug)
-    context_dict['plant'] = plant
-
-    if request.method == 'POST':
-        form = ImageForm(request.POST)
-
-        if form.is_valid():
-            image = form.save(commit=True)
-            if 'picture' in request.FILES:
-                image.picture = request.FILES['picture']
-            context_dict['form'] = form
-            image.save()
-
-            return show_plant(request, slugify(form.__getitem__('plant_name').value()))
-
-        else:
-            print(form.errors)
-
-    return render(request, 'plantmate/add-image.html', context=context_dict)
-
 
 def quiz(request):
     context_dict = {}
