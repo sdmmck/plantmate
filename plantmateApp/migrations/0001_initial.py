@@ -41,6 +41,7 @@ class Migration(migrations.Migration):
                 ('room', models.CharField(choices=[('Living-room/Bedroom', 'living-room/bedroom'), ('Kitchen/Bathroom', 'kitchen/bathroom')], default='Living-room/Bedroom', max_length=128)),
                 ('pet', models.CharField(max_length=128)),
                 ('slug', models.SlugField()),
+                ('url', models.URLField()),
             ],
             options={
                 'verbose_name_plural': 'Plants',

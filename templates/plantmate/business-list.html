@@ -7,28 +7,29 @@
 
 {% block body_block %}
     <h1>Business List</h1>
-{% if businesses %}
-           <ul>
-                {% for business in businesses %}
-                    <li><a href="{{ business.url }}">{{ business.title }}</a></li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <strong>No businesses currently to show.</strong>
-            <div>
-                <form role="form" id="business_form" method="post" action="{% url 'add_business' %}">
-                {% csrf_token %}
-                {% for hidden in form.hidden_fields %}
-                    {{ hidden }}
-                {% endfor %}
-                {% for field in form.visible_fields %}
-                    {{ field.errors }}
-                    {{ field.help_text }}
-                    {{ field }}
-                {% endfor %}
-                    <button class="btn btn-primary" type="submit" name="submit" value="Add business"/>add business</button>
-                </form>
-            </div>
-        {% endif %}
-        {#<a href="{% url 'show_business' business.slug %}">Add a Business</a>#}
+    {% if businesses %}
+        <ul>
+            {% for business in businesses %}
+                <li><a href="{{ business.slug }}">{{ business.name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <strong>No businesses currently to show.</strong>
+    {% endif %}
+    <div>
+        <form role="form" id="business_form" method="post" action="{% url 'add_business' %}">
+            {% csrf_token %}
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+            {% for field in form.visible_fields %}
+                {{ field.errors }}
+                {{ field.help_text }}
+                {{ field }}
+            {% endfor %}
+            <button class="btn btn-primary" type="submit" name="submit" value="Add business"/>
+            add business</button>
+        </form>
+    </div>
+    {#<a href="{% url 'show_business' business.slug %}">Add a Business</a>#}
 {% endblock %}

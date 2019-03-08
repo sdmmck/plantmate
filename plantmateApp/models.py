@@ -31,9 +31,11 @@ class Plant (models.Model):
     characteristics = models.CharField(max_length=128, unique=False)
     climate = models.CharField(max_length=128, unique=False, blank=False, default="cool", choices=climate_choices)
     light = models.CharField(max_length=128, unique=False, blank=False, default="sunny", choices=light_choices)
-    room = models.CharField(max_length=128, unique=False, blank=False, default="Living-room/Bedroom", choices= room_choices)
+    room = models.CharField(max_length=128, unique=False, blank=False, default="Living-room/Bedroom", choices=room_choices)
     pet = models.CharField(max_length=128, unique=False)
     slug = models.SlugField()
+
+    url = models.URLField()
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -57,15 +59,8 @@ class UserProfile(models.Model):
         return self.user.username
 
 class Comment(models.Model):
-    plant = models.ForeignKey(Plant)
-    user = models.ForeignKey(UserProfile)
-    text = models.TextField(max_length=300)
-    created_date = models.DateTimeField(auto_now_add=True)
-    approved_comment = models.BooleanField(default=False)
 
-    def approve(self):
-        self.approved_comment = True
-        self.save()
-
+    text = models.CharField(max_length=500)
+    
     def __str__(self):
         return self.text

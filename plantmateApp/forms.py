@@ -1,5 +1,5 @@
 from django import forms
-from plantmateApp.models import Business, Plant
+from plantmateApp.models import Business, Plant, Comment
 from django import forms
 from django.contrib.auth.models import User
 from plantmateApp.models import UserProfile
@@ -14,6 +14,15 @@ class BusinessForm(forms.ModelForm):
 
         model = Business
         fields = ('name',)
+
+class CommentForm(forms.ModelForm):
+    text = forms.CharField(max_length=500,
+                            help_text="please enter a comment:")
+    
+    class Meta:
+
+        model = Comment
+        fields = ('text',)
 
 
 class PlantForm(forms.ModelForm):
@@ -36,7 +45,7 @@ class PlantForm(forms.ModelForm):
     class Meta:
 
         model = Plant
-        fields = ('name', 'latin_name', 'size', 'climate', 'light')
+        fields = ('name', 'latin_name', 'size', 'climate', 'light', 'room')
 
 
 class UserForm(forms.ModelForm):
@@ -51,3 +60,5 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('website', 'picture')
+
+        
