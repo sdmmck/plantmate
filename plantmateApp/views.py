@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from plantmateApp.models import Business, Plant
+from plantmateApp.models import Business, Plant, Comment
 from plantmateApp.forms import BusinessForm, UserForm, UserProfileForm, PlantForm
 from django.template.defaultfilters import slugify
 
@@ -81,7 +81,6 @@ def add_plant(request):
         else:
             print(form.errors)
     return render(request, 'plantmate/add-plant.html', {'form': form})
-
 
 def quiz(request):
     context_dict = {}

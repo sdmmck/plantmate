@@ -1,28 +1,21 @@
 from django import forms
-from plantmateApp.models import Business, Plant, Comment
-from django import forms
 from django.contrib.auth.models import User
 from plantmateApp.models import UserProfile
-
+from plantmateApp.models import Business, Plant, PlantImage, UserSavedPlants, UserWishlistPlants, Comment
 
 class BusinessForm(forms.ModelForm):
     name = forms.CharField(max_length=128,
                            help_text="Please enter the Business name.")
+    address = forms.CharField(max_length=128,
+                              help_text="Enter the Business address.")
+    postcode = forms.CharField(max_length=8,
+                               help_text="Enter the Business postcode.")
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
 
         model = Business
-        fields = ('name',)
-
-class CommentForm(forms.ModelForm):
-    text = forms.CharField(max_length=500,
-                            help_text="please enter a comment:")
-    
-    class Meta:
-
-        model = Comment
-        fields = ('text',)
+        fields = ('name','address','postcode')
 
 
 class PlantForm(forms.ModelForm):
@@ -48,6 +41,16 @@ class PlantForm(forms.ModelForm):
         fields = ('name', 'latin_name', 'size', 'climate', 'light', 'room')
 
 
+class ImageForm(forms.ModelForm):
+
+    picture = forms.ImageField(required=False)
+    plant_name = forms.HiddenInput()
+
+    class Meta:
+        model = PlantImage
+        fields = ('picture', 'plant_name')
+
+
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
 
@@ -61,4 +64,20 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         fields = ('website', 'picture')
 
-        
+
+class SavePlantForm(forms.ModelForm):
+    user = forms.HiddenInput()
+    saved_plant = forms.HiddenInput()
+
+    class Meta:
+        model = UserSavedPlants
+        fields = ('saved_plant', 'user')
+
+
+class WishlistPlantForm(forms.ModelForm):
+    wishlist_plant = forms.HiddenInput()
+
+    class Meta:
+        model = UserWishlistPlants
+        fields = ('wishlist_plant',)
+        exclude = ('user',)

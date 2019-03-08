@@ -7,10 +7,19 @@
 
 {% block body_block %}
     <h1>my plants</h1>
-    hi username!<br>
+
+
+    hi {{ username }}!<br>
     my plants<br><br><br><br>
     <h2>wishlist</h2>
-    <a href="{% url 'wishlist' %}">view all</a><br /><br><br><br>
+
+    {% if wishlist %}
+
+        {{ wishlist}}
+
+    {% endif %}
+    
+{#    <a href="{% url 'wishlist' %}">view all</a><br /><br><br><br>#}
     {#<a href="{% url 'home' %}">Home</a><br />#}
     <h3>nearest plant shop</h3>
     name<br>
