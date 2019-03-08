@@ -11,9 +11,11 @@
 
     hi {{ username }}!<br>
     <h2>my plants</h2>
-
-
-
+ {% if saved_plants %}
+        {% for saved in saved_plants %}
+            {{ saved }} </br>
+        {% endfor %}
+    {% endif %}
     <h2>wishlist</h2>
     {% if wishlist %}
         {% for wish in wishlist %}

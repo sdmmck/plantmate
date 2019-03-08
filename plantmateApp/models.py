@@ -73,7 +73,10 @@ class UserProfile(models.Model):
 
 
 class UserSavedPlants(models.Model):
-    user = models.ForeignKey(UserProfile)
+    class Meta:
+        unique_together = ('saved_plant', 'user')
+
+    user = models.ForeignKey(User)
     saved_plant = models.CharField(max_length=128, unique=False, default=" ")
 
     def save(self, *args, **kwargs):

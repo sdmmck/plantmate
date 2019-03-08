@@ -68,12 +68,12 @@ class UserProfileForm(forms.ModelForm):
 
 
 class SavePlantForm(forms.ModelForm):
-    user = forms.HiddenInput()
     saved_plant = forms.HiddenInput()
 
     class Meta:
         model = UserSavedPlants
-        fields = ('saved_plant', 'user')
+        fields = ('saved_plant',)
+        exclude = ('user',)
 
 
 class WishlistPlantForm(forms.ModelForm):

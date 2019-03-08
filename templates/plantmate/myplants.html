@@ -7,5 +7,9 @@
 
 {% block body_block %}
     <h1>my plants</h1>
-    <a href="/myaccount/wishlist">My Wishlist</a><br />
+    {% if saved_plants %}
+        {% for plant in saved_plants %}
+            <a href="/plant-list/{{ plant }}/">{{ plant }}</a><br />
+        {%  endfor %}
+    {% endif %}
 {% endblock %}
