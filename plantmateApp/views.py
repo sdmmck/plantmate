@@ -154,7 +154,7 @@ def add_plant(request):
         else:
             print(form.errors)
     return render(request, 'plantmate/add-plant.html', {'form': form})
-
+  
 
 @login_required
 def remove_wishlist_plant(request):
