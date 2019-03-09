@@ -17,6 +17,7 @@ MEDIA_DIR = os.path.join(BASE_DIR,'media')
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 PLANT_IMAGE_DIR = os.path.join(BASE_DIR, 'media/plant_images')
+MAIN_PLANT_IMAGE_DIR = os.path.join(BASE_DIR, 'media/main_plant_images')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -143,3 +144,4 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 PLANT_IMAGE_URL = '/media/plant_images/'
+MAIN_PLANT_IMAGE_URL = '/media/main_plant_images/'

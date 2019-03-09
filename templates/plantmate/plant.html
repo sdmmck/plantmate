@@ -15,6 +15,7 @@
     {% endif %}
     {% if plant %}
         <h1>{{ plant.name }}</h1><br/>
+        <img src="{% static plant.picture %}"/>
         <h2>{{ plant.latin_name }}</h2><br/>
         <h2>{{ plant.size }}</h2><br/>
         <h2>{{ plant.climate }}</h2><br/>
@@ -28,19 +29,57 @@
 
         {% if user.is_authenticated %}
 
+
+            <script>
+            plantIsInWishlist = false;
+            plantIsInSavedPlants = false;
+            </script>
+            {% for wish in wishlistplants %}
+                {% ifequal wish.wishlist_plant plant.slug %}
+                    <script>
+                        plantIsInWishlist = true;
+                    </script>
+                {% endifequal %}
+            {% endfor %}
+            {% for saved in saved_plants %}
+                {% ifequal saved.saved_plant plant.slug %}
+                    <script>
+                        plantIsInSavedPlants = true;
+                    </script>
+                {% endifequal %}
+            {% endfor %}
+            <div id="saved_button" style="display: block">
             <form method="post" action="{% url 'save_plant' %}">
                 {% csrf_token %}
                 <input type="hidden" id="saved_plant" name="saved_plant" value={{ plant.slug }}>
                 <button type="submit" name="saved_plants">add plant to my plants</button>
             </form>
+            </div>
 
-            <div id="wishlist_button">
+            <div id="wishlist_button" style="display: block">
                 <form method="post" action="{% url 'wishlist_plant' %}">
                     {% csrf_token %}
                     <input type="hidden" id="wishlist_plant" name="wishlist_plant" value={{ plant.slug }}>
                     <button type="submit" name="wishlist">add plant to wishlist</button>
                 </form>
             </div>
+
+            <script>
+            console.log(plantIsInWishlist + " greetings");
+
+
+            if (plantIsInWishlist){
+                document.getElementById("wishlist_button").style.display="none";
+            }else{
+                document.getElementById("wishlist_button").style.display="block";
+            }
+
+             if (plantIsInSavedPlants){
+                document.getElementById("saved_button").style.display="none";
+            }else{
+                document.getElementById("saved_button").style.display="block";
+            }
+            </script>
 
             <a href="/plant-list/{{ plant.slug }}/add-image">Add a new image</a><br/>
 

@@ -36,11 +36,12 @@ class PlantForm(forms.ModelForm):
                                         choices=Plant.light_choices)
 
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
+    picture = forms.ImageField(required=False)
 
     class Meta:
 
         model = Plant
-        fields = ('name', 'latin_name', 'size', 'climate', 'light', 'room')
+        fields = ('name', 'latin_name', 'size', 'climate', 'light', 'room', 'picture')
 
 
 class ImageForm(forms.ModelForm):

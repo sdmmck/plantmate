@@ -39,6 +39,7 @@ class Plant (models.Model):
     pet = models.CharField(max_length=128, unique=False)
     slug = models.SlugField()
     url = models.URLField()
+    picture = models.ImageField(upload_to='main_plant_images', blank=True, null=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)

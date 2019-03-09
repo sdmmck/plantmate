@@ -63,7 +63,7 @@ def save_plant(request):
             saved_plants = save_plant_form.save(commit=False)
             saved_plants.user = request.user
             saved_plants.save()
-            return myaccount(request)
+            return my_plants(request)
         else:
             print(save_plant_form.errors)
     except IntegrityError:
@@ -76,14 +76,14 @@ def wishlist_plant(request):
     wishlist_plant_form = WishlistPlantForm(request.POST)
     try:
         if wishlist_plant_form.is_valid():
-            wishlist = wishlist_plant_form.save(commit=False)
-            wishlist.user = request.user
-            wishlist.save()
-            return myaccount(request)
+            wishlisted = wishlist_plant_form.save(commit=False)
+            wishlisted.user = request.user
+            wishlisted.save()
+            return wishlist(request)
         else:
             print(wishlist_plant_form.errors)
     except IntegrityError:
-        return myaccount(request)
+        return wishlist(request)
 
     return render(request, 'plantmate/myaccount.html', {'wishlist_plant_form': wishlist_plant_form})
 
@@ -139,11 +139,15 @@ def show_plant(request, plant_name_slug):
 @login_required
 def add_plant(request):
 
+    form = PlantForm(request.POST)
+
     if request.method == 'POST':
         form = PlantForm(request.POST)
 
         if form.is_valid():
-            plant = form.save(commit=True)
+            plant = form.save(commit=False)
+            if 'picture' in request.FILES:
+                plant.picture = request.FILES['picture']
             plant.save()
             return show_plant(request, slugify(form.__getitem__('name').value()))
 
@@ -158,10 +162,11 @@ def remove_wishlist_plant(request):
         form = WishlistPlantForm(request.POST)
 
         if form.is_valid():
-            wishlist_plant=request.POST.get('wishlist_plant')
-            plant = UserWishlistPlants.objects.get(wishlist_plant=wishlist_plant)
-            plant.delete()
-            return show_plant(request, wishlist_plant)
+            wishlisted_plant = request.POST.get('wishlist_plant')
+            plant = UserWishlistPlants.objects.filter(wishlist_plant=wishlisted_plant)
+            for p in plant:
+                p.delete()
+            return show_plant(request, wishlisted_plant)
 
         else:
             print(form.errors)
@@ -173,11 +178,11 @@ def remove_saved_plant(request):
 
     if request.method == 'POST':
         form = SavePlantForm(request.POST)
-
         if form.is_valid():
             saved_plant=request.POST.get('saved_plant')
-            plant = UserSavedPlants.objects.get(saved_plant=saved_plant)
-            plant.delete()
+            plant = UserSavedPlants.objects.filter(saved_plant=saved_plant)
+            for p in plant:
+                p.delete()
             return show_plant(request, saved_plant)
 
         else:
