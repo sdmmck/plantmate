@@ -89,6 +89,7 @@ def wishlist_plant(request):
     return render(request, 'plantmate/myaccount.html', {'wishlist_plant_form': wishlist_plant_form})
 
 
+
 @login_required
 def add_image(request, plant_name_slug):
 
@@ -113,6 +114,7 @@ def add_image(request, plant_name_slug):
             print(form.errors)
 
     return render(request, 'plantmate/add-image.html', context=context_dict)
+
 
 
 def show_plant(request, plant_name_slug):
@@ -152,7 +154,6 @@ def add_plant(request):
         else:
             print(form.errors)
     return render(request, 'plantmate/add-plant.html', {'form': form})
-
 
 def quiz(request):
     context_dict = {}
