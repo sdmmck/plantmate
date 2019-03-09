@@ -153,7 +153,6 @@ def add_plant(request):
             print(form.errors)
     return render(request, 'plantmate/add-plant.html', {'form': form})
 
-
 def quiz(request):
     context_dict = {}
     return render(request, 'plantmate/quiz.html', context=context_dict)
