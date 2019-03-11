@@ -9,9 +9,13 @@ from plantmateApp.models import Business, Plant
 def populate():
     local_businesses = [
         {"title": "blooms",
-         "url": "http://bloomsglasgow.co.uk/"},
+         "url": "http://bloomsglasgow.co.uk/",
+         "lat": "55.870668",
+         "long": "-4.300317"},
         {"title": "Apercu",
-         "url": "https://www.instagram.com/apercuglasgow/?hl=en"}
+         "url": "https://www.instagram.com/apercuglasgow/?hl=en",
+         "lat": "55.837192",
+         "long": "-4.269045"}
     ]
     plants = [
         {"name": "Aloe Vera",
@@ -170,14 +174,16 @@ def populate():
     ]
 
     for business in local_businesses:
-        add_business(business["title"], business["url"])
+        add_business(business["title"], business["url"], business["lat"], business["long"])
 
     for plant in plants:
         add_plant(plant)
 
 
-def add_business(title, url):
-    p = Business.objects.get_or_create(name=title)[0]
+def add_business(title, url, lat, long):
+    p = Business.objects.get_or_create(name=title,
+                                       lat=lat,
+                                       long=long)[0]
     p.url = url
     p.save()
     return p
