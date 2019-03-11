@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block body_block %}
-    {% if image %}
+    {% if plant.picture %}
         {% for i in image %}
             {% ifequal i.plant_name plant.slug %}
                 <img src="{% static i.picture %}"/>

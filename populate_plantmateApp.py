@@ -20,6 +20,7 @@ def populate():
          "characteristics": "Air purifying",
          "climate": "cool",
          "light": "sunny",
+         "picture": "images/aloe-vera.jpg",
          "pet": "no",
          "room": "Living-room/Bedroom"},
 
@@ -190,8 +191,10 @@ def add_plant(plant):
                                         characteristics=plant["characteristics"],
                                         climate=plant["climate"],
                                         light=plant["light"],
+                                        picture=plant["picture"],
                                         pet=plant["pet"],
-                                        room=plant["room"])[0]
+                                        room=plant["room"],
+                                        )[0]
     plant.save()
     return plant
 

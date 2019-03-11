@@ -13,6 +13,7 @@
     <h2>my plants</h2>
  {% if saved_plants %}
         {% for saved in saved_plants %}
+            {% ifequal saved.saved_plant  %}
             {{ saved }} </br>
         {% endfor %}
     {% endif %}
