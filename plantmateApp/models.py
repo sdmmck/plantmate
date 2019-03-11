@@ -7,8 +7,8 @@ from django.dispatch import receiver
 
 class Business (models.Model):
     name = models.CharField(max_length=128, unique=True)
-    address = models.CharField(max_length=128, unique=False)
-    postcode = models.CharField(max_length=8, unique=False)
+    lat = models.CharField(max_length=20, unique=False)
+    long = models.CharField(max_length=20, unique=False)
     url = models.URLField()
     slug = models.SlugField()
 
