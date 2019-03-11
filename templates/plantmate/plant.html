@@ -9,13 +9,13 @@
     {% if plant.picture %}
         {% for i in image %}
             {% ifequal i.plant_name plant.slug %}
-                <img src="{% static i.picture %}"/>
+                <img src="{% static i.picture %}" />
             {% endifequal %}
         {% endfor %}
     {% endif %}
     {% if plant %}
         <h1>{{ plant.name }}</h1><br/>
-        <img src="{% static plant.picture %}"/>
+        <img src="{% static plant.picture %}" width="380" height="400" alt="picture of plant"/>
         <h2>{{ plant.latin_name }}</h2><br/>
         <h2>{{ plant.size }}</h2><br/>
         <h2>{{ plant.climate }}</h2><br/>
