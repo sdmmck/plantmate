@@ -30,6 +30,7 @@ def populate():
          "characteristics": "Air purifying",
          "climate": "cool",
          "light": "sunny",
+         "picture": "images/banana-plant.jpg",
          "pet": "yes",
          "room": "Living-room/Bedroom"},
 
@@ -39,6 +40,7 @@ def populate():
          "characteristics": "Easy to care for",
          "climate": "cool",
          "light": "shady",
+         "picture": "images/cast-iron-plant.jpg",
          "pet": "yes",
          "room": "Living-room/Bedroom"},
 
@@ -48,6 +50,7 @@ def populate():
          "characteristics": "Air purifying",
          "climate": "warm",
          "light": "sunny",
+         "picture": "images/rose-painted-calathea.jpg",
          "pet": "yes",
          "room": "Kitchen/Bathroom"},
 
@@ -57,6 +60,7 @@ def populate():
          "characteristics": "Air purifying",
          "climate": "warm",
          "light": "shady",
+         "picture": "images/chinese-evergreen.jpg",
          "pet": "yes",
          "room": "Kitchen/Bathroom"},
 
@@ -66,6 +70,7 @@ def populate():
          "characteristics": "Easy to care for",
          "climate": "warm",
          "light": "sunny",
+         "picture": "images/chinese-money-plant.jpg",
          "pet": "yes",
          "room": "Living-room/Bedroom"},
 
@@ -75,6 +80,7 @@ def populate():
          "characteristics": "Air purifying",
          "climate": "warm",
          "light": "bright",
+         "picture": "images/dragon-plant.jpg",
          "pet": "no",
          "room": "Living-room/Bedroom"},
 
@@ -84,6 +90,7 @@ def populate():
          "characteristics": "Trailing",
          "climate": "warm",
          "light": "shady",
+         "picture": "images/golden-pothos.jpg",
          "pet": "no",
          "room": "Living-room/Bedroom"},
 
@@ -93,6 +100,7 @@ def populate():
          "characteristics": "Easy to care for",
          "climate": "warm",
          "light": "shady",
+         "picture": "images/swiss-cheese-plant.jpg",
          "pet": "no",
          "room": "Kitchen/Bathroom"},
 
@@ -102,6 +110,7 @@ def populate():
          "characteristics": "Easy to care for",
          "climate": "warm",
          "light": "sunny",
+         "picture": "images/rattlesnake-plant.jpg",
          "pet": "yes",
          "room": "Kitchen/Bathroom"},
 
@@ -111,6 +120,7 @@ def populate():
          "characteristics": "Easy to care for",
          "climate": "warm",
          "light": "shady",
+         "picture": "images/straight-cylindrical-snake-plant.jpg",
          "pet": "no",
          "room": "Living-room/Bedroom"},
 
@@ -120,6 +130,7 @@ def populate():
          "characteristics": "Trailing",
          "climate": "cool",
          "light": "sunny",
+         "picture": "images/spider-plant.jpg",
          "pet": "yes",
          "room": "Living-room/Bedroom"},
 
@@ -129,6 +140,7 @@ def populate():
          "characteristics": "Trailing",
          "climate": "warm",
          "light": "sunny",
+         "picture": "images/string-of-hearts.jpg",
          "pet": "no",
          "room": "Kitchen/Bathroom"},
 
@@ -138,6 +150,7 @@ def populate():
          "characteristics": "Air purifying",
          "climate": "warm",
          "light": "shady",
+         "picture": "images/money-tree.jpg",
          "pet": "no",
          "room": "Living-room/Bedroom"},
 
@@ -147,6 +160,7 @@ def populate():
          "characteristics": "Air purifying",
          "climate": "cool",
          "light": "shady",
+         "picture": "images/parlour-palm.jpg",
          "pet": "yes",
          "room": "Living-room/Bedroom"},
 
@@ -156,6 +170,7 @@ def populate():
          "characteristics": "Air purifying",
          "climate": "warm",
          "light": "shady",
+         "picture": "images/ponytail-palm.jpg",
          "pet": "yes",
          "room": "Living-room/Bedroom"},
 
@@ -165,6 +180,7 @@ def populate():
          "characteristics": "Easy to care for",
          "climate": "warm",
          "light": "sunny",
+         "picture": "images/spineless-yucca.jpg",
          "pet": "yes",
          "room": "Living-room/Bedroom"},
 
