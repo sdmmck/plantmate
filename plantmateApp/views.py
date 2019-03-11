@@ -123,10 +123,13 @@ def show_plant(request, plant_name_slug):
         for i in PlantImage.objects.all():
             image.add(i)
 
-        wishlistplants = UserWishlistPlants.objects.filter(user=request.user)
-        saved_plants = UserSavedPlants.objects.filter(user=request.user)
-
-        context_dict = {'plant': plant, 'image': image, 'wishlistplants': wishlistplants, 'saved_plants': saved_plants}
+        if request.user.is_authenticated():
+            wishlistplants = UserWishlistPlants.objects.filter(user=request.user)
+            saved_plants = UserSavedPlants.objects.filter(user=request.user)
+            context_dict = {'plant': plant, 'image': image, 'wishlistplants': wishlistplants,
+                            'saved_plants': saved_plants}
+        else:
+            context_dict = {'plant': plant, 'image': image}
 
     except Plant.DoesNotExist:
         context_dict['plant'] = None
@@ -259,7 +262,8 @@ def plant_list(request):
 
 def wishlist(request):
     wishlistplants = UserWishlistPlants.objects.filter(user=request.user)
-    context_dict = {'wishlist': wishlistplants}
+    plants = Plant.objects.get()
+    context_dict = {'wishlist': wishlistplants, 'plants': plants}
     return render(request, 'plantmate/wishlist.html', context=context_dict)
 
 
