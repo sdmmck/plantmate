@@ -33,18 +33,19 @@
 
     <h1>{{ plant.name }}</h1><br/>
     <h2><i>{{plant.latin_name }}</i></h2><br/>
-    <div class="col-sm-4" style="background-color:lavender;">
-        <img src="{% static plant.picture %}" width="380" height="400" alt="picture of plant"/>
+    <div class="col-sm-4">
+        <img src="{% static plant.picture %}" width="380" height="400" class="img-circle" alt="picture of plant"/>
     </div>
     <div class="col-sm-8" style="background-color:lavenderblush;">
-        {{ plant.size }}<br/>
-        {{ plant.climate }}<br/>
-        {{ plant.light }}<br/>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aperiam corporis, obcaecati officia placeat quas sint tempora. Deserunt earum maxime porro! Dolorem ea eaque eligendi error esse eveniet illo incidunt molestias nemo neque nisi, officiis possimus quam qui quibusdam, reiciendis sed soluta sunt. Accusamus corporis debitis eligendi iure molestiae odit officiis pariatur recusandae rem vel!<br>
+        Grows to be: {{ plant.size }}<br/>
+        Thrives in a {{ plant.climate }} climate where it
+        is {{ plant.light }}<br/>
         {% if plant.characteristics %}
-        {{ plant.characteristics }}<br/>
+        Special because I am {{ plant.characteristics }}<br/>
         {% endif %}
         {% if plant.pet %}
-        {{ plant.pet }}<br/>
+        Suitable for pets? {{ plant.pet }}<br/>
         {% endif %}
     </div>
 </div>
@@ -76,20 +77,24 @@
 </script>
 {% endifequal %}
 {% endfor %}
-<div id="saved_button" style="display: block">
-    <form method="post" action="{% url 'save_plant' %}">
-        {% csrf_token %}
-        <input type="hidden" id="saved_plant" name="saved_plant" value={{ plant.slug }}>
-        <button type="submit" name="saved_plants">add plant to my plants</button>
-    </form>
+<div class="col-sm-6">
+    <div id="saved_button" style="display: block">
+        <form method="post" action="{% url 'save_plant' %}">
+            {% csrf_token %}
+            <input type="hidden" id="saved_plant" name="saved_plant" value={{ plant.slug }}>
+            <button type="submit" name="saved_plants">add plant to my plants</button>
+        </form>
+    </div>
 </div>
 
-<div id="wishlist_button" style="display: block">
-    <form method="post" action="{% url 'wishlist_plant' %}">
-        {% csrf_token %}
-        <input type="hidden" id="wishlist_plant" name="wishlist_plant" value={{ plant.slug }}>
-        <button type="submit" name="wishlist">add plant to wishlist</button>
-    </form>
+<div class="col-sm-6">
+    <div id="wishlist_button" style="display: block">
+        <form method="post" action="{% url 'wishlist_plant' %}">
+            {% csrf_token %}
+            <input type="hidden" id="wishlist_plant" name="wishlist_plant" value={{ plant.slug }}>
+            <button type="submit" name="wishlist">add plant to wishlist</button>
+        </form>
+    </div>
 </div>
 
 <script>
