@@ -40,6 +40,8 @@ class Plant (models.Model):
     slug = models.SlugField()
     url = models.URLField()
     picture = models.ImageField(upload_to='main_plant_images', blank=True, null=True)
+    #DESCRIPTION UNIQUE NEEDS TO BE CHANGED TO TRUE AND BLANK TO FALSE WHEN REAL DESCRIPTIONS ADDED
+    description = models.TextField(unique=False, blank=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)

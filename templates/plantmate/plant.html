@@ -37,10 +37,11 @@
         <img src="{% static plant.picture %}" width="380" height="400" class="img-circle" alt="picture of plant"/>
     </div>
     <div class="col-sm-8" style="background-color:lavenderblush;">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aperiam corporis, obcaecati officia placeat quas sint tempora. Deserunt earum maxime porro! Dolorem ea eaque eligendi error esse eveniet illo incidunt molestias nemo neque nisi, officiis possimus quam qui quibusdam, reiciendis sed soluta sunt. Accusamus corporis debitis eligendi iure molestiae odit officiis pariatur recusandae rem vel!<br>
+        {{ plant.description }}<br/>
         Grows to be: {{ plant.size }}<br/>
         Thrives in a {{ plant.climate }} climate where it
         is {{ plant.light }}<br/>
+        Best suited for the {{ plant.room }}<br/>
         {% if plant.characteristics %}
         Special because I am {{ plant.characteristics }}<br/>
         {% endif %}
