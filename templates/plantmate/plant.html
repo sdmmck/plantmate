@@ -151,13 +151,13 @@
 <div>
     <form method="POST" role ="form" action="{% url 'add_comment' %}">
         {% csrf_token %}
-       
+
         <div class="form-group row">
             <div class="col-md-10">
                 <input type="hidden" id="plant_slug" name="plant_slug" value="{{plant.slug}}">
                 <input type="text" name="body" id="body" class="form-control round-0" type="text" rows="3"
                           placeholder="Leave some advice on caring for this plant..."></input>
-                
+
             </div>
             <div class="col-md-2">
                 <button type="submit" name="add_comment" class="btn btn-success">Add comment</button>
@@ -181,7 +181,7 @@
 <p>no comments yet. be the first!</p>
 <hr>
 {% endfor %}
-        
+
 
     {% else %}
         This plant has not been added yet!
