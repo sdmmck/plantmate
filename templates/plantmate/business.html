@@ -8,15 +8,27 @@
 {% block body_block %}
     {% if business %}
         <h1>{{ business.name }}</h1>
+        <p>{{ business.address }}</p>
+        <p>{{ business.phone }}
+        <br>{{ business.email }}</p>
+        <p><a href="{{ business.url }}">Visit website</a></p>
+        <p><strong>Opening hours:</strong>
+        <br>
+            {{ business.hours }}<br/>
+        {{ business.weekend_hours }}
+        </p>
 
         <div id="googleMap" style="width:75%;height:400px;"></div>
-
-
+        <br>
+        <p>comments?</p>
         <script>
             function initMap() {
+                var lat = Number("{{ business.lat }}");
+                var lng = Number("{{ business.long }}");
+
                 var mapProp= {
-                    center: {lat: 55.864237, lng: -4.251806},
-                    zoom:11,
+                    center: {lat: lat, lng: lng},
+                    zoom:14,
                 };
 
                 // Create new map
@@ -24,7 +36,7 @@
 
                 // Add marker
                 var marker = new google.maps.Marker({
-                    position: {lat:Number("{{ business.lat }}"),lng:Number("{{ business.long }}")},
+                    position: {lat:lat,lng:lng},
                     map: map
                     });
 
