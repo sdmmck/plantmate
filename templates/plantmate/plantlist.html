@@ -11,7 +11,8 @@
     {% if plants %}
         <ul>
             {% for plant in plants %}
-                <li><a href="{{ plant.slug }}">{{ plant.name }}</a></li>
+                <li><a href="{{ plant.slug }}">{{ plant.name }}</a>
+                <img src="{% static plant.picture %}" width="100"></li>
             {% endfor %}
         </ul>
     {% endif %}

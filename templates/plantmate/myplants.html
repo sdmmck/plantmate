@@ -7,9 +7,11 @@
 
 {% block body_block %}
     <h1>my plants</h1>
-    {% if saved_plants %}
-        {% for plant in saved_plants %}
-            <a href="/plant-list/{{ plant }}/">{{ plant }}</a><br />
-        {%  endfor %}
+    {% if plants %}
+        {% for plant in plants %}
+            <a href="/plant-list/{{ plant.slug }}">{{ plant.name }}</a>
+            <img src="{% static plant.picture %}" width="100">
+            </br>
+        {% endfor %}
     {% endif %}
 {% endblock %}

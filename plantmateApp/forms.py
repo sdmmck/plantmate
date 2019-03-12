@@ -17,7 +17,7 @@ class BusinessForm(forms.ModelForm):
     class Meta:
 
         model = Business
-        fields = ('name','address','postcode')
+        fields = ('name','address','postcode', 'lat', 'long', 'url', 'slug')
 
 
 class PlantForm(forms.ModelForm):
