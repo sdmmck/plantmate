@@ -108,10 +108,11 @@ def add_comment(request):
             print ("Third if $%^&%$&%$^&^%*&^&*^%&*&%^*^&*((*)&*)&$%£$@£!@$!@£")
             comment = form.save(commit=False)
             print(comment.plant_slug)
-            plant = Plant.objects.filter(slug=comment.plant_slug)
+            plant = Plant.objects.filter(slug=comment.plant_slug)[0]
             print(plant)
+            comment.plant = plant
             comment.save()
-            return show_plant(request, plant_slug)
+            return show_plant(request, comment.plant_slug)
         else:
             print("IT FAILED!")
             print(form.errors)

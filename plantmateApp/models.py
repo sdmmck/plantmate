@@ -101,7 +101,7 @@ class UserWishlistPlants(models.Model):
 class Comment(models.Model):
     user = models.ForeignKey(UserProfile)
     plant = models.ForeignKey(Plant)
-    plant_slug = models.CharField(max_length=128)
+    plant_slug = models.CharField(max_length=128, default=" ")
     body = models.TextField(unique=False, default=" ")
     created_date = models.DateTimeField(default=timezone.now)
     approved_comment = models.BooleanField(default=True)
