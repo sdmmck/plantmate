@@ -10,14 +10,15 @@
 
         <!-- Custom styles for this template -->
         <link href="dashboard.cs http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
-    </head>
 {% block head_block %}
     <head>
         <title>plantmate </title>
         {% block title_block %}
             welcome to plantmate
         {% endblock %}
+      </head>
 {% endblock %}
+
 <body>
 <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
     <button class="navbar-toggler navbar-toggler-right hidden-lg-up"
@@ -30,18 +31,6 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand" href="{% url 'home' %}">plantmate</a>
-
-    {#<div>#}
-    {#    {% block body_block %}#}
-    {#    {% endblock %}#}
-    {#</div>#}
-    {#<hr />#}
-    {#<a href="/business-list">Local Business List</a><br />#}
-    {#    <a href="/plant-list">Plant A-Z</a><br />#}
-    {#    <a href="/quiz">Quiz</a><br />#}
-    {#    <a href="/login">login</a><br />#}
-    {#    <a href="/sign-up">sign up</a><br />#}
-    {#    <a href="/contact">contact us</a><br />#}
 
     <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav mr-auto">
@@ -139,25 +128,6 @@
 <script src="http://v4-alpha.getbootstrap.com/dist/js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
-</body>
-</html>
 
-{#<div>#}
-
-{#    <ul>#}
-{#            {% if user.is_authenticated %}#}
-{#        <li><a href="{% url 'wishlist' %}">wishlist</a> </li>#}
-{#        <li><a href="{% url 'my_plants' %}">my plants</a> </li>#}
-{#        <li></li><a href="{% url 'auth_logout' %}?next=/">log out</a></li>#}
-{#            {% else %}#}
-{#        <li><a href="{% url 'registration_register' %}">register</a></li>#}
-{#        <li><a href="{% url 'auth_login' %}">log In</a></li>#}
-{##}
-{##}
-{#            {% endif %}#}
-{#        <li><a href="{% url 'add_business' %}">add a business</a></li>#}
-{#        <li><a href="{% url 'home' %}">home</a></li>#}
-{#    </ul>#}
-{#</div>#}
 </body>
 </html>
