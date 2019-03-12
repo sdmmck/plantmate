@@ -173,8 +173,10 @@
                     <hr>
                 {% endfor %}
             {% else %}
-                This plant has not been added yet!
+               Log in or sign up to add this plant to a wishlist!
             {% endif %}
+        {% else %}
+        Plant has not been added
         {% endif %}
         <a href="/plant-list/{{ plant.slug }}/add-image">Add a new image</a><br/>
         <a href="{% url 'plant_list' %}">See the A-Z of plants</a><br/>

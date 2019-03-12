@@ -142,6 +142,7 @@ def add_image(request, plant_name_slug):
 
     return render(request, 'plantmate/add-image.html', context=context_dict)
 
+#have made this login_required to avoid error coming up when user is not logged in
 
 def show_plant(request, plant_name_slug):
 
@@ -168,8 +169,7 @@ def show_plant(request, plant_name_slug):
     except PlantImage.DoesNotExist:
         context_dict['image'] = None
 
-    context_dict = {'plant': plant, 'image': image, 'wishlistplants': wishlistplants,
-                    'saved_plants': saved_plants, 'comments': comments}
+    context_dict = {'plant': plant, 'image': image,'comments': comments}
 
     return render(request, 'plantmate/plant.html', context_dict)
 
