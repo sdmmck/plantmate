@@ -10,10 +10,12 @@ def populate():
     local_businesses = [
         {"title": "blooms",
          "url": "http://bloomsglasgow.co.uk/",
+         "address": "182 Dumbarton Rd, Glasgow",
          "lat": "55.870668",
          "long": "-4.300317"},
         {"title": "Apercu",
          "url": "https://www.instagram.com/apercuglasgow/?hl=en",
+         "address": "617 Pollokshaws Road, Glasgow",
          "lat": "55.837192",
          "long": "-4.269045"}
     ]
@@ -191,14 +193,15 @@ def populate():
     ]
 
     for business in local_businesses:
-        add_business(business["title"], business["url"], business["lat"], business["long"])
+        add_business(business["title"], business["url"], business["address"], business["lat"], business["long"])
 
     for plant in plants:
         add_plant(plant)
 
 
-def add_business(title, url, lat, long):
+def add_business(title, url, address, lat, long):
     p = Business.objects.get_or_create(name=title,
+                                       address=address,
                                        lat=lat,
                                        long=long)[0]
     p.url = url
