@@ -59,15 +59,11 @@
                 <script>
                     plantIsInWishlist = false;
                     plantIsInSavedPlants = false;
-
-
                 </script>
                 {% for wish in wishlistplants %}
                     {% ifequal wish.wishlist_plant plant.slug %}
                         <script>
                             plantIsInWishlist = true;
-
-
                         </script>
                     {% endifequal %}
                 {% endfor %}
@@ -75,8 +71,6 @@
                     {% ifequal saved.saved_plant plant.slug %}
                         <script>
                             plantIsInSavedPlants = true;
-
-
                         </script>
                     {% endifequal %}
                 {% endfor %}
@@ -102,21 +96,16 @@
 
                 <script>
                     console.log(plantIsInWishlist + " greetings");
-
-
                     if (plantIsInWishlist) {
                         document.getElementById("wishlist_button").style.display = "none";
                     } else {
                         document.getElementById("wishlist_button").style.display = "block";
                     }
-
                     if (plantIsInSavedPlants) {
                         document.getElementById("saved_button").style.display = "none";
                     } else {
                         document.getElementById("saved_button").style.display = "block";
                     }
-
-
                 </script>
 
                 <a href="/plant-list/{{ plant.slug }}/add-image">Add a new image</a><br/>
@@ -184,8 +173,10 @@
                     <hr>
                 {% endfor %}
             {% else %}
-                This plant has not been added yet!
+               Log in or sign up to add this plant to a wishlist!
             {% endif %}
+        {% else %}
+        Plant has not been added
         {% endif %}
         <a href="/plant-list/{{ plant.slug }}/add-image">Add a new image</a><br/>
         <a href="{% url 'plant_list' %}">See the A-Z of plants</a><br/>
