@@ -10,7 +10,7 @@
     {% if plants %}
         {% for plant in plants %}
             <a href="/plant-list/{{ plant.slug }}">{{ plant.name }}</a>
-            <img src="{% static plant.picture %}" width="100">
+            <img src="{% static plant.picture %}" width="100" class="img-circle">
             </br>
         {% endfor %}
     {% endif %}
