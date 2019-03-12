@@ -85,9 +85,9 @@ class WishlistPlantForm(forms.ModelForm):
         exclude = ('user',)
 
 class CommentForm(forms.ModelForm):
-    plant = forms.HiddenInput()
+    plant_slug = forms.HiddenInput()
     body = forms.Textarea()
     class Meta:
         model = Comment
-        fields = ('plant', 'body')
+        fields = ('plant_slug', 'body')
         exclude = ('approved_comment',)

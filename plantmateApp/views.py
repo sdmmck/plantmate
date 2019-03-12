@@ -99,12 +99,22 @@ def add_comment(request):
     form = CommentForm(request.POST)
     if request.method == 'POST':
         print ("Second if $%^&%$&%$^&^%*&^&*^%&*&%^*^&*((*)&*)&$%£$@£!@$!@£")
+        # plant = request.POST.get('plant')
+        # print (plant)
+        # form.fields['plant'].choices = Plant.objects.filter(slug=plant)
+        # print(form.fields['plant'].choices)
         if form.is_valid():
+
             print ("Third if $%^&%$&%$^&^%*&^&*^%&*&%^*^&*((*)&*)&$%£$@£!@$!@£")
             comment = form.save(commit=False)
+            print(comment.plant_slug)
+            plant = Plant.objects.filter(slug=comment.plant_slug)
+            print(plant)
             comment.save()
-            return show_plant(request, plant_name_slug)
+            return show_plant(request, plant_slug)
         else:
+            print("IT FAILED!")
+            print(form.errors)
             form = CommentForm()
     template = 'plantmate/add-comment.html'
     context_dict = {'form': form, 'user': user}
