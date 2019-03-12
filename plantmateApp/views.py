@@ -245,11 +245,18 @@ def contact(request):
 
 
 def myaccount(request):
-    wishlistplants = UserWishlistPlants.objects.filter(user=request.user)
-    saved_plants = UserSavedPlants.objects.filter(user=request.user)
+
+    saved_plants = set()
+    wishlist_plants = set()
     username = User.objects.get(username=request.user)
 
-    context_dict = {'username': username, 'wishlist': wishlistplants, 'saved_plants': saved_plants}
+    for wish in UserWishlistPlants.objects.filter(user=request.user):
+        wishlist_plants.add(Plant.objects.get(slug=wish.wishlist_plant))
+
+    for saved in UserSavedPlants.objects.filter(user=request.user):
+        saved_plants.add(Plant.objects.get(slug=saved.saved_plant))
+
+    context_dict = {'username': username, 'wishlist_plants': wishlist_plants, 'saved_plants': saved_plants}
     return render(request, 'plantmate/myaccount.html', context=context_dict)
 
 
@@ -262,14 +269,21 @@ def plant_list(request):
 
 def wishlist(request):
     wishlistplants = UserWishlistPlants.objects.filter(user=request.user)
-    plants = Plant.objects.get()
+    plants = set()
+    for wish in wishlistplants:
+        plants.add(Plant.objects.get(slug=wish.wishlist_plant))
+
     context_dict = {'wishlist': wishlistplants, 'plants': plants}
     return render(request, 'plantmate/wishlist.html', context=context_dict)
 
 
 def my_plants(request):
     saved_plants = UserSavedPlants.objects.filter(user=request.user)
-    context_dict = {'saved_plants': saved_plants}
+    plants = set()
+    for saved in saved_plants:
+        plants.add(Plant.objects.get(slug=saved.saved_plant))
+
+    context_dict = {'saved_plants': saved_plants, 'plants': plants}
     return render(request, 'plantmate/myplants.html', context=context_dict)
 
 
