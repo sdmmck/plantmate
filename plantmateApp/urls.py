@@ -8,7 +8,6 @@ urlpatterns = [
     url(r'^contact/', views.contact, name='contact'),
     url(r'^myaccount/$', views.myaccount, name='myaccount'),
     url(r'^quiz/', views.quiz, name='quiz'),
-    url(r'^recommendations/', views.recommendations, name='recommendations'),
     url(r'^business-list/$', views.businesslist, name='business-list'),
     url(r'^add-business/$', views.add_business, name='add_business'),
     url(r'^plant-list/(?P<plant_name_slug>[\w\-]+)/$', views.show_plant, name='plant'),

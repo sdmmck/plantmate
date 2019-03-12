@@ -223,12 +223,6 @@ def quiz(request):
     context_dict = {}
     return render(request, 'plantmate/quiz.html', context=context_dict)
 
-
-def recommendations(request):
-    context_dict = {}
-    return render(request, 'plantmate/recommendations.html', context=context_dict)
-
-
 def login(request):
     context_dict = {}
     return render(request, 'plantmate/login.html', context=context_dict)
