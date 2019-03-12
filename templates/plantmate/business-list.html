@@ -1,8 +1,9 @@
 {% extends "plantmate/base.html" %}
 {% load staticfiles %}
-
-{% block title_block %}
-    Business List
+{% block head_block %}
+    {% block title_block %}
+        Business List
+    {% endblock %}
 {% endblock %}
 
 {% block body_block %}
@@ -17,48 +18,50 @@
         <strong>No businesses currently to show.</strong>
     {% endif %}
     <div>
-    {% if user.is_authenticated %}
-        <a href="{% url 'add_business' %}">add a new business</a><br/>
-    {% endif %}
+        {% if user.is_authenticated %}
+            <a href="{% url 'add_business' %}">add a new business</a><br/>
+        {% endif %}
     </div>
     <div id="googleMap" style="width:75%;height:400px;"></div>
     <script>
-            function initMap() {
+        function initMap() {
 
-                // Map location set to Glasgow
-                var mapProp= {
-                    center: {lat: 55.864237, lng: -4.251806},
-                    zoom:11,
-                };
+            // Map location set to Glasgow
+            var mapProp = {
+                center: {lat: 55.864237, lng: -4.251806},
+                zoom: 11,
+            };
 
-                // Create new map
-                var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+            // Create new map
+            var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
-                // add markers for all businesses
-                {%  for business in businesses %}
-                    addMarker({
-                        lat:Number("{{ business.lat }}"),
-                        lng:Number("{{ business.long }}")}, "{{business.name }}"
-                        );
-                {%  endfor %}
+            // add markers for all businesses
+            {%  for business in businesses %}
+                addMarker({
+                        lat: Number("{{ business.lat }}"),
+                        lng: Number("{{ business.long }}")
+                    }, "{{business.name }}"
+                );
+            {%  endfor %}
 
-                // function for adding markers
-                function addMarker(coords, name){
-                    var marker = new google.maps.Marker({
-                        position: coords,
-                        map: map,
-                    });
+            // function for adding markers
+            function addMarker(coords, name) {
+                var marker = new google.maps.Marker({
+                    position: coords,
+                    map: map,
+                });
 
-                    var infoWindow = new google.maps.InfoWindow({
-                        content:name
-                    });
+                var infoWindow = new google.maps.InfoWindow({
+                    content: name
+                });
 
-                    marker.addListener('click', function(){
-                        infoWindow.open(map, marker);
-                    });
-                }
+                marker.addListener('click', function () {
+                    infoWindow.open(map, marker);
+                });
             }
-        </script>
+        }
+    </script>
 
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1_mwAa6UhCMVkPr4XIk-XFSXlD0Fwkmw&callback=initMap"></script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1_mwAa6UhCMVkPr4XIk-XFSXlD0Fwkmw&callback=initMap"></script>
 {% endblock %}

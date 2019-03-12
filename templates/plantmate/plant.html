@@ -4,9 +4,10 @@
 
 <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
 
-
-{% block title_block %}
-    {{ slug }}
+{% block head_block %}
+    {% block title_block %}
+        {{ slug }}
+    {% endblock %}
 {% endblock %}
 
 {% block body_block %}
@@ -96,6 +97,7 @@
 
                 <script>
                     console.log(plantIsInWishlist + " greetings");
+
                     if (plantIsInWishlist) {
                         document.getElementById("wishlist_button").style.display = "none";
                     } else {
@@ -121,7 +123,6 @@
                     {% endifequal %}
                 {% endfor %}
 
-
                 {% for saved in saved_plants %}
                     {% ifequal saved.saved_plant plant.slug %}
                         <form method="post" action="{% url 'remove_saved_plant' %}">
@@ -138,16 +139,17 @@
                     <form method="POST" action="{% url 'add_comment' %}">
                         {% csrf_token %}
 
-{#                        <div class="form-group row">#}
-{#                            <div class="col-md-10">#}
-                                <input type="hidden" id="plant_slug" name="plant_slug" value="{{ plant.slug }}">
-                                <input type="text" name="body" id="body" class="form-control round-0" placeholder="Leave some advice on caring for this plant...">
+                        {#                        <div class="form-group row">#}
+                        {#                            <div class="col-md-10">#}
+                        <input type="hidden" id="plant_slug" name="plant_slug" value="{{ plant.slug }}">
+                        <input type="text" name="body" id="body" class="form-control round-0"
+                               placeholder="Leave some advice on caring for this plant...">
 
-{#                            </div>#}
-{#                            <div class="col-md-2">#}
-                                <button type="submit" name="add_comment" class="btn btn-success">Add comment</button>
-{#                            </div>#}
-{#                        </div>#}
+                        {#                            </div>#}
+                        {#                            <div class="col-md-2">#}
+                        <button type="submit" name="add_comment" class="btn btn-success">Add comment</button>
+                        {#                            </div>#}
+                        {#                        </div>#}
                     </form>
                 </div>
                 {% for comment in comments %}
@@ -172,7 +174,7 @@
         {% else %}
         Plant has not been added
         {% endif %}
-        <a href="/plant-list/{{ plant.slug }}/add-image">Add a new image</a><br/>
-        <a href="{% url 'plant_list' %}">See the A-Z of plants</a><br/>
+    <a href="/plant-list/{{ plant.slug }}/add-image">Add a new image</a><br/>
+    <a href="{% url 'plant_list' %}">See the A-Z of plants</a><br/>
 
 {% endblock %}

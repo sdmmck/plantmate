@@ -1,13 +1,14 @@
 {% extends "plantmate/base.html" %}
 {% load staticfiles %}
+{% block head_block %}
+    {% block title_block %}
+        contact us at plantmate
+    {% endblock %}
 
-{% block title_block %}
-    contact us at plantmate
-{% endblock %}
-
-{% block body_block %}
+    {% block body_block %}
         <h1>contact us</h1>
         plantmate@gmail.com<br>
         0141 557 1110<br><br>
-        <img src="{% static "images/office1.jpg" %}" alt ="plantmate contact" />
+        <img src="{% static "images/office1.jpg" %}" alt="plantmate contact"/>
+    {% endblock %}
 {% endblock %}

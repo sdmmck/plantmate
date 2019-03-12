@@ -14,7 +14,6 @@ def home(request):
 
 def businesslist(request):
     context_dict = {}
-
     try:
         business_list = Business.objects.order_by('-name')
         context_dict = {'businesses': business_list}
@@ -86,6 +85,11 @@ def wishlist_plant(request):
 
     return render(request, 'plantmate/myaccount.html', {'wishlist_plant_form': wishlist_plant_form})
 
+
+def your_plantmate(request):
+    return render(request, 'plantmate/your-plantmate.html')
+
+
 @login_required
 def add_comment(request):
     context_dict = {} 
@@ -114,7 +118,7 @@ def add_comment(request):
                 print(form.errors)
                 form = CommentForm()
     template = 'plantmate/add-comment.html'
-    context_dict = {'form': form, 'user': user}
+    context_dict = {'form': form}
     return render(request, template, context=context_dict)
 
 
@@ -147,7 +151,6 @@ def add_image(request, plant_name_slug):
 def show_plant(request, plant_name_slug):
 
     image = set()
-    comments = set()
 
     try:
         plant = Plant.objects.get(slug=plant_name_slug)
@@ -160,16 +163,16 @@ def show_plant(request, plant_name_slug):
         if request.user.is_authenticated():
             wishlistplants = UserWishlistPlants.objects.filter(user=request.user)
             saved_plants = UserSavedPlants.objects.filter(user=request.user)
+            context_dict = {'plant': plant, 'image': image, 'wishlistplants': wishlistplants,
+                            'saved_plants': saved_plants, 'comments': comments}
 
         else:
-            context_dict = {'plant': plant, 'image': image}
+            context_dict = {'plant': plant, 'image': image, 'comments': comments}
 
     except Plant.DoesNotExist:
         context_dict['plant'] = None
     except PlantImage.DoesNotExist:
         context_dict['image'] = None
-
-    context_dict = {'plant': plant, 'image': image,'comments': comments}
 
     return render(request, 'plantmate/plant.html', context_dict)
 
@@ -278,6 +281,7 @@ def myaccount(request):
     saved_plants = set()
     wishlist_plants = set()
     username = User.objects.get(username=request.user)
+    # user_profile = UserProfile.objects.get(user=username)
 
     for wish in UserWishlistPlants.objects.filter(user=request.user):
         wishlist_plants.add(Plant.objects.get(slug=wish.wishlist_plant))
@@ -285,6 +289,7 @@ def myaccount(request):
     for saved in UserSavedPlants.objects.filter(user=request.user):
         saved_plants.add(Plant.objects.get(slug=saved.saved_plant))
 
+    # 'user_profile': user_profile
     context_dict = {'username': username, 'wishlist_plants': wishlist_plants, 'saved_plants': saved_plants}
     return render(request, 'plantmate/myaccount.html', context=context_dict)
 

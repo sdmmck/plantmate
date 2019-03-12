@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 {% load staticfiles %}
+ <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="{% static "images/testicon.ico" %}" alt="test icon">
+ <link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="{% static "images/testicon.ico" %}" alt="test icon">
-    <title>
-        plantmate
+        <!-- Custom styles for this template -->
+        <link href="dashboard.cs http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
+{% block head_block %}
+    <head>
+        <title>plantmate </title>
         {% block title_block %}
             welcome to plantmate
         {% endblock %}
-    </title>
-    <!-- Bootstrap core CSS -->
-    <link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
+      </head>
+{% endblock %}
 
 <body>
 <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
@@ -54,7 +55,7 @@
                         my account
                     </a>
                 </li>
-            
+
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'my_plants' %}">
                         my plants

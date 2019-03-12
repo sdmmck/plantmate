@@ -7,7 +7,7 @@ urlpatterns = [
     url(r'^sign-up/', views.signup, name='signup'),
     url(r'^contact/', views.contact, name='contact'),
     url(r'^myaccount/$', views.myaccount, name='myaccount'),
-    url(r'^quiz/', views.quiz, name='quiz'),
+    url(r'^quiz/$', views.quiz, name='quiz'),
     url(r'^business-list/$', views.businesslist, name='business-list'),
     url(r'^add-business/$', views.add_business, name='add_business'),
     url(r'^plant-list/(?P<plant_name_slug>[\w\-]+)/$', views.show_plant, name='plant'),
@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^add-comment/$', views.add_comment, name='add_comment'),
     url(r'^remove-wishlist-plant/$', views.remove_wishlist_plant, name='remove_wishlist_plant'),
     url(r'^remove-saved-plant/$', views.remove_saved_plant, name='remove_saved_plant'),
+    url(r'^quiz/your-plantmate/', views.your_plantmate, name='your_plantmate'),
 
 
 ]
