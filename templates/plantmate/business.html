@@ -8,10 +8,16 @@
 {% block body_block %}
     {% if business %}
         <h1>{{ business.name }}</h1>
-        <p>Address</p>
-        <p>contact</p>
-        <p>opening hours</p>
-        <p>social media links</p>
+        <p>{{ business.address }}</p>
+        <p>{{ business.phone }}
+        <br>{{ business.email }}</p>
+        <p><a href="{{ business.url }}">Visit website</a></p>
+        <p><strong>Opening hours:</strong>
+        <br>
+            {{ business.hours }}<br/>
+        {{ business.weekend_hours }}
+        </p>
+
         <div id="googleMap" style="width:75%;height:400px;"></div>
         <br>
         <p>comments?</p>
