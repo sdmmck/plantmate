@@ -122,12 +122,6 @@
                 {% endfor %}
 
 
-                <form method="post" action="{% url 'wishlist_plant' %}">
-                {% csrf_token %}
-                <input type="hidden" id="wishlist_plant" name="wishlist_plant" value={{ plant.slug }}>
-                <button type="submit" name="wishlist">add plant to wishlist</button><br><br>
-                </form>
-
                 {% for saved in saved_plants %}
                     {% ifequal saved.saved_plant plant.slug %}
                         <form method="post" action="{% url 'remove_saved_plant' %}">
