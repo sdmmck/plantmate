@@ -35,8 +35,43 @@
          <form method="post" action="{% url 'wishlist_plant' %}">
   {% csrf_token %}
               <input type="hidden" id="wishlist_plant" name="wishlist_plant" value={{ plant.slug }}>
-  <button type="submit" name="wishlist">add plant to wishlist</button>
+  <button type="submit" name="wishlist">add plant to wishlist</button><br><br>
 </form>
+
+<div>
+    <form method="POST" role ="form" action="{% url 'add_comment' %}">
+        {% csrf_token %}
+       
+        <div class="form-group row">
+            <div class="col-md-10">
+                <input type="hidden" id="plant" name="plant" value="{{plant.slug}}">
+                <input type="text" name="body" id="body" class="form-control round-0" type="text" rows="3"
+                          placeholder="Leave some advice on caring for this plant..."></input>
+                
+            </div>
+            <div class="col-md-2">
+                <button type="submit" name="add_comment" class="btn btn-success">Add comment</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% for comment in plant.comments.all %}
+<div class="card border-info mb-3">
+    <div class="card-header">
+        {{ comment.user }} commented on {{ comment.created_date }}
+    </div>
+    <div class="card-body text-primary">
+        <p class="card-text">
+            {{ comment.body }}
+        </p>
+    </div>
+</div>
+<hr>
+{% empty %}
+<p>no comments yet. be the first!</p>
+<hr>
+{% endfor %}
+        
 
     {% else %}
         This plant has not been added yet!

@@ -1,5 +1,5 @@
 
-from plantmateApp.models import Business, Plant, PlantImage, UserSavedPlants, UserWishlistPlants
+from plantmateApp.models import Business, Plant, PlantImage, UserSavedPlants, UserWishlistPlants, Comment
 from django import forms
 from django.contrib.auth.models import User
 from plantmateApp.models import UserProfile
@@ -83,3 +83,11 @@ class WishlistPlantForm(forms.ModelForm):
         model = UserWishlistPlants
         fields = ('wishlist_plant',)
         exclude = ('user',)
+
+class CommentForm(forms.ModelForm):
+    plant = forms.HiddenInput()
+    body = forms.Textarea()
+    class Meta:
+        model = Comment
+        fields = ('plant', 'body')
+        exclude = ('approved_comment',)
