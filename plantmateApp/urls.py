@@ -24,6 +24,8 @@ urlpatterns = [
     url(r'^save-plant/$', views.save_plant, name='save_plant'),
     url(r'^wishlist-plant/$', views.wishlist_plant, name='wishlist_plant'),
     url(r'^add-comment/$', views.add_comment, name='add_comment'),
+    url(r'^remove-wishlist-plant/$', views.remove_wishlist_plant, name='remove_wishlist_plant'),
+    url(r'^remove-saved-plant/$', views.remove_saved_plant, name='remove_saved_plant'),
 
 
 ]

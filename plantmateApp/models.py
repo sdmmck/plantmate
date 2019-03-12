@@ -8,8 +8,9 @@ from django.utils import timezone
 
 class Business (models.Model):
     name = models.CharField(max_length=128, unique=True)
-    address = models.CharField(max_length=128, unique=False)
-    postcode = models.CharField(max_length=8, unique=False)
+    address = models.CharField(max_length=128, unique=True)
+    lat = models.CharField(max_length=20, unique=False)
+    long = models.CharField(max_length=20, unique=False)
     url = models.URLField()
     slug = models.SlugField()
 
@@ -40,6 +41,9 @@ class Plant (models.Model):
     pet = models.CharField(max_length=128, unique=False)
     slug = models.SlugField()
     url = models.URLField()
+    picture = models.ImageField(upload_to='main_plant_images', blank=True, null=True)
+    #DESCRIPTION UNIQUE NEEDS TO BE CHANGED TO TRUE AND BLANK TO FALSE WHEN REAL DESCRIPTIONS ADDED
+    description = models.TextField(unique=False, blank=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -74,7 +78,10 @@ class UserProfile(models.Model):
 
 
 class UserSavedPlants(models.Model):
-    user = models.ForeignKey(UserProfile)
+    class Meta:
+        unique_together = ('saved_plant', 'user')
+
+    user = models.ForeignKey(User)
     saved_plant = models.CharField(max_length=128, unique=False, default=" ")
 
     def save(self, *args, **kwargs):

@@ -7,7 +7,6 @@ from plantmateApp.forms import BusinessForm, UserForm, UserProfileForm, PlantFor
 from django.template.defaultfilters import slugify
 
 
-
 def home(request):
     context_dict = {}
     return render(request, 'plantmate/home.html', context=context_dict)
@@ -27,7 +26,6 @@ def businesslist(request):
 
 
 def show_business(request, business_name_slug):
-
     context_dict = {}
 
     try:
@@ -39,9 +37,9 @@ def show_business(request, business_name_slug):
 
     return render(request, 'plantmate/business.html', context_dict)
 
+
 @login_required
 def add_business(request):
-
     form = BusinessForm()
 
     if request.method == 'POST':
@@ -55,36 +53,36 @@ def add_business(request):
             print(form.errors)
     return render(request, 'plantmate/add-business.html', {'form': form})
 
+
 @login_required
 def save_plant(request):
-
     save_plant_form = SavePlantForm(request.POST)
-    print("no save ----------------------------------------------------------------")
-
-    if save_plant_form.is_valid():
-        save_plant_form.save()
-        print("hiya ----------------------------------------------------------------")
+    try:
+        if save_plant_form.is_valid():
+            saved_plants = save_plant_form.save(commit=False)
+            saved_plants.user = request.user
+            saved_plants.save()
+            return my_plants(request)
+        else:
+            print(save_plant_form.errors)
+    except IntegrityError:
         return myaccount(request)
-    else:
-        print(save_plant_form.errors)
-        return render(request, 'plantmate/myaccount.html', {'save_plant_form': save_plant_form})
+    return render(request, 'plantmate/myaccount.html', {'save_plant_form': save_plant_form})
 
 
 @login_required
 def wishlist_plant(request):
-
     wishlist_plant_form = WishlistPlantForm(request.POST)
-
     try:
         if wishlist_plant_form.is_valid():
-            wishlist = wishlist_plant_form.save(commit=False)
-            wishlist.user = request.user
-            wishlist.save()
-            return myaccount(request)
+            wishlisted = wishlist_plant_form.save(commit=False)
+            wishlisted.user = request.user
+            wishlisted.save()
+            return wishlist(request)
         else:
             print(wishlist_plant_form.errors)
     except IntegrityError:
-        return myaccount(request)
+        return wishlist(request)
 
     return render(request, 'plantmate/myaccount.html', {'wishlist_plant_form': wishlist_plant_form})
 
@@ -123,7 +121,6 @@ def add_comment(request):
 
 @login_required
 def add_image(request, plant_name_slug):
-
     context_dict = {}
 
     plant = Plant.objects.get(slug=plant_name_slug)
@@ -149,7 +146,6 @@ def add_image(request, plant_name_slug):
 
 def show_plant(request, plant_name_slug):
 
-    context_dict = {}
     image = set()
 
     try:
@@ -158,8 +154,13 @@ def show_plant(request, plant_name_slug):
         for i in PlantImage.objects.all():
             image.add(i)
 
-        context_dict['plant'] = plant
-        context_dict['image'] = image
+        if request.user.is_authenticated():
+            wishlistplants = UserWishlistPlants.objects.filter(user=request.user)
+            saved_plants = UserSavedPlants.objects.filter(user=request.user)
+            context_dict = {'plant': plant, 'image': image, 'wishlistplants': wishlistplants,
+                            'saved_plants': saved_plants}
+        else:
+            context_dict = {'plant': plant, 'image': image}
 
     except Plant.DoesNotExist:
         context_dict['plant'] = None
@@ -168,23 +169,87 @@ def show_plant(request, plant_name_slug):
 
     return render(request, 'plantmate/plant.html', context_dict)
 
+
 @login_required
 def add_plant(request):
 
-    form = PlantForm()
+    form = PlantForm(request.POST)
 
     if request.method == 'POST':
         form = PlantForm(request.POST)
 
         if form.is_valid():
-            plant = form.save(commit=True)
+            plant = form.save(commit=False)
+            if 'picture' in request.FILES:
+                plant.picture = request.FILES['picture']
             plant.save()
             return show_plant(request, slugify(form.__getitem__('name').value()))
 
         else:
             print(form.errors)
     return render(request, 'plantmate/add-plant.html', {'form': form})
+  
 
+@login_required
+def remove_wishlist_plant(request):
+
+    if request.method == 'POST':
+        form = WishlistPlantForm(request.POST)
+
+        if form.is_valid():
+            wishlisted_plant = request.POST.get('wishlist_plant')
+            plant = UserWishlistPlants.objects.filter(wishlist_plant=wishlisted_plant)
+            for p in plant:
+                p.delete()
+            return show_plant(request, wishlisted_plant)
+
+        else:
+            print(form.errors)
+    return render(request, 'plantmate/wishlist.html', {'form': form})
+
+
+@login_required
+def remove_saved_plant(request):
+
+    if request.method == 'POST':
+        form = SavePlantForm(request.POST)
+        if form.is_valid():
+            saved_plant=request.POST.get('saved_plant')
+            plant = UserSavedPlants.objects.filter(saved_plant=saved_plant)
+            for p in plant:
+                p.delete()
+            return show_plant(request, saved_plant)
+
+        else:
+            print(form.errors)
+    return render(request, 'plantmate/myplants.html', {'form': form})
+
+
+@login_required
+def add_image(request, plant_name_slug):
+    context_dict = {}
+
+    plant = Plant.objects.get(slug=plant_name_slug)
+    context_dict['plant'] = plant
+
+    if request.method == 'POST':
+        form = ImageForm(request.POST)
+
+        if form.is_valid():
+            image = form.save(commit=True)
+            if 'picture' in request.FILES:
+                image.picture = request.FILES['picture']
+            context_dict['form'] = form
+            image.save()
+
+            return show_plant(request, slugify(form.__getitem__('plant_name').value()))
+
+        else:
+            print(form.errors)
+
+    return render(request, 'plantmate/add-image.html', context=context_dict)
+
+  
 def quiz(request):
     context_dict = {}
     return render(request, 'plantmate/quiz.html', context=context_dict)
@@ -212,16 +277,17 @@ def contact(request):
 
 def myaccount(request):
 
-    wishlistplants = set()
-
-    for i in UserWishlistPlants.objects.all():
-        if i.user == request.user:
-            wishlistplants.add(i.wishlist_plant)
-
+    saved_plants = set()
+    wishlist_plants = set()
     username = User.objects.get(username=request.user)
 
-    context_dict = {'username': username, 'wishlist': wishlistplants}
+    for wish in UserWishlistPlants.objects.filter(user=request.user):
+        wishlist_plants.add(Plant.objects.get(slug=wish.wishlist_plant))
 
+    for saved in UserSavedPlants.objects.filter(user=request.user):
+        saved_plants.add(Plant.objects.get(slug=saved.saved_plant))
+
+    context_dict = {'username': username, 'wishlist_plants': wishlist_plants, 'saved_plants': saved_plants}
     return render(request, 'plantmate/myaccount.html', context=context_dict)
 
 
@@ -233,17 +299,26 @@ def plant_list(request):
 
 
 def wishlist(request):
-    context_dict = {'boldmessage': "all of the plants I wish I had"}
+    wishlistplants = UserWishlistPlants.objects.filter(user=request.user)
+    plants = set()
+    for wish in wishlistplants:
+        plants.add(Plant.objects.get(slug=wish.wishlist_plant))
+
+    context_dict = {'wishlist': wishlistplants, 'plants': plants}
     return render(request, 'plantmate/wishlist.html', context=context_dict)
 
 
 def my_plants(request):
-    context_dict = {'boldmessage': "all of the plants I already have"}
+    saved_plants = UserSavedPlants.objects.filter(user=request.user)
+    plants = set()
+    for saved in saved_plants:
+        plants.add(Plant.objects.get(slug=saved.saved_plant))
+
+    context_dict = {'saved_plants': saved_plants, 'plants': plants}
     return render(request, 'plantmate/myplants.html', context=context_dict)
 
 
 def register(request):
-
     registered = False
 
     if request.method == 'POST':
@@ -269,7 +344,3 @@ def register(request):
                   {'user_form': user_form,
                    'profile_form': profile_form,
                    'registered': registered})
-
-
-
-

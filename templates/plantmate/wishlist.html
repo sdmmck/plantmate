@@ -6,8 +6,15 @@
 {% endblock %}
 
 {% block body_block %}
-    <h1>this is a page for</h1>
-    <a href="/plant/">Plant page</a><br />
-    <a href="/myaccount/my-plants">My Plants</a><br />
-    <a href="{% url 'home' %}">plantmate home</a><br />
+    <h1>wishlist</h1>
+    {% if plants %}
+        {% for plant in plants %}
+            <a href="/plant-list/{{ plant.slug }}">{{ plant.name }}</a>
+            <img src="{% static plant.picture %}" width="100">
+            </br>
+        {% endfor %}
+    {% endif %}
+    <a href="/plant/">Plant page</a><br/>
+    <a href="/myaccount/my-plants">My Plants</a><br/>
+    <a href="{% url 'home' %}">plantmate home</a><br/>
 {% endblock %}
