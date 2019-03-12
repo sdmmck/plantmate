@@ -1,10 +1,11 @@
 {% extends "plantmate/base.html" %}
 {% load staticfiles %}
 
-{% block title_block %}
-    wishlist
+{% block head_block %}
+    {% block title_block %}
+        wishlist
+    {% endblock %}
 {% endblock %}
-
 {% block body_block %}
     <h1>wishlist</h1>
     {% if plants %}

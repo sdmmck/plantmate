@@ -57,7 +57,7 @@ class Plant (models.Model):
 
 
 class PlantImage (models.Model):
-    picture = models.ImageField(upload_to='plant_images', blank=True, null=True)
+    picture = models.ImageField(upload_to='media/user_profile_images', blank=True, null=True)
     plant_name = models.CharField(max_length=128, unique=False, default=" ")
 
     def save(self, *args, **kwargs):

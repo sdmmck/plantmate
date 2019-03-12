@@ -1,11 +1,11 @@
 {% extends "plantmate/base.html" %}
 {% load staticfiles %}
 
-
-{% block title_block %}
-    plant a-z
+{% block head_block %}
+    {% block title_block %}
+        plant a-z
+    {% endblock %}
 {% endblock %}
-
 {% block body_block %}
     <h1>Plants</h1>
 
@@ -13,7 +13,7 @@
         <ul>
             {% for plant in plants %}
                 <li><a href="{{ plant.slug }}">{{ plant.name }}</a>
-                <img src="{% static plant.picture %}" width="100" ></li>
+                    <img src="{% static plant.picture %}" width="100"></li>
             {% endfor %}
         </ul>
     {% endif %}

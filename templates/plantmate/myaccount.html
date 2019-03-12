@@ -1,15 +1,18 @@
 {% extends "plantmate/base.html" %}
 {% load staticfiles %}
-
-{% block title_block %}
-    my account
+{% block head_block %}
+    {% block title_block %}
+        my account
+    {% endblock %}
 {% endblock %}
 
 {% block body_block %}
     <h1>Hi {{ username }}!</h1><br>
-    <img src="{% static "images/profile.jpg" %}" alt ="profile picture" /><br>
+    {% if user_profile.picture %}
+    <img src="{% static user_profile.picture %}" alt="profile picture"/><br>
+    {% endif %}
     <h2>my plants</h2>
- {% if saved_plants %}
+    {% if saved_plants %}
         {% for saved in saved_plants %}
             <a href="/plant-list/{{ saved.slug }}">{{ saved.name }}</a>
             <img src="{% static saved.picture %}" width="100">
@@ -25,7 +28,7 @@
         {% endfor %}
     {% endif %}
 
-{#    <a href="{% url 'wishlist' %}">view all</a><br /><br><br><br>#}
+    {#    <a href="{% url 'wishlist' %}">view all</a><br /><br><br><br>#}
     {#<a href="{% url 'home' %}">Home</a><br />#}
     <h3>nearest plant shop</h3>
     name<br>
