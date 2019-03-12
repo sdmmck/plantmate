@@ -2,9 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from plantmateApp.models import Business, Plant, PlantImage, UserWishlistPlants, UserSavedPlants, UserProfile, User
-from plantmateApp.forms import BusinessForm, UserForm, UserProfileForm, PlantForm, ImageForm, SavePlantForm, \
-    WishlistPlantForm
+from plantmateApp.models import Business, Plant, PlantImage, UserWishlistPlants, UserSavedPlants, UserProfile, User, Comment
+from plantmateApp.forms import BusinessForm, UserForm, UserProfileForm, PlantForm, ImageForm, SavePlantForm, WishlistPlantForm, CommentForm
 from django.template.defaultfilters import slugify
 
 
@@ -86,6 +85,38 @@ def wishlist_plant(request):
         return wishlist(request)
 
     return render(request, 'plantmate/myaccount.html', {'wishlist_plant_form': wishlist_plant_form})
+
+@login_required
+def add_comment(request):
+    context_dict = {} 
+    # plant = Plant.objects.get(slug=plant_name_slug)
+    if request.user.is_authenticated():
+        print ("First if $%^&%$&%$^&^%*&^&*^%&*&%^*^&*((*)&*)&$%£$@£!@$!@£")
+        user = request.user
+
+    form = CommentForm(request.POST)
+    if request.method == 'POST':
+        print ("Second if $%^&%$&%$^&^%*&^&*^%&*&%^*^&*((*)&*)&$%£$@£!@$!@£")
+        # plant = request.POST.get('plant')
+        # print (plant)
+        # form.fields['plant'].choices = Plant.objects.filter(slug=plant)
+        # print(form.fields['plant'].choices)
+        if form.is_valid():
+
+            print ("Third if $%^&%$&%$^&^%*&^&*^%&*&%^*^&*((*)&*)&$%£$@£!@$!@£")
+            comment = form.save(commit=False)
+            print(comment.plant_slug)
+            plant = Plant.objects.filter(slug=comment.plant_slug)
+            print(plant)
+            comment.save()
+            return show_plant(request, plant_slug)
+        else:
+            print("IT FAILED!")
+            print(form.errors)
+            form = CommentForm()
+    template = 'plantmate/add-comment.html'
+    context_dict = {'form': form, 'user': user}
+    return render(request, template, context=context_dict)
 
 
 @login_required
@@ -223,12 +254,6 @@ def quiz(request):
     context_dict = {}
     return render(request, 'plantmate/quiz.html', context=context_dict)
 
-
-def recommendations(request):
-    context_dict = {}
-    return render(request, 'plantmate/recommendations.html', context=context_dict)
-
-
 def login(request):
     context_dict = {}
     return render(request, 'plantmate/login.html', context=context_dict)
@@ -245,11 +270,18 @@ def contact(request):
 
 
 def myaccount(request):
-    wishlistplants = UserWishlistPlants.objects.filter(user=request.user)
-    saved_plants = UserSavedPlants.objects.filter(user=request.user)
+
+    saved_plants = set()
+    wishlist_plants = set()
     username = User.objects.get(username=request.user)
 
-    context_dict = {'username': username, 'wishlist': wishlistplants, 'saved_plants': saved_plants}
+    for wish in UserWishlistPlants.objects.filter(user=request.user):
+        wishlist_plants.add(Plant.objects.get(slug=wish.wishlist_plant))
+
+    for saved in UserSavedPlants.objects.filter(user=request.user):
+        saved_plants.add(Plant.objects.get(slug=saved.saved_plant))
+
+    context_dict = {'username': username, 'wishlist_plants': wishlist_plants, 'saved_plants': saved_plants}
     return render(request, 'plantmate/myaccount.html', context=context_dict)
 
 
@@ -262,14 +294,21 @@ def plant_list(request):
 
 def wishlist(request):
     wishlistplants = UserWishlistPlants.objects.filter(user=request.user)
-    plants = Plant.objects.get()
+    plants = set()
+    for wish in wishlistplants:
+        plants.add(Plant.objects.get(slug=wish.wishlist_plant))
+
     context_dict = {'wishlist': wishlistplants, 'plants': plants}
     return render(request, 'plantmate/wishlist.html', context=context_dict)
 
 
 def my_plants(request):
     saved_plants = UserSavedPlants.objects.filter(user=request.user)
-    context_dict = {'saved_plants': saved_plants}
+    plants = set()
+    for saved in saved_plants:
+        plants.add(Plant.objects.get(slug=saved.saved_plant))
+
+    context_dict = {'saved_plants': saved_plants, 'plants': plants}
     return render(request, 'plantmate/myplants.html', context=context_dict)
 
 

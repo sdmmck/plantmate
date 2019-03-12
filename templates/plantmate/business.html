@@ -9,21 +9,14 @@
     {% if business %}
         <h1>{{ business.name }}</h1>
 
-        <div id="googleMap" style="width:75%;height:400px;">
+        <div id="googleMap" style="width:75%;height:400px;"></div>
 
 
         <script>
             function initMap() {
-
-                // Map location
-              //  var lat = "{{ business.lat }}"
-              //  var lng = "{{ business.long }}"
-                var lat = 55.87
-                var lng = -4.27
-                var shop = {lat: lat, lng: lng};
                 var mapProp= {
-                    center: shop,
-                    zoom:10,
+                    center: {lat: 55.864237, lng: -4.251806},
+                    zoom:11,
                 };
 
                 // Create new map
@@ -36,7 +29,7 @@
                     });
 
                 var infoWindow = new google.maps.InfoWindow({
-                    content: "<h3>{{ business.name }}</h3>"
+                    content: "{{ business.name }}"
                 });
 
                 marker.addListener('click', function(){

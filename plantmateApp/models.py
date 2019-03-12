@@ -3,10 +3,12 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import timezone
 
 
 class Business (models.Model):
     name = models.CharField(max_length=128, unique=True)
+    address = models.CharField(max_length=128, unique=True)
     lat = models.CharField(max_length=20, unique=False)
     long = models.CharField(max_length=20, unique=False)
     url = models.URLField()
@@ -40,6 +42,8 @@ class Plant (models.Model):
     slug = models.SlugField()
     url = models.URLField()
     picture = models.ImageField(upload_to='main_plant_images', blank=True, null=True)
+    #DESCRIPTION UNIQUE NEEDS TO BE CHANGED TO TRUE AND BLANK TO FALSE WHEN REAL DESCRIPTIONS ADDED
+    description = models.TextField(unique=False, blank=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -102,15 +106,19 @@ class UserWishlistPlants(models.Model):
 
 
 class Comment(models.Model):
-    plant = models.ForeignKey(Plant)
     user = models.ForeignKey(UserProfile)
-    text = models.TextField(max_length=300)
-    created_date = models.DateTimeField(auto_now_add=True)
-    approved_comment = models.BooleanField(default=False)
+    plant = models.ForeignKey(Plant)
+    plant_slug = models.CharField(max_length=128)
+    body = models.TextField(unique=False, default=" ")
+    created_date = models.DateTimeField(default=timezone.now)
+    approved_comment = models.BooleanField(default=True)
 
     def approve(self):
         self.approved_comment = True
         self.save()
 
+    def save(self, *args, **kwargs):
+        super(Comment, self).save(*args, **kwargs)
+
     def __str__(self):
-        return self.text
+        return self.body
