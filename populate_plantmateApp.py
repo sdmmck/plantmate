@@ -1,7 +1,9 @@
 import os
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE',
                       'plantmate.settings')
 import django
+
 django.setup()
 from plantmateApp.models import Business, Plant
 
@@ -17,7 +19,12 @@ def populate():
          "url": "https://www.instagram.com/apercuglasgow/?hl=en",
          "address": "617 Pollokshaws Road, Glasgow",
          "lat": "55.837192",
-         "long": "-4.269045"}
+         "long": "-4.269045"},
+        {"title": "Roots, Fruits & Flowers",
+         "url": "https://www.rootsfruitsflowershop.com",
+         "address": "451 Great Western Road, Glasgow",
+         "lat": "55.875217",
+         "long": "-4.281234"}
     ]
     plants = [
         {"name": "Aloe Vera",
