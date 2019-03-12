@@ -13,16 +13,28 @@ def populate():
         {"title": "blooms",
          "url": "http://bloomsglasgow.co.uk/",
          "address": "182 Dumbarton Rd, Glasgow",
+         "phone": "+44 (0)141 334 8552",
+         "email": "INFO@BLOOMSGLASGOW.CO.UK",
+         "hours": "MON - FRIDAY 9:00 - 5:30",
+         "weekend_hours": "SAT 9:00 - 5:00",
          "lat": "55.870668",
          "long": "-4.300317"},
         {"title": "Apercu",
          "url": "https://www.instagram.com/apercuglasgow/?hl=en",
          "address": "617 Pollokshaws Road, Glasgow",
+         "phone": "",
+         "email": "",
+         "hours": "Wednesday - Sunday 10.30-5.30",
+         "weekend_hours": "",
          "lat": "55.837192",
          "long": "-4.269045"},
         {"title": "Roots, Fruits & Flowers",
          "url": "https://www.rootsfruitsflowershop.com",
          "address": "451 Great Western Road, Glasgow",
+         "phone": "0141 334 3530",
+         "email": "flowers@rootsfruitsandflowers.com",
+         "hours": "Monday - Saturday : 09.00-5.00",
+         "weekend_hours": "Sunday: Closed",
          "lat": "55.875217",
          "long": "-4.281234"}
     ]
@@ -217,18 +229,22 @@ def populate():
     ]
 
     for business in local_businesses:
-        add_business(business["title"], business["url"], business["address"], business["lat"], business["long"])
+        add_business(business)
 
     for plant in plants:
         add_plant(plant)
 
 
-def add_business(title, url, address, lat, long):
-    p = Business.objects.get_or_create(name=title,
-                                       address=address,
-                                       lat=lat,
-                                       long=long)[0]
-    p.url = url
+def add_business(business):
+    p = Business.objects.get_or_create(name=business["title"],
+                                       address=business["address"],
+                                       lat=business["lat"],
+                                       long=business["long"],
+                                       phone=business["phone"],
+                                       email=business["email"],
+                                       hours=business["hours"],
+                                       weekend_hours=business["weekend_hours"])[0]
+    p.url = business["url"]
     p.save()
     return p
 
