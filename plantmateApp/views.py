@@ -2,9 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from plantmateApp.models import Business, Plant, PlantImage, UserWishlistPlants, UserSavedPlants, UserProfile, User
-from plantmateApp.forms import BusinessForm, UserForm, UserProfileForm, PlantForm, ImageForm, SavePlantForm, \
-    WishlistPlantForm
+from plantmateApp.models import Business, Plant, PlantImage, UserWishlistPlants, UserSavedPlants, UserProfile, User, Comment
+from plantmateApp.forms import BusinessForm, UserForm, UserProfileForm, PlantForm, ImageForm, SavePlantForm, WishlistPlantForm, CommentForm
 from django.template.defaultfilters import slugify
 
 
@@ -86,6 +85,38 @@ def wishlist_plant(request):
         return wishlist(request)
 
     return render(request, 'plantmate/myaccount.html', {'wishlist_plant_form': wishlist_plant_form})
+
+@login_required
+def add_comment(request):
+    context_dict = {} 
+    # plant = Plant.objects.get(slug=plant_name_slug)
+    if request.user.is_authenticated():
+        print ("First if $%^&%$&%$^&^%*&^&*^%&*&%^*^&*((*)&*)&$%£$@£!@$!@£")
+        user = request.user
+
+    form = CommentForm(request.POST)
+    if request.method == 'POST':
+        print ("Second if $%^&%$&%$^&^%*&^&*^%&*&%^*^&*((*)&*)&$%£$@£!@$!@£")
+        # plant = request.POST.get('plant')
+        # print (plant)
+        # form.fields['plant'].choices = Plant.objects.filter(slug=plant)
+        # print(form.fields['plant'].choices)
+        if form.is_valid():
+
+            print ("Third if $%^&%$&%$^&^%*&^&*^%&*&%^*^&*((*)&*)&$%£$@£!@$!@£")
+            comment = form.save(commit=False)
+            print(comment.plant_slug)
+            plant = Plant.objects.filter(slug=comment.plant_slug)
+            print(plant)
+            comment.save()
+            return show_plant(request, plant_slug)
+        else:
+            print("IT FAILED!")
+            print(form.errors)
+            form = CommentForm()
+    template = 'plantmate/add-comment.html'
+    context_dict = {'form': form, 'user': user}
+    return render(request, template, context=context_dict)
 
 
 @login_required
