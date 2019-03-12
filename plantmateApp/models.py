@@ -106,7 +106,7 @@ class UserWishlistPlants(models.Model):
 
 
 class Comment(models.Model):
-    user = models.ForeignKey(UserProfile)
+    user = models.ForeignKey(User)
     plant = models.ForeignKey(Plant)
     plant_slug = models.CharField(max_length=128)
     body = models.TextField(unique=False, default=" ")

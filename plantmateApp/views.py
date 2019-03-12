@@ -91,29 +91,28 @@ def add_comment(request):
     context_dict = {} 
     # plant = Plant.objects.get(slug=plant_name_slug)
     if request.user.is_authenticated():
-        print ("First if $%^&%$&%$^&^%*&^&*^%&*&%^*^&*((*)&*)&$%£$@£!@$!@£")
-        user = request.user
+        print ("First if ------------------------------------------------------------")
+        form = CommentForm(request.POST)
+        if request.method == 'POST':
+            print ("Second if  ------------------------------------------------------------")
+            # plant = request.POST.get('plant')
+            # print (plant)
+            # form.fields['plant'].choices = Plant.objects.filter(slug=plant)
+            # print(form.fields['plant'].choices)
+            if form.is_valid():
 
-    form = CommentForm(request.POST)
-    if request.method == 'POST':
-        print ("Second if $%^&%$&%$^&^%*&^&*^%&*&%^*^&*((*)&*)&$%£$@£!@$!@£")
-        # plant = request.POST.get('plant')
-        # print (plant)
-        # form.fields['plant'].choices = Plant.objects.filter(slug=plant)
-        # print(form.fields['plant'].choices)
-        if form.is_valid():
-
-            print ("Third if $%^&%$&%$^&^%*&^&*^%&*&%^*^&*((*)&*)&$%£$@£!@$!@£")
-            comment = form.save(commit=False)
-            print(comment.plant_slug)
-            plant = Plant.objects.filter(slug=comment.plant_slug)
-            print(plant)
-            comment.save()
-            return show_plant(request, plant_slug)
-        else:
-            print("IT FAILED!")
-            print(form.errors)
-            form = CommentForm()
+                print ("Third if  ------------------------------------------------------------")
+                comment = form.save(commit=False)
+                comment.user = request.user
+                print(comment.plant_slug)
+                comment.plant = Plant.objects.get(slug=comment.plant_slug)
+                print(comment.plant)
+                comment.save()
+                return show_plant(request, comment.plant_slug)
+            else:
+                print("IT FAILED!")
+                print(form.errors)
+                form = CommentForm()
     template = 'plantmate/add-comment.html'
     context_dict = {'form': form, 'user': user}
     return render(request, template, context=context_dict)
@@ -147,6 +146,7 @@ def add_image(request, plant_name_slug):
 def show_plant(request, plant_name_slug):
 
     image = set()
+    comments = set()
 
     try:
         plant = Plant.objects.get(slug=plant_name_slug)
@@ -154,11 +154,12 @@ def show_plant(request, plant_name_slug):
         for i in PlantImage.objects.all():
             image.add(i)
 
+        comments = Comment.objects.filter(plant_slug=plant_name_slug)
+
         if request.user.is_authenticated():
             wishlistplants = UserWishlistPlants.objects.filter(user=request.user)
             saved_plants = UserSavedPlants.objects.filter(user=request.user)
-            context_dict = {'plant': plant, 'image': image, 'wishlistplants': wishlistplants,
-                            'saved_plants': saved_plants}
+
         else:
             context_dict = {'plant': plant, 'image': image}
 
@@ -166,6 +167,9 @@ def show_plant(request, plant_name_slug):
         context_dict['plant'] = None
     except PlantImage.DoesNotExist:
         context_dict['image'] = None
+
+    context_dict = {'plant': plant, 'image': image, 'wishlistplants': wishlistplants,
+                    'saved_plants': saved_plants, 'comments': comments}
 
     return render(request, 'plantmate/plant.html', context_dict)
 
