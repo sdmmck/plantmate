@@ -6,19 +6,25 @@
 {% endblock %}
 
 {% block body_block %}
-    <h1>my plants</h1>
-
-
-    hi {{ username }}!<br>
-    my plants<br><br><br><br>
-    <h2>wishlist</h2>
-
-    {% if wishlist %}
-
-        {{ wishlist}}
-
+    <h1>Hi {{ username }}!</h1><br>
+    <img src="{% static "images/profile.jpg" %}" alt ="profile picture" /><br>
+    <h2>my plants</h2>
+ {% if saved_plants %}
+        {% for saved in saved_plants %}
+            <a href="/plant-list/{{ saved.slug }}">{{ saved.name }}</a>
+            <img src="{% static saved.picture %}" width="100">
+            </br>
+        {% endfor %}
     {% endif %}
-    
+    <h2>wishlist</h2>
+    {% if wishlist_plants %}
+        {% for wish in wishlist_plants %}
+            <a href="/plant-list/{{ wish.slug }}">{{ wish.name }}</a>
+            <img src="{% static wish.picture %}" width="100">
+            </br>
+        {% endfor %}
+    {% endif %}
+
 {#    <a href="{% url 'wishlist' %}">view all</a><br /><br><br><br>#}
     {#<a href="{% url 'home' %}">Home</a><br />#}
     <h3>nearest plant shop</h3>
@@ -26,7 +32,6 @@
     species stocked<br>
     opening hours<br>
     view more<br><br><br><br>
-    <img src="{% static "images/profile.jpg" %}" alt ="profile picture" /><br>
     settings
     logout
 

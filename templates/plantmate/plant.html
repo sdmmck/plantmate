@@ -1,81 +1,193 @@
 {% extends "plantmate/base.html" %}
 {% load staticfiles %}
 
+
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+
+
 {% block title_block %}
     {{ slug }}
 {% endblock %}
 
 {% block body_block %}
-    {% if image %}
-        {% for i in image %}
-            {% ifequal i.plant_name plant.slug %}
-            <img src= "{% static i.picture %}"/>
-            {% endifequal %}
-        {% endfor %}
-    {% endif %}
-    {% if plant %}
-        <h1>{{ plant.name }}</h1><br/>
-        <h2>{{ plant.latin_name }}</h2><br/>
-        <h2>{{ plant.size }}</h2><br/>
-        <h2>{{ plant.climate }}</h2><br/>
-        <h2>{{ plant.light }}</h2><br/>
-        {% if plant.characteristics %}
-            <h2>{{ plant.characteristics }}</h2><br/>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <div class="container">
+        {% if plant.picture %}
+            {% for i in image %}
+                {% ifequal i.plant_name plant.slug %}
+                    <img src="{% static i.picture %}"/>
+                {% endifequal %}
+            {% endfor %}
         {% endif %}
-        {% if plant.pet %}
-            <h2>{{ plant.pet }}</h2><br/>
+
+        {% if plant %}
+
+            <h1>{{ plant.name }}</h1><br/>
+            <h2><i>{{ plant.latin_name }}</i></h2><br/>
+            <div class="col-sm-4">
+                <img src="{% static plant.picture %}" width="380" height="400" class="img-circle"
+                     alt="picture of plant"/>
+            </div>
+            <div class="col-sm-8" style="background-color:lavenderblush;">
+                {{ plant.description }}<br/>
+                Grows to be: {{ plant.size }}<br/>
+                Thrives in a {{ plant.climate }} climate where it
+                is {{ plant.light }}<br/>
+                Best suited for the {{ plant.room }}<br/>
+                {% if plant.characteristics %}
+                    Special because I am {{ plant.characteristics }}<br/>
+                {% endif %}
+                {% if plant.pet %}
+                    Suitable for pets? {{ plant.pet }}<br/>
+
+                    </div>
+                {% endif %}
+            </div>
+
+            {% if user.is_authenticated %}
+
+
+                <script>
+                    plantIsInWishlist = false;
+                    plantIsInSavedPlants = false;
+
+
+                </script>
+                {% for wish in wishlistplants %}
+                    {% ifequal wish.wishlist_plant plant.slug %}
+                        <script>
+                            plantIsInWishlist = true;
+
+
+                        </script>
+                    {% endifequal %}
+                {% endfor %}
+                {% for saved in saved_plants %}
+                    {% ifequal saved.saved_plant plant.slug %}
+                        <script>
+                            plantIsInSavedPlants = true;
+
+
+                        </script>
+                    {% endifequal %}
+                {% endfor %}
+                <div class="col-sm-6">
+                    <div id="saved_button" style="display: block">
+                        <form method="post" action="{% url 'save_plant' %}">
+                            {% csrf_token %}
+                            <input type="hidden" id="saved_plant" name="saved_plant" value={{ plant.slug }}>
+                            <button type="submit" name="saved_plants">add plant to my plants</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div id="wishlist_button" style="display: block">
+                        <form method="post" action="{% url 'wishlist_plant' %}">
+                            {% csrf_token %}
+                            <input type="hidden" id="wishlist_plant" name="wishlist_plant" value={{ plant.slug }}>
+                            <button type="submit" name="wishlist">add plant to wishlist</button>
+                        </form>
+                    </div>
+                </div>
+
+                <script>
+                    console.log(plantIsInWishlist + " greetings");
+
+
+                    if (plantIsInWishlist) {
+                        document.getElementById("wishlist_button").style.display = "none";
+                    } else {
+                        document.getElementById("wishlist_button").style.display = "block";
+                    }
+
+                    if (plantIsInSavedPlants) {
+                        document.getElementById("saved_button").style.display = "none";
+                    } else {
+                        document.getElementById("saved_button").style.display = "block";
+                    }
+
+
+                </script>
+
+                <a href="/plant-list/{{ plant.slug }}/add-image">Add a new image</a><br/>
+
+                {% for wish in wishlistplants %}
+                    {% ifequal wish.wishlist_plant plant.slug %}
+                        <form method="post" action="{% url 'remove_wishlist_plant' %}">
+                            {% csrf_token %}
+                            <input type="hidden" id="remove_wishlist_plant" name="wishlist_plant"
+                                   value={{ plant.slug }}>
+                            <button type="submit" name="remove_wishlist">remove plant from wishlist</button>
+                        </form>
+                    {% endifequal %}
+                {% endfor %}
+
+
+                <form method="post" action="{% url 'wishlist_plant' %}">
+                {% csrf_token %}
+                <input type="hidden" id="wishlist_plant" name="wishlist_plant" value={{ plant.slug }}>
+                <button type="submit" name="wishlist">add plant to wishlist</button><br><br>
+                </form>
+
+                {% for saved in saved_plants %}
+                    {% ifequal saved.saved_plant plant.slug %}
+                        <form method="post" action="{% url 'remove_saved_plant' %}">
+                            {% csrf_token %}
+                            <input type="hidden" id="saved_plant" name="saved_plant" value={{ plant.slug }}>
+                            <button type="submit" name="remove_saved_plant">remove plant from my plants</button>
+
+                        </form>
+                    {% endifequal %}
+                {% endfor %}
+
+
+                <div>
+                    <form method="POST" action="{% url 'add_comment' %}">
+                        {% csrf_token %}
+
+{#                        <div class="form-group row">#}
+{#                            <div class="col-md-10">#}
+                                <input type="hidden" id="plant_slug" name="plant_slug" value="{{ plant.slug }}">
+                                <input type="text" name="body" id="body" class="form-control round-0" placeholder="Leave some advice on caring for this plant...">
+
+{#                            </div>#}
+{#                            <div class="col-md-2">#}
+                                <button type="submit" name="add_comment" class="btn btn-success">Add comment</button>
+{#                            </div>#}
+{#                        </div>#}
+                    </form>
+                </div>
+                {% for comment in comments %}
+                    <div class="card border-info mb-3">
+                        <div class="card-header">
+                            {{ comment.user }} commented on {{ comment.created_date }}
+                        </div>
+                        <div class="card-body text-primary">
+                            <p class="card-text">
+                                {{ comment.body }}
+                            </p>
+                        </div>
+                    </div>
+                    <hr>
+                {% empty %}
+                    <p>no comments yet. be the first!</p>
+                    <hr>
+                {% endfor %}
+            {% else %}
+                This plant has not been added yet!
+            {% endif %}
         {% endif %}
+        <a href="/plant-list/{{ plant.slug }}/add-image">Add a new image</a><br/>
+        <a href="{% url 'plant_list' %}">See the A-Z of plants</a><br/>
 
-        <form method="post" action="{% url 'save_plant' %}">
-  {% csrf_token %}
-  {{ save_plant_form.as_p }}
-  <button type="submit" name="saved_plants" >add plant to my plants </button>
-</form>
-
-         <form method="post" action="{% url 'wishlist_plant' %}">
-  {% csrf_token %}
-              <input type="hidden" id="wishlist_plant" name="wishlist_plant" value={{ plant.slug }}>
-  <button type="submit" name="wishlist">add plant to wishlist</button><br><br>
-</form>
-
-<div>
-    <form method="POST" role ="form" action="{% url 'add_comment' %}">
-        {% csrf_token %}
-       
-        <div class="form-group row">
-            <div class="col-md-10">
-                <input type="hidden" id="plant_slug" name="plant_slug" value="{{plant.slug}}">
-                <input type="text" name="body" id="body" class="form-control round-0" type="text" rows="3"
-                          placeholder="Leave some advice on caring for this plant..."></input>
-                
-            </div>
-            <div class="col-md-2">
-                <button type="submit" name="add_comment" class="btn btn-success">Add comment</button>
-            </div>
-        </div>
-    </form>
-</div>
-{% for comment in plant.comments.all %}
-<div class="card border-info mb-3">
-    <div class="card-header">
-        {{ comment.user }} commented on {{ comment.created_date }}
-    </div>
-    <div class="card-body text-primary">
-        <p class="card-text">
-            {{ comment.body }}
-        </p>
-    </div>
-</div>
-<hr>
-{% empty %}
-<p>no comments yet. be the first!</p>
-<hr>
-{% endfor %}
-        
-
-    {% else %}
-        This plant has not been added yet!
-    {% endif %}
-    <a href="/plant-list/{{ plant.slug }}/add-image">Add a new image</a><br/>
-    <a href="{% url 'plant_list' %}">See the A-Z of plants</a><br/>
 {% endblock %}

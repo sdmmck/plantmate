@@ -17,7 +17,7 @@ class BusinessForm(forms.ModelForm):
     class Meta:
 
         model = Business
-        fields = ('name','address','postcode')
+        fields = ('name','address','postcode', 'lat', 'long', 'url', 'slug')
 
 
 class PlantForm(forms.ModelForm):
@@ -36,11 +36,12 @@ class PlantForm(forms.ModelForm):
                                         choices=Plant.light_choices)
 
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
+    picture = forms.ImageField(required=False)
 
     class Meta:
 
         model = Plant
-        fields = ('name', 'latin_name', 'size', 'climate', 'light', 'room')
+        fields = ('name', 'latin_name', 'size', 'climate', 'light', 'room', 'picture')
 
 
 class ImageForm(forms.ModelForm):
@@ -68,12 +69,12 @@ class UserProfileForm(forms.ModelForm):
 
 
 class SavePlantForm(forms.ModelForm):
-    user = forms.HiddenInput()
     saved_plant = forms.HiddenInput()
 
     class Meta:
         model = UserSavedPlants
-        fields = ('saved_plant', 'user')
+        fields = ('saved_plant',)
+        exclude = ('user',)
 
 
 class WishlistPlantForm(forms.ModelForm):
