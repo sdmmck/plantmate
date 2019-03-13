@@ -9,6 +9,10 @@ from django.utils import timezone
 class Business (models.Model):
     name = models.CharField(max_length=128, unique=True)
     address = models.CharField(max_length=128, unique=True)
+    phone = models.CharField(max_length=128, unique=False)
+    email = models.CharField(max_length=128, unique=False)
+    hours = models.CharField(max_length=128, unique=False)
+    weekend_hours = models.CharField(max_length=128, unique=False)
     lat = models.CharField(max_length=20, unique=False)
     long = models.CharField(max_length=20, unique=False)
     url = models.URLField()
@@ -57,7 +61,7 @@ class Plant (models.Model):
 
 
 class PlantImage (models.Model):
-    picture = models.ImageField(upload_to='plant_images', blank=True, null=True)
+    picture = models.ImageField(upload_to='media/user_profile_images', blank=True, null=True)
     plant_name = models.CharField(max_length=128, unique=False, default=" ")
 
     def save(self, *args, **kwargs):

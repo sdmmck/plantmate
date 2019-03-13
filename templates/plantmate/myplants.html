@@ -1,10 +1,10 @@
 {% extends "plantmate/base.html" %}
 {% load staticfiles %}
-
-{% block title_block %}
-    my plants
+{% block head_block %}
+    {% block title_block %}
+        my plants
+    {% endblock %}
 {% endblock %}
-
 {% block body_block %}
     <h1>my plants</h1>
     {% if plants %}

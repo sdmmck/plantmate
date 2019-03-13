@@ -4,9 +4,10 @@
 
 <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
 
-
-{% block title_block %}
-    {{ slug }}
+{% block head_block %}
+    {% block title_block %}
+        {{ slug }}
+    {% endblock %}
 {% endblock %}
 
 {% block body_block %}
@@ -59,15 +60,11 @@
                 <script>
                     plantIsInWishlist = false;
                     plantIsInSavedPlants = false;
-
-
                 </script>
                 {% for wish in wishlistplants %}
                     {% ifequal wish.wishlist_plant plant.slug %}
                         <script>
                             plantIsInWishlist = true;
-
-
                         </script>
                     {% endifequal %}
                 {% endfor %}
@@ -75,8 +72,6 @@
                     {% ifequal saved.saved_plant plant.slug %}
                         <script>
                             plantIsInSavedPlants = true;
-
-
                         </script>
                     {% endifequal %}
                 {% endfor %}
@@ -103,20 +98,16 @@
                 <script>
                     console.log(plantIsInWishlist + " greetings");
 
-
                     if (plantIsInWishlist) {
                         document.getElementById("wishlist_button").style.display = "none";
                     } else {
                         document.getElementById("wishlist_button").style.display = "block";
                     }
-
                     if (plantIsInSavedPlants) {
                         document.getElementById("saved_button").style.display = "none";
                     } else {
                         document.getElementById("saved_button").style.display = "block";
                     }
-
-
                 </script>
 
                 <a href="/plant-list/{{ plant.slug }}/add-image">Add a new image</a><br/>
@@ -131,13 +122,6 @@
                         </form>
                     {% endifequal %}
                 {% endfor %}
-
-
-                <form method="post" action="{% url 'wishlist_plant' %}">
-                {% csrf_token %}
-                <input type="hidden" id="wishlist_plant" name="wishlist_plant" value={{ plant.slug }}>
-                <button type="submit" name="wishlist">add plant to wishlist</button><br><br>
-                </form>
 
                 {% for saved in saved_plants %}
                     {% ifequal saved.saved_plant plant.slug %}
@@ -155,16 +139,17 @@
                     <form method="POST" action="{% url 'add_comment' %}">
                         {% csrf_token %}
 
-{#                        <div class="form-group row">#}
-{#                            <div class="col-md-10">#}
-                                <input type="hidden" id="plant_slug" name="plant_slug" value="{{ plant.slug }}">
-                                <input type="text" name="body" id="body" class="form-control round-0" placeholder="Leave some advice on caring for this plant...">
+                        {#                        <div class="form-group row">#}
+                        {#                            <div class="col-md-10">#}
+                        <input type="hidden" id="plant_slug" name="plant_slug" value="{{ plant.slug }}">
+                        <input type="text" name="body" id="body" class="form-control round-0"
+                               placeholder="Leave some advice on caring for this plant...">
 
-{#                            </div>#}
-{#                            <div class="col-md-2">#}
-                                <button type="submit" name="add_comment" class="btn btn-success">Add comment</button>
-{#                            </div>#}
-{#                        </div>#}
+                        {#                            </div>#}
+                        {#                            <div class="col-md-2">#}
+                        <button type="submit" name="add_comment" class="btn btn-success">Add comment</button>
+                        {#                            </div>#}
+                        {#                        </div>#}
                     </form>
                 </div>
                 {% for comment in comments %}
@@ -184,10 +169,12 @@
                     <hr>
                 {% endfor %}
             {% else %}
-                This plant has not been added yet!
+               Log in or sign up to add this plant to a wishlist!
             {% endif %}
+        {% else %}
+        Plant has not been added
         {% endif %}
-        <a href="/plant-list/{{ plant.slug }}/add-image">Add a new image</a><br/>
-        <a href="{% url 'plant_list' %}">See the A-Z of plants</a><br/>
+    <a href="/plant-list/{{ plant.slug }}/add-image">Add a new image</a><br/>
+    <a href="{% url 'plant_list' %}">See the A-Z of plants</a><br/>
 
 {% endblock %}
