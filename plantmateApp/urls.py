@@ -15,7 +15,7 @@ urlpatterns = [
     url(r'^plant-list/$', views.plant_list, name='plant_list'),
     url(r'^myaccount/wishlist/$', views.wishlist, name='wishlist'),
     url(r'^myaccount/my-plants/$', views.my_plants, name='my_plants'),
-    url(r'^register/$', views.register, name='register'),
+    # url(r'^register/$', views.register, name='register'),
     url(r'^business-list/(?P<business_name_slug>[\w\-]+)/$',
         views.show_business,
         name='show_business'),
@@ -26,6 +26,6 @@ urlpatterns = [
     url(r'^remove-wishlist-plant/$', views.remove_wishlist_plant, name='remove_wishlist_plant'),
     url(r'^remove-saved-plant/$', views.remove_saved_plant, name='remove_saved_plant'),
     url(r'^quiz/your-plantmate/', views.your_plantmate, name='your_plantmate'),
-
-
+    url(r'^myaccount/add_profile_image/$', views.add_profile_image, name='add_profile_image'),
+    url(r'^plants-as-list/$', views.plants_as_list, name='plants_as_list'),
 ]

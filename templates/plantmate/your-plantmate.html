@@ -1,7 +1,7 @@
 {% extends "plantmate/base.html" %}
 {% load staticfiles %}
 {% block head_block %}
-    <script type="text/javascript" src={% static "javascript/quiz.js" %}></script>
+
     {% block title_block %}
         <title>Your plantmate</title>
     {% endblock %}
@@ -10,4 +10,15 @@
     <div ><H4 id="hi">WELCOME TO QUIZ</H4></div>
     </br>
     <input type="button" name="button" value="button" onclick="buttons()">
+
+     <script>
+    let allplants = "yo";
+    </script>
+
+    {% for plant in plants %}
+        {{ plant }}
+    {% endfor %}
+
+    <script type="text/javascript" src={% static "javascript/quiz.js" %}></script>
+
 {% endblock %}

@@ -62,13 +62,13 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'email', 'password')
 
 
-class UserProfileForm(forms.ModelForm):
+class ProfileImageForm(forms.ModelForm):
 
     picture = forms.ImageField(required=False)
 
     class Meta:
         model = UserProfile
-        fields = ('website', 'picture')
+        fields = ('picture',)
 
 
 class SavePlantForm(forms.ModelForm):
@@ -87,6 +87,7 @@ class WishlistPlantForm(forms.ModelForm):
         model = UserWishlistPlants
         fields = ('wishlist_plant',)
         exclude = ('user',)
+
 
 class CommentForm(forms.ModelForm):
     plant_slug = forms.HiddenInput()
