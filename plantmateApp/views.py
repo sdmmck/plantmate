@@ -151,6 +151,7 @@ def add_image(request, plant_name_slug):
 
     return render(request, 'plantmate/add-image.html', context=context_dict)
 
+#have made this login_required to avoid error coming up when user is not logged in
 
 def show_plant(request, plant_name_slug):
 
