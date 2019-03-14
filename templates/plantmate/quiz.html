@@ -2,101 +2,104 @@
 {% load staticfiles %}
 
 {% block head_block %}
-    {% block title_block %}
-        quiz
-    {% endblock %}
+{% block title_block %}
+quiz
+{% endblock %}
 {% endblock %}
 {% block body_block %}
-    <script src="../../static/javascript/quiz.js"></script>
+<script src="../../static/javascript/quiz.js"></script>
+<div class="jumbotron">
     <h1>plantmate quiz</h1>
-    <h1 id="quiz">jhgjgjhghjg</h1>
-
-    <form action="{% url 'your_plantmate' %}" method="get">
-
-        What size of plant are you looking for? <br>
-        <fieldset id="size">
-            <div class="small_plant">
-                <label for="small_plant">small</label>
-                <input type="radio" id="small_plant" name="size" value="small_plant">
-            </div>
-            <div class="medium_plant">
-                <label for="medium_plant">medium</label>
-                <input type="radio" id="medium_plant" name="size" value="medium_plant">
-            </div>
-            <div class="large_plant">
-                <label for="large_plant">large</label>
-                <input type="radio" id="large_plant" name="size" value="large_plant">
-            </div>
-        </fieldset>
-
-        Which of the following options best describes the type of plant you would like to own?<br>
-        <fieldset id="feature">
-            <div class="easy">
-                <label for="easy">easy to care for</label>
-                <input type="radio" id="easy" name="feature" value="easy">
-            </div>
-            <div class="air_purifying">
-                <label for="air_purifying">air purifying</label>
-                <input type="radio" id="air_purifying" name="feature" value="air_purifying">
-            </div>
-            <div class="trailing_hanging">
-                <label for="trailing_hanging">trailing / hanging</label>
-                <input type="radio" id="trailing_hanging" name="feature" value="trailing_hanging">
-            </div>
-        </fieldset>
-
-        Which room would you like to put your plant in?<br>
-        <fieldset id="room">
-            <div class="living_room_bedroom">
-                <label for="living_room_bedroom"> living room / bedroom,</label>
-                <input type="radio" id="living_room_bedroom" name="room" value="living_room_bedroom">
-            </div>
-            <div class="kitchen_bathroom">
-                <label for="kitchen_bathroom">kitchen / bathroom</label>
-                <input type="radio" id="kitchen_bathroom" name="room" value="kitchen_bathroom">
-            </div>
-        </fieldset>
+</div>
+<h1 id="quiz">jhgjgjhghjg</h1>
 
 
-        Which one of the following words best describes the climate of your chosen room?<br>
-        <fieldset id="temperature">
-            <div class="cool">
-                <label for="cool"> cool </label>
-                <input type="radio" id="cool" name="temperature" value="cool">
-            </div>
-            <div class="warm">
-                <label for="warm">warm</label>
-                <input type="radio" id="warm" name="temperature" value="warm">
-            </div>
-        </fieldset>
+<form action="{% url 'your_plantmate' %}" method="get">
 
-        How bright is the sunlight in your chosen room?<br>
-        <fieldset id="sunlight">
-            <div class="bright">
-                <label for="bright"> bright </label>
-                <input type="radio" id="bright" name="sunlight" value="bright">
-            </div>
-            <div class="shaded">
-                <label for="shaded">shaded</label>
-                <input type="radio" id="shaded" name="sunlight" value="shaded">
-            </div>
-        </fieldset>
+    What size of plant are you looking for? <br>
+    <fieldset id="size">
+        <div class="small_plant">
+            <label for="small_plant">small</label>
+            <input type="radio" id="small_plant" name="size" value="small_plant">
+        </div>
+        <div class="medium_plant">
+            <label for="medium_plant">medium</label>
+            <input type="radio" id="medium_plant" name="size" value="medium_plant">
+        </div>
+        <div class="large_plant">
+            <label for="large_plant">large</label>
+            <input type="radio" id="large_plant" name="size" value="large_plant">
+        </div>
+    </fieldset>
 
-        Do you have a pet?<br>
-        <fieldset id="pets">
-            <div class="yes">
-                <label for="yes"> yes </label>
-                <input type="radio" id="yes" name="pets" value="yes">
-            </div>
-            <div class="no">
-                <label for="no">no</label>
-                <input type="radio" id="no" name="pets" value="no">
-            </div>
-        </fieldset>
+    Which of the following options best describes the type of plant you would like to own?<br>
+    <fieldset id="feature">
+        <div class="easy">
+            <label for="easy">easy to care for</label>
+            <input type="radio" id="easy" name="feature" value="easy">
+        </div>
+        <div class="air_purifying">
+            <label for="air_purifying">air purifying</label>
+            <input type="radio" id="air_purifying" name="feature" value="air_purifying">
+        </div>
+        <div class="trailing_hanging">
+            <label for="trailing_hanging">trailing / hanging</label>
+            <input type="radio" id="trailing_hanging" name="feature" value="trailing_hanging">
+        </div>
+    </fieldset>
 
-        <input id="plant_quiz" type="submit" value="plant_quiz" name="plant_quiz" onclick="buttons()">
+    Which room would you like to put your plant in?<br>
+    <fieldset id="room">
+        <div class="living_room_bedroom">
+            <label for="living_room_bedroom"> living room / bedroom,</label>
+            <input type="radio" id="living_room_bedroom" name="room" value="living_room_bedroom">
+        </div>
+        <div class="kitchen_bathroom">
+            <label for="kitchen_bathroom">kitchen / bathroom</label>
+            <input type="radio" id="kitchen_bathroom" name="room" value="kitchen_bathroom">
+        </div>
+    </fieldset>
 
-    </form>
+
+    Which one of the following words best describes the climate of your chosen room?<br>
+    <fieldset id="temperature">
+        <div class="cool">
+            <label for="cool"> cool </label>
+            <input type="radio" id="cool" name="temperature" value="cool">
+        </div>
+        <div class="warm">
+            <label for="warm">warm</label>
+            <input type="radio" id="warm" name="temperature" value="warm">
+        </div>
+    </fieldset>
+
+    How bright is the sunlight in your chosen room?<br>
+    <fieldset id="sunlight">
+        <div class="bright">
+            <label for="bright"> bright </label>
+            <input type="radio" id="bright" name="sunlight" value="bright">
+        </div>
+        <div class="shaded">
+            <label for="shaded">shaded</label>
+            <input type="radio" id="shaded" name="sunlight" value="shaded">
+        </div>
+    </fieldset>
+
+    Do you have a pet?<br>
+    <fieldset id="pets">
+        <div class="yes">
+            <label for="yes"> yes </label>
+            <input type="radio" id="yes" name="pets" value="yes">
+        </div>
+        <div class="no">
+            <label for="no">no</label>
+            <input type="radio" id="no" name="pets" value="no">
+        </div>
+    </fieldset>
+
+    <input id="plant_quiz" type="submit" value="plant_quiz" name="plant_quiz" onclick="buttons()">
+
+</form>
 
 {% endblock %}
 

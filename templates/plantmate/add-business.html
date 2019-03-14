@@ -7,9 +7,11 @@
 {% endblock %}
 
 {% block body_block %}
-    <h1>add a Business</h1>
+<div class="jumbotron">
+    <h1>Add a Business</h1>
+</div>
     <div>
-        <form role="form" id="business_form" method="post" action="{% url 'add_business' %}">
+        <form role="form" id="business_form" method="post" enctype="multipart/form-data" action="{% url 'add_business' %}" class=""form-inline">
             {% csrf_token %}
             {% for hidden in form.hidden_fields %}
                 {{ hidden }}
