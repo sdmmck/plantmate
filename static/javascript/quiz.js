@@ -3,7 +3,7 @@ function buttons() {
 
     document.getElementById("hi").innerHTML = "IN YOUR FACE DJANGO I AM A FULLY FUNCTIONAL BUTTON";
 
-    console.log(allplants[0]);
+    console.log(allplants);
 
 
 }

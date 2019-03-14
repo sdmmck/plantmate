@@ -296,7 +296,7 @@ def myaccount(request):
     saved_plants = set()
     wishlist_plants = set()
     username = User.objects.get(username=request.user)
-    # user_profile = UserProfile.objects.get(user=username)
+    user_profile = UserProfile.objects.get(user=username)
 
     for wish in UserWishlistPlants.objects.filter(user=request.user):
         wishlist_plants.add(Plant.objects.get(slug=wish.wishlist_plant))
@@ -304,8 +304,7 @@ def myaccount(request):
     for saved in UserSavedPlants.objects.filter(user=request.user):
         saved_plants.add(Plant.objects.get(slug=saved.saved_plant))
 
-    # 'user_profile': user_profile
-    context_dict = {'username': username, 'wishlist_plants': wishlist_plants, 'saved_plants': saved_plants, 'profile_image_form': profile_image_form}
+    context_dict = {'username': username, 'wishlist_plants': wishlist_plants, 'saved_plants': saved_plants, 'profile_image_form': profile_image_form, 'user_profile': user_profile}
     return render(request, 'plantmate/myaccount.html', context=context_dict)
 
 

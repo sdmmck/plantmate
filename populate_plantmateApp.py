@@ -81,7 +81,7 @@ def populate():
          "picture": "images/rose-painted-calathea.jpg",
          "pet": "yes",
          "room": "Kitchen/Bathroom",
-         "description": "Calatheas come in a remarkable assortment of color blends ranging from green tones to burgundy and silver shades. The plant gets its common name 'Prayer Plant' because the leaves on most selections fold closed at night similar to a pair of praying hands. A wonderful foliage plant that offers color and brightness for any room!"},
+         "description": "Calatheas come in a remarkable assortment of color blends ranging from green tones to burgundy and silver shades. The plant gets its common name \'Prayer Plant\' because the leaves on most selections fold closed at night similar to a pair of praying hands. A wonderful foliage plant that offers color and brightness for any room!"},
 
         {"name": "Chinese Evergreen",
          "latin_name": "Aglaeonema Maria",
@@ -224,7 +224,7 @@ def populate():
          "picture": "images/spineless-yucca.jpg",
          "pet": "yes",
          "room": "Living-room/Bedroom",
-         "description": "Yucca is a plant of strong lines and symmetry with its spiky leaves radiating out from the base in an attractive display of nature's architecture skills. Striking as a solo specimen in an entry way. Also provides nice contrast to groupings of softer houseplants."},
+         "description": "Yucca is a plant of strong lines and symmetry with its spiky leaves radiating out from the base in an attractive display of nature\'s architecture skills. Striking as a solo specimen in an entry way. Also provides nice contrast to groupings of softer houseplants."},
 
     ]
 

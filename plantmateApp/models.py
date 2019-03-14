@@ -1,20 +1,18 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.utils import timezone
 
 
 class Business (models.Model):
-    name = models.CharField(max_length=128, unique=True)
-    address = models.CharField(max_length=128, unique=True)
-    phone = models.CharField(max_length=128, unique=False)
-    email = models.CharField(max_length=128, unique=False)
-    hours = models.CharField(max_length=128, unique=False)
-    weekend_hours = models.CharField(max_length=128, unique=False)
-    lat = models.CharField(max_length=20, unique=False)
-    long = models.CharField(max_length=20, unique=False)
+    name = models.CharField(max_length=128, unique=True, default="")
+    address = models.CharField(max_length=128, unique=True, default="")
+    phone = models.CharField(max_length=128, unique=False, default="")
+    email = models.CharField(max_length=128, unique=False, default="")
+    hours = models.CharField(max_length=128, unique=False, default="")
+    weekend_hours = models.CharField(max_length=128, unique=False, default="")
+    lat = models.CharField(max_length=20, unique=False, default="")
+    long = models.CharField(max_length=20, unique=False, default="")
     url = models.URLField()
     slug = models.SlugField()
 
