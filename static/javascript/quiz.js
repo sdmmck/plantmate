@@ -1,6 +1,5 @@
 function buttons() {
-    document.getElementById("hi").innerHTML = "IN YOUR FACE DJANGO I AM A FULLY FUNCTIONAL BUTTON";
-    console.log(allplants);
+
     showPlant();
 }
 
@@ -13,36 +12,66 @@ function showPlant() {
 
     for (let r = 0; r < results.length; r++) {
         results[r] = results[r].split("=")[1];
+        results[r] = results[r].replace("%2F", "/");
+        results[r] = results[r].replace(/_/g, " ");
     }
 
     document.getElementById("results").innerText = results.toString();
 
-    let plantMatches = [];
+    let plants = [allplants.length];
+    let plant;
 
-    for(let i = 0; i<allplants.length; i++){
-
-        if(results[0].toLowerCase()===allplants[i].size.toLowerCase()){
-            console.log(allplants[i].name+" "+allplants[i].size);
-            plantMatches.push(allplants[i]);
-        }
-
+    for (let i = 0; i < allplants.length; i++) {
+        plants[i] = 0;
     }
 
-    for(let i = 0; i<plantMatches.length; i++){
+    console.log(allplants);
 
-        if(results[1].toLowerCase()!==plantMatches[i].bright.toLowerCase()){
-            console.log();
-            plantMatches.remove(plantMatches[i]);
+    for (let i = 0; i < allplants.length; i++) {
+
+        if (results[0].toLowerCase() === allplants[i].size.toLowerCase()) {
+            plants[i]++;
+            console.log(allplants[i].name);
         }
-
+        if (results[1].toLowerCase() === allplants[i].characteristics.toLowerCase()) {
+            plants[i]++;
+            console.log(allplants[i].name);
+        }
+        if (results[2].toLowerCase() === allplants[i].room.toLowerCase()) {
+            plants[i]++;
+            console.log(allplants[i].name);
+        }
+        if (results[3].toLowerCase() === allplants[i].climate.toLowerCase()) {
+            plants[i]++;
+            console.log(allplants[i].name);
+        }
+        if (results[4].toLowerCase() === allplants[i].light.toLowerCase()) {
+            plants[i]++;
+            console.log(allplants[i].name);
+        }
+        if (results[5].toLowerCase() === allplants[i].pet.toLowerCase()) {
+            plants[i]++;
+            console.log(allplants[i].name);
+        }
     }
 
-    //
-    // for (let p in allplants) {
-    //     console.log();
-    // }
-    //
-    // console.log(sizeFound.toString());
+
+    let highestNumber = 0;
+    let index = 0;
+    for (let i = 0; i < allplants.length; i++) {
+        console.log('index number = '+i+' index value =' + plants[i]+' plant = '+allplants[i].name);
+        if (plants[i] > highestNumber) {
+            index = i;
+            highestNumber = plants[i];
+        }
+    }
+
+    plant = allplants[index];
+
+    document.getElementById("hi").innerHTML = plant.name;
+    document.getElementById("quiz_results").style.display="none";
+
+//
 
 
 //    things to do:

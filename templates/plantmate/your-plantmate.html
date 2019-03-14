@@ -6,18 +6,16 @@
     {% endblock %}
 {% endblock %}
 {% block body_block %}
-    <div><H4 id="hi">WELCOME TO QUIZ</H4></div>
-    </br>
-    <input type="button" name="button" value="button" onclick="buttons()">
-
-    {% for plant in plants %}
+    <body onload="buttons()">
+     {% for plant in plants %}
         <script>
             let allplants = JSON.parse('{{plant|safe|escapejs}}');
         </script>
     {% endfor %}
-
+    <div><H4 id="hi"></H4></div>
+    </br>
     <div id="results"></div>
-
     <script type="text/javascript" src={% static "javascript/quiz.js" %}></script>
+    </body>
 {% endblock %}
 
