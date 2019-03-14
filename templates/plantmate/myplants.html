@@ -6,7 +6,9 @@
     {% endblock %}
 {% endblock %}
 {% block body_block %}
+<div class="jumbotron">
     <h1>my plants</h1>
+</div>
     {% if plants %}
         {% for plant in plants %}
             <a href="/plant-list/{{ plant.slug }}">{{ plant.name }}</a>

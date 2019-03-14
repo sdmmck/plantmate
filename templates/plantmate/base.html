@@ -1,134 +1,85 @@
 <!DOCTYPE html>
 {% load staticfiles %}
- <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <link rel="icon" href="{% static "images/testicon.ico" %}" alt="test icon">
- <link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
 
-        <!-- Custom styles for this template -->
-        <link href="dashboard.cs http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" href="{% static 'images/testicon.ico' %}" alt="test icon">
 
-{% block head_block %}
-    <head>
-        <title>plantmate </title>
+<html>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+<!--font awesome???? -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+
+<head>
+
+    <title>
+        plantmate
         {% block title_block %}
-            welcome to plantmate
+        welcome to plantmate
         {% endblock %}
-     </head>
-{% endblock %}
 
+    </title>
+</head>
 <body>
-<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
-    <button class="navbar-toggler navbar-toggler-right hidden-lg-up"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbar"
-            aria-controls="navbar"
-            aria-expanded="false"
-            aria-label="Toggle navigation">
+
+<!-- NAVIGATION BAR ------------------------------------------------------------------------------------>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'images/testicon.ico' %}" width="30" height="30"
+                                                         class="d-inline-block align-top" alt="">Plantmate</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="{% url 'home' %}">plantmate</a>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'plant_list' %}">A-Z of Plants </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'business-list' %}">Find Local Plant Shops</a>
+            </li>
 
-    <div class="collapse navbar-collapse" id="navbar">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'plant_list' %}">
-                    a-z of houseplants
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'business-list' %}">
-                    find local plant shops
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'contact' %}">
-                    contact us
-                </a>
-            </li>
             {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'myaccount' %}">
-                        my account
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'myaccount' %}">My Account </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'my_plants' %}">My Plants</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'wishlist' %}">My Wishlist</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'auth_logout' %}?next=/">Log Out</a>
+            </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'my_plants' %}">
-                        my plants
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'wishlist' %}">
-                        my wishlist
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'auth_logout' %}?next=/">
-                        log out
-                    </a>
-                </li>
             {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'registration_register' %}">
-                        sign up
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'auth_login' %}">
-                        log in
-                    </a>
-                </li>
-                {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'add_business' %}">
-                            add a business
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'add_plant' %}">
-                            add a plant
-                        </a>
-                    </li>
-                {% endif %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'registration_register' %}">Sign Up</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'auth_login' %}">Log In</a>
+            </li>
             {% endif %}
+            <li class="nav-item">
+        <a class="nav-link" href="{% url 'contact' %}">Contact us</a>
+    </li>
+
         </ul>
     </div>
 </nav>
 
-<div class="container-fluid">
-    <br>
-    <br>
-    <br>
-    <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-            {% block sidebar_block %}
-            {% endblock %}
-        </div>
-        <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
-            {% block body_block %}{% endblock %}
-        </div>
-    </div>
+
+<!-- END OF NAVIGATION BAR -------------------------------------------------------------------------------------->
+<div>
+    {% block body_block %}
+    {% endblock %}
 </div>
-
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
-        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
-        crossorigin="anonymous"></script>
-<script>window.jQuery || document.write('<script src="http://v4-alpha.getbootstrap.com/assets/js/vendor/jquery.min.js"><\/script>')</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
-        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
-        crossorigin="anonymous"></script>
-<script src="http://v4-alpha.getbootstrap.com/dist/js/bootstrap.min.js"></script>
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
-
+<script src="{% static 'javascript/bootstrap.min.js' %}"></script>
 </body>
 </html>
