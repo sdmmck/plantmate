@@ -1,14 +1,16 @@
 {% extends "plantmate/base.html" %}
 {% load staticfiles %}
 {% block head_block %}
-    {% block title_block %}
-        my account
-    {% endblock %}
+{% block title_block %}
+my account
+{% endblock %}
 {% endblock %}
 
 
 {% block body_block %}
-    <h1>Hi {{ username }}!</h1>
+
+<div class="jumbotron">
+    <h1>Hi {{ username }}!</h1><br>
     {% if user_profile.picture %}
         <img src="{% static user_profile.picture %}" alt="profile picture" width="100px" height="100px"/><br>
     {% else %}
@@ -20,31 +22,39 @@
         </form>
     {% endif %}
 
-    <h2>my plants</h2>
-    {% if saved_plants %}
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <h2>my plants</h2>
+        {% if saved_plants %}
         {% for saved in saved_plants %}
-            <a href="/plant-list/{{ saved.slug }}">{{ saved.name }}</a>
-            <img src="{% static saved.picture %}" width="100">
-            </br>
+        <a href="/plant-list/{{ saved.slug }}">{{ saved.name }}</a>
+        <img src="{% static saved.picture %}" width="100">
+        </br>
         {% endfor %}
-    {% endif %}
-    <h2>wishlist</h2>
-    {% if wishlist_plants %}
+        {% endif %}
+    </div>
+    <div class="col-md-6">
+        <h2>wishlist</h2>
+        {% if wishlist_plants %}
         {% for wish in wishlist_plants %}
-            <a href="/plant-list/{{ wish.slug }}">{{ wish.name }}</a>
-            <img src="{% static wish.picture %}" width="100">
-            </br>
+        <a href="/plant-list/{{ wish.slug }}">{{ wish.name }}</a>
+        <img src="{% static wish.picture %}" width="100">
+        </br>
         {% endfor %}
-    {% endif %}
+        {% endif %}
 
-    {#    <a href="{% url 'wishlist' %}">view all</a><br /><br><br><br>#}
-    {#<a href="{% url 'home' %}">Home</a><br />#}
-    <h3>nearest plant shop</h3>
-    name<br>
-    species stocked<br>
-    opening hours<br>
-    view more<br><br><br><br>
-    settings
-    logout
+    </div>
+</div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>nearest plant shop</h3>
+            name<br>
+            species stocked<br>
+            opening hours<br>
+            view more<br><br><br><br>
+        </div>
+    </div>
 
-{% endblock %}
+
+    {% endblock %}

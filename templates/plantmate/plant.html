@@ -12,33 +12,25 @@
 
 {% block body_block %}
 
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-
-    <div class="container">
+<!--    <div class="container">
         {% if plant.picture %}
             {% for i in image %}
                 {% ifequal i.plant_name plant.slug %}
                     <img src="{% static i.picture %}"/>
                 {% endifequal %}
             {% endfor %}
-        {% endif %}
+        {% endif %}-->
 
         {% if plant %}
-
+            <div class="jumbotron">
             <h1>{{ plant.name }}</h1><br/>
             <h2><i>{{ plant.latin_name }}</i></h2><br/>
-            <div class="col-sm-4">
+            </div>
+
                 <img src="{% static plant.picture %}" width="380" height="400" class="img-circle"
                      alt="picture of plant"/>
             </div>
-            <div class="col-sm-8" style="background-color:lavenderblush;">
+
                 {{ plant.description }}<br/>
                 Grows to be: {{ plant.size }}<br/>
                 Thrives in a {{ plant.climate }} climate where it

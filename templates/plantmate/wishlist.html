@@ -7,7 +7,9 @@
     {% endblock %}
 {% endblock %}
 {% block body_block %}
+<div class="jumbotron">
     <h1>wishlist</h1>
+</div>
     {% if plants %}
         {% for plant in plants %}
             <a href="/plant-list/{{ plant.slug }}">{{ plant.name }}</a>
@@ -15,6 +17,7 @@
             </br>
         {% endfor %}
     {% endif %}
+<!-- these need fixed --------------------------------------------------------------------------------->
     <a href="/plant/">Plant page</a><br/>
     <a href="/myaccount/my-plants">My Plants</a><br/>
     <a href="{% url 'home' %}">plantmate home</a><br/>

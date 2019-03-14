@@ -7,13 +7,18 @@
 {% endblock %}
 
 {% block body_block %}
-    <h1>Business List</h1>
+<div class="jumbotron">
+    <h1>Find a plant shop near you...</h1>
+</div>
     {% if businesses %}
-        <ul>
             {% for business in businesses %}
-                <li><a href="{{ business.slug }}">{{ business.name }}</a></li>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ business.name }}</a></h5>
+                    <a href="{{ business.slug }}" class=" btn-primary stretched-link"></a>
+                </div>
+            </div>
             {% endfor %}
-        </ul>
     {% else %}
         <strong>No businesses currently to show.</strong>
     {% endif %}
