@@ -8,11 +8,11 @@ from django.utils import timezone
 
 class Business (models.Model):
     name = models.CharField(max_length=128, unique=True)
-    address = models.CharField(max_length=128, unique=True)
-    phone = models.CharField(max_length=128, unique=False)
-    email = models.CharField(max_length=128, unique=False)
-    hours = models.CharField(max_length=128, unique=False)
-    weekend_hours = models.CharField(max_length=128, unique=False)
+    address = models.CharField(max_length=128, unique=True, default=" ")
+    phone = models.CharField(max_length=128, unique=False, default=" ")
+    email = models.CharField(max_length=128, unique=False, default=" ")
+    hours = models.CharField(max_length=128, unique=False, default=" ")
+    weekend_hours = models.CharField(max_length=128, unique=False, default=" ")
     lat = models.CharField(max_length=20, unique=False)
     long = models.CharField(max_length=20, unique=False)
     url = models.URLField()
@@ -116,6 +116,10 @@ class Comment(models.Model):
     body = models.TextField(unique=False, default=" ")
     created_date = models.DateTimeField(default=timezone.now)
     approved_comment = models.BooleanField(default=True)
+
+    # def was_published_recently(self):
+    #     now = timezone.now()
+    #     return now - datetime.time
 
     def approve(self):
         self.approved_comment = True
