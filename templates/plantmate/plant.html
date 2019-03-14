@@ -54,12 +54,90 @@
                 {% endif %}
                 </p>
 
+                            {% if user.is_authenticated %}
 
+
+                <script>
+                    plantIsInWishlist = false;
+                    plantIsInSavedPlants = false;
+                </script>
+                {% for wish in wishlistplants %}
+                    {% ifequal wish.wishlist_plant plant.slug %}
+                        <script>
+                            plantIsInWishlist = true;
+                        </script>
+                    {% endifequal %}
+                {% endfor %}
+                {% for saved in saved_plants %}
+                    {% ifequal saved.saved_plant plant.slug %}
+                        <script>
+                            plantIsInSavedPlants = true;
+                        </script>
+                    {% endifequal %}
+                {% endfor %}
+                <div class="col-sm-6">
+                    <div id="saved_button" style="display: block">
+                        <form method="post" action="{% url 'save_plant' %}">
+                            {% csrf_token %}
+                            <input type="hidden" id="saved_plant" name="saved_plant" value={{ plant.slug }}>
+                            <button type="submit" name="saved_plants">add plant to my plants</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div id="wishlist_button" style="display: block">
+                        <form method="post" action="{% url 'wishlist_plant' %}">
+                            {% csrf_token %}
+                            <input type="hidden" id="wishlist_plant" name="wishlist_plant" value={{ plant.slug }}>
+                            <button type="submit" name="wishlist">add plant to wishlist</button>
+                        </form>
+                    </div>
+                </div>
+
+                <script>
+                    console.log(plantIsInWishlist + " greetings");
+                    if (plantIsInWishlist) {
+                        document.getElementById("wishlist_button").style.display = "none";
+                    } else {
+                        document.getElementById("wishlist_button").style.display = "block";
+                    }
+                    if (plantIsInSavedPlants) {
+                        document.getElementById("saved_button").style.display = "none";
+                    } else {
+                        document.getElementById("saved_button").style.display = "block";
+                    }
+                </script>
+
+                {% for wish in wishlistplants %}
+                    {% ifequal wish.wishlist_plant plant.slug %}
+                        <form method="post" action="{% url 'remove_wishlist_plant' %}">
+                            {% csrf_token %}
+                            <input type="hidden" id="remove_wishlist_plant" name="wishlist_plant"
+                                   value={{ plant.slug }}>
+                            <button type="submit" name="remove_wishlist">remove plant from wishlist</button>
+                        </form>
+                    {% endifequal %}
+                {% endfor %}
+
+                {% for saved in saved_plants %}
+                    {% ifequal saved.saved_plant plant.slug %}
+                        <form method="post" action="{% url 'remove_saved_plant' %}">
+                            {% csrf_token %}
+                            <input type="hidden" id="saved_plant" name="saved_plant" value={{ plant.slug }}>
+                            <button type="submit" name="remove_saved_plant">remove plant from my plants</button>
+
+                        </form>
+                    {% endifequal %}
+                {% endfor %}
+            {% endif %}
 
     </div><!--end card body-->
 </div><!--end card-->
 </div><!--end class"col-md-6" with card in it-->
 </div><!-- end row-->
+
+
 
 
 <!---- COMMENT BOX ---------------------------------------------------------------------------------------------->
