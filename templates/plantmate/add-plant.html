@@ -6,9 +6,10 @@
     {% endblock %}
 {% endblock %}
 
-
 {% block body_block %}
-    <h1 xmlns="http://www.w3.org/1999/html">add a Plant</h1>
+<div class="jumbotron">
+    <h1> Add a Plant</h1>
+</div>
     <div>
         <form role="form" id="plant_form" method="post" enctype="multipart/form-data" action="{% url 'add_plant' %}">
             {% csrf_token %}

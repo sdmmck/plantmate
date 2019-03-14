@@ -1,3 +1,4 @@
+<!--
 {% extends 'plantmate/base.html' %}
 {% load staticfiles %}
 {% block head_block %}
@@ -6,7 +7,9 @@
     {% endblock %}
 {% endblock %}
 {% block body_block %}
+<div class="jumbotron">
     <h1>Register for Plantmate!</h1>
+</div>
     {% if registered %}
         Thank you for registering!
         <a href="{% url 'home' %}">Return to homepage</a><br/>
@@ -20,4 +23,4 @@
             <input type="submit" name="submit" value="Register"/>
         </form>
     {% endif %}
-{% endblock %}
+{% endblock %}-->

@@ -8,7 +8,9 @@
 
 {% block body_block %}
     {% if business %}
+<div class="jumbotron">
         <h1>{{ business.name }}</h1>
+</div>
         <p>{{ business.address }}</p>
         <p>{{ business.phone }}
         <br>{{ business.email }}</p>
