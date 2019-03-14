@@ -1,10 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from plantmateApp.models import Business, Plant, PlantImage, UserWishlistPlants, UserSavedPlants, UserProfile, User, Comment
-from plantmateApp.forms import BusinessForm, UserForm, UserProfileForm, PlantForm, ImageForm, SavePlantForm, WishlistPlantForm, CommentForm
+from plantmateApp.forms import BusinessForm, UserForm, ProfileImageForm, PlantForm, ImageForm, SavePlantForm, WishlistPlantForm, CommentForm
 from django.template.defaultfilters import slugify
+import json
+from django.core.serializers.json import DjangoJSONEncoder
 
 
 def home(request):
@@ -87,7 +89,10 @@ def wishlist_plant(request):
 
 
 def your_plantmate(request):
-    return render(request, 'plantmate/your-plantmate.html')
+    context_dict = {}
+    plants = plants_as_list()
+    context_dict['plants'] = plants
+    return render(request, 'plantmate/your-plantmate.html', context=context_dict)
 
 
 @login_required
@@ -259,7 +264,16 @@ def add_image(request, plant_name_slug):
   
 def quiz(request):
     context_dict = {}
+    plants = plants_as_list()
+    context_dict['plants'] = plants
     return render(request, 'plantmate/quiz.html', context=context_dict)
+
+
+def plants_as_list():
+    plants = Plant.objects.all().values()
+    plants_list = list(plants)
+    return JsonResponse(plants_list, safe=False)
+
 
 def login(request):
     context_dict = {}
@@ -278,6 +292,7 @@ def contact(request):
 
 def myaccount(request):
 
+    profile_image_form = ProfileImageForm(data=request.POST)
     saved_plants = set()
     wishlist_plants = set()
     username = User.objects.get(username=request.user)
@@ -290,7 +305,7 @@ def myaccount(request):
         saved_plants.add(Plant.objects.get(slug=saved.saved_plant))
 
     # 'user_profile': user_profile
-    context_dict = {'username': username, 'wishlist_plants': wishlist_plants, 'saved_plants': saved_plants}
+    context_dict = {'username': username, 'wishlist_plants': wishlist_plants, 'saved_plants': saved_plants, 'profile_image_form': profile_image_form}
     return render(request, 'plantmate/myaccount.html', context=context_dict)
 
 
@@ -321,29 +336,56 @@ def my_plants(request):
     return render(request, 'plantmate/myplants.html', context=context_dict)
 
 
-def register(request):
-    registered = False
+def add_profile_image(request):
+
+    context_dict = {}
+
+    user = request.user
 
     if request.method == 'POST':
-        user_form = UserForm(data=request.POST)
-        profile_form = UserProfileForm(data=request.POST)
-        if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
-            user.save()
+        form = ProfileImageForm(request.POST)
 
-            profile = profile_form.save(commit=False)
-            profile.user = user
+        if form.is_valid():
+            image = form.save(commit=False)
+            image.user = user
             if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
-            profile.save()
-            registered = True
+                image.picture = request.FILES['picture']
+            image.save()
+            context_dict['image'] = image
         else:
-            print(user_form.errors, profile_form.errors)
-    else:
-        user_form = UserForm()
-        profile_form = UserProfileForm()
-    return render(request, 'plantmate/register.html',
-                  {'user_form': user_form,
-                   'profile_form': profile_form,
-                   'registered': registered})
+            print(form.errors)
+            return myaccount(request)
+
+    return render(request, 'plantmate/myaccount.html', context=context_dict)
+
+
+def register(request):
+    return render(request, 'plantmate/register.html')
+#     print("register method reached ----------------------------------------------------------------------")
+#     registered = False
+#     if request.method == 'POST':
+#         print("first if reached ----------------------------------------------------------------------")
+#         user_form = UserForm(data=request.POST)
+#         profile_form = UserProfileForm(data=request.POST)
+#         if user_form.is_valid() and profile_form.is_valid():
+#             user = user_form.save()
+#             user.set_password(user.password)
+#             user.save()
+#
+#             profile = profile_form.save(commit=False)
+#             profile.user = user
+#             print (profile.user)
+#             print (profile)
+#             if 'picture' in request.FILES:
+#                 profile.picture = request.FILES['picture']
+#             profile.save()
+#             registered = True
+#         else:
+#             print(user_form.errors, profile_form.errors)
+#     else:
+#         user_form = UserForm()
+#         profile_form = UserProfileForm()
+#     return render(request, 'plantmate/register.html',
+#                   {'user_form': user_form,
+#                    'profile_form': profile_form,
+#                    'registered': registered})

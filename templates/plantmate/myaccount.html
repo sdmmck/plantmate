@@ -6,13 +6,22 @@ my account
 {% endblock %}
 {% endblock %}
 
+
 {% block body_block %}
 
 <div class="jumbotron">
     <h1>Hi {{ username }}!</h1><br>
     {% if user_profile.picture %}
-    <img src="{% static user_profile.picture %}" alt="profile picture"/><br>
+        <img src="{% static user_profile.picture %}" alt="profile picture"/><br>
+    {% else %}
+        <form id="profile_image_form" method="post" action="{% url 'add_profile_image' %}"
+              enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ profile_image_form.as_p }}
+            <input type="submit" name="submit" value="add a profile image"/>
+        </form>
     {% endif %}
+
 </div>
 <div class="row">
     <div class="col-md-6">
