@@ -1,52 +1,60 @@
 {% extends "plantmate/base.html" %}
 {% load staticfiles %}
 
-
-<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
-
 {% block head_block %}
-    {% block title_block %}
-        {{ slug }}
-    {% endblock %}
+{% block title_block %}
+{{ slug }}
+{% endblock %}
 {% endblock %}
 
 {% block body_block %}
 
-<!--    <div class="container">
-        {% if plant.picture %}
-            {% for i in image %}
-                {% ifequal i.plant_name plant.slug %}
-                    <img src="{% static i.picture %}"/>
-                {% endifequal %}
-            {% endfor %}
-        {% endif %}-->
+{% if plant %}
+<!-- JUMBOTRON ---------------------------------------------------------------------------------------------------->
+<div class="jumbotron">
+    <h1>{{ plant.name }}</h1><br/>
+    <h2><i>{{ plant.latin_name }}</i></h2><br/>
 
-        {% if plant %}
-            <div class="jumbotron">
-            <h1>{{ plant.name }}</h1><br/>
-            <h2><i>{{ plant.latin_name }}</i></h2><br/>
+</div>
+
+<!-- END JUMBOTRON ---------------------------------------------------------------------------------------------------->
+
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+           <div class="card-body align-items-center d-flex justify-content-center">
+                     <img src="{% static plant.picture %}" width="380" height="400" class="img-circle" alt="picture of plant"/><br/>
+           </div>
+            {% if user.is_authenticated %}
+            <div class="card-body align-items-center d-flex justify-content-center">
+                <a class="btn btn-primary btn-lg" href="/plant-list/{{ plant.slug }}/add-image" role="button">add a new image</a>
             </div>
+            {% endif %}
 
-                <img src="{% static plant.picture %}" width="380" height="400" class="img-circle"
-                     alt="picture of plant"/>
-            </div>
+        </div>
+    </div>
 
-                {{ plant.description }}<br/>
-                Grows to be: {{ plant.size }}<br/>
-                Thrives in a {{ plant.climate }} climate where it
-                is {{ plant.light }}<br/>
-                Best suited for the {{ plant.room }}<br/>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Details</h5>
+                <p class="card-text">
+                    {{ plant.description }}<br/>
+                <h6 class="card-subtitle mb-2 text-muted">Tags</h6>
+                Size: {{ plant.size }}<br/>
+                Climate: {{ plant.climate }}<br/>
+                Light: {{ plant.light }}<br/>
+                Room: {{ plant.room }}<br/>
                 {% if plant.characteristics %}
-                    Special because I am {{ plant.characteristics }}<br/>
+                Special characteristic: {{ plant.characteristics }}<br/>
                 {% endif %}
                 {% if plant.pet %}
-                    Suitable for pets? {{ plant.pet }}<br/>
-
-                    </div>
+                Suitable for pets: {{ plant.pet }}<br/>
                 {% endif %}
-            </div>
+                </p>
 
-            {% if user.is_authenticated %}
+                            {% if user.is_authenticated %}
 
 
                 <script>
@@ -89,7 +97,6 @@
 
                 <script>
                     console.log(plantIsInWishlist + " greetings");
-
                     if (plantIsInWishlist) {
                         document.getElementById("wishlist_button").style.display = "none";
                     } else {
@@ -101,8 +108,6 @@
                         document.getElementById("saved_button").style.display = "block";
                     }
                 </script>
-
-                <a href="/plant-list/{{ plant.slug }}/add-image">Add a new image</a><br/>
 
                 {% for wish in wishlistplants %}
                     {% ifequal wish.wishlist_plant plant.slug %}
@@ -125,48 +130,62 @@
                         </form>
                     {% endifequal %}
                 {% endfor %}
-
-
-                <div>
-                    <form method="POST" action="{% url 'add_comment' %}">
-                        {% csrf_token %}
-
-                        {#                        <div class="form-group row">#}
-                        {#                            <div class="col-md-10">#}
-                        <input type="hidden" id="plant_slug" name="plant_slug" value="{{ plant.slug }}">
-                        <input type="text" name="body" id="body" class="form-control round-0"
-                               placeholder="Leave some advice on caring for this plant...">
-
-                        {#                            </div>#}
-                        {#                            <div class="col-md-2">#}
-                        <button type="submit" name="add_comment" class="btn btn-success">Add comment</button>
-                        {#                            </div>#}
-                        {#                        </div>#}
-                    </form>
-                </div>
-                {% for comment in comments %}
-                    <div class="card border-info mb-3">
-                        <div class="card-header">
-                            {{ comment.user }} commented on {{ comment.created_date }}
-                        </div>
-                        <div class="card-body text-primary">
-                            <p class="card-text">
-                                {{ comment.body }}
-                            </p>
-                        </div>
-                    </div>
-                    <hr>
-                {% empty %}
-                    <p>no comments yet. be the first!</p>
-                    <hr>
-                {% endfor %}
-            {% else %}
-               Log in or sign up to add this plant to a wishlist!
             {% endif %}
+
+    </div><!--end card body-->
+</div><!--end card-->
+</div><!--end class"col-md-6" with card in it-->
+</div><!-- end row-->
+
+
+
+
+<!---- COMMENT BOX ---------------------------------------------------------------------------------------------->
+ {% if user.is_authenticated %}
+<div class="container">
+
+    <h3>Comments</h3><br/>
+
+    <form method="POST" action="{% url 'add_comment' %}">
+        {% csrf_token %}
+
+        <div class="form-group row">
+            <div class="col-md-10">
+                <input type="hidden" id="plant_slug" name="plant_slug" value="{{ plant.slug }}">
+                <input type="text" name="body" id="body" class="form-control round-0"
+                       placeholder="Leave some advice on caring for this plant...">
+
+            </div>
+            <div class="col-md-2">
+                <button type="submit" name="add_comment" class="btn btn-success">Add comment</button>
+            </div>
+        </div>
+    </form>
+
+
+    {% for comment in comments %}
+    <div class="card border-info mb-3">
+        <div class="card-header">
+            {{ comment.user }} commented on {{ comment.created_date }}
+        </div>
+        <div class="card-body text-primary">
+            <p class="card-text">
+                {{ comment.body }}
+            </p>
+        </div>
+    </div>
+    <hr>
+    {% empty %}
+    <p>no comments yet. be the first!</p>
+    <hr>
+    {% endfor %}
+
+    {% endif %}
         {% else %}
-        Plant has not been added
-        {% endif %}
-    <a href="/plant-list/{{ plant.slug }}/add-image">Add a new image</a><br/>
-    <a href="{% url 'plant_list' %}">See the A-Z of plants</a><br/>
+    Plant has not been added
+    {% endif %}
+
+</div>
+
 
 {% endblock %}
