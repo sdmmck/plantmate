@@ -31,7 +31,7 @@ class Plant (models.Model):
     size_choices = (("small", "Small"), ("medium", "Medium"), ("large", "Large"))
     climate_choices = (("cool", "Cool"), ("warm", "Warm"))
     light_choices = (("sunny", "Sunny"), ("shady", "Shady"))
-    room_choices = (("Living-room/Bedroom", "living-room/bedroom"), ("Kitchen/Bathroom", "kitchen/bathroom"))
+    room_choices = (("living-room/bedroom", "Living-room/Bedroom"), ("kitchen/bathroom", "Kitchen/Bathroom"))
 
     name = models.CharField(max_length=128, unique=True)
     latin_name = models.CharField(max_length=128, unique=True)

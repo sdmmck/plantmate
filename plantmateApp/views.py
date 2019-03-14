@@ -151,7 +151,8 @@ def add_image(request, plant_name_slug):
 
     return render(request, 'plantmate/add-image.html', context=context_dict)
 
-#have made this login_required to avoid error coming up when user is not logged in
+# have made this login_required to avoid error coming up when user is not logged in
+
 
 def show_plant(request, plant_name_slug):
 
@@ -340,6 +341,7 @@ def add_profile_image(request):
     context_dict = {}
 
     user = UserProfile.objects.get_or_create(user=request.user)[0]
+
 
     if request.method == 'POST':
         form = ProfileImageForm(request.POST)

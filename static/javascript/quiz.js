@@ -1,11 +1,7 @@
 function buttons() {
-
     document.getElementById("hi").innerHTML = "IN YOUR FACE DJANGO I AM A FULLY FUNCTIONAL BUTTON";
-
     console.log(allplants);
-
     showPlant();
-
 }
 
 
@@ -15,11 +11,38 @@ function showPlant() {
     let result = window.location.search.substring(n + 1);
     let results = result.split("&");
 
-    for(let r = 0; r<results.length; r++){
+    for (let r = 0; r < results.length; r++) {
         results[r] = results[r].split("=")[1];
     }
 
     document.getElementById("results").innerText = results.toString();
+
+    let plantMatches = [];
+
+    for(let i = 0; i<allplants.length; i++){
+
+        if(results[0].toLowerCase()===allplants[i].size.toLowerCase()){
+            console.log(allplants[i].name+" "+allplants[i].size);
+            plantMatches.push(allplants[i]);
+        }
+
+    }
+
+    for(let i = 0; i<plantMatches.length; i++){
+
+        if(results[1].toLowerCase()!==plantMatches[i].bright.toLowerCase()){
+            console.log();
+            plantMatches.remove(plantMatches[i]);
+        }
+
+    }
+
+    //
+    // for (let p in allplants) {
+    //     console.log();
+    // }
+    //
+    // console.log(sizeFound.toString());
 
 
 //    things to do:

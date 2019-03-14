@@ -41,7 +41,7 @@ def populate():
     plants = [
         {"name": "Aloe Vera",
          "latin_name": "Aloe barbadensis miller",
-         "size": "small",
+         "size": "Small",
          "characteristics": "Air purifying",
          "climate": "cool",
          "light": "sunny",
