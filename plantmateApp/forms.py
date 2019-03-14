@@ -71,6 +71,7 @@ class ProfileImageForm(forms.ModelForm):
         fields = ('picture',)
 
 
+
 class SavePlantForm(forms.ModelForm):
     saved_plant = forms.HiddenInput()
 
