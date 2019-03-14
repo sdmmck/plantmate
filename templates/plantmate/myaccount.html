@@ -10,7 +10,9 @@ my account
 {% block body_block %}
 
 <div class="jumbotron">
+
     <h1>Hi {{ username }}!</h1><br>
+
     {% if user_profile.picture %}
         <img src="{% static user_profile.picture %}" alt="profile picture" width="100px" height="100px"/><br>
     {% else %}

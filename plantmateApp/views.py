@@ -296,7 +296,7 @@ def myaccount(request):
     saved_plants = set()
     wishlist_plants = set()
     username = User.objects.get(username=request.user)
-    user_profile = UserProfile.objects.get(user=username)
+    user_profile = UserProfile.objects.get_or_create(user=username)[0]
 
     for wish in UserWishlistPlants.objects.filter(user=request.user):
         wishlist_plants.add(Plant.objects.get(slug=wish.wishlist_plant))
@@ -339,21 +339,19 @@ def add_profile_image(request):
 
     context_dict = {}
 
-    user = request.user
+    user = UserProfile.objects.get_or_create(user=request.user)[0]
 
     if request.method == 'POST':
         form = ProfileImageForm(request.POST)
 
         if form.is_valid():
-            image = form.save(commit=False)
-            image.user = user
             if 'picture' in request.FILES:
-                image.picture = request.FILES['picture']
-            image.save()
-            context_dict['image'] = image
+                user.picture = (request.FILES['picture'])
+            user.save()
+            context_dict['image'] = user.picture
         else:
             print(form.errors)
-            return myaccount(request)
+        return myaccount(request)
 
     return render(request, 'plantmate/myaccount.html', context=context_dict)
 

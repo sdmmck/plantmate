@@ -1,8 +1,6 @@
-<!--
 {% extends "plantmate/base.html" %}
 {% load staticfiles %}
 {% block head_block %}
-    <script type="text/javascript" src={% static "javascript/quiz.js" %}></script>
     {% block title_block %}
         <title>Your plantmate</title>
     {% endblock %}
@@ -17,5 +15,9 @@
             let allplants = JSON.parse('{{plant|safe|escapejs}}');
         </script>
     {% endfor %}
+
+    <div id="results"></div>
+
+    <script type="text/javascript" src={% static "javascript/quiz.js" %}></script>
 {% endblock %}
--->
+
