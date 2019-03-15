@@ -89,9 +89,17 @@ def wishlist_plant(request):
 
 
 def your_plantmate(request):
-    context_dict = {}
     plants = plants_as_list()
-    context_dict['plants'] = plants
+
+    if request.user.is_authenticated():
+        wishlistplants = UserWishlistPlants.objects.filter(user=request.user)
+        saved_plants = UserSavedPlants.objects.filter(user=request.user)
+        context_dict = {'plants': plants, 'wishlistplants': wishlistplants,
+                        'saved_plants': saved_plants}
+
+    else:
+        context_dict = {'plants': plants}
+
     return render(request, 'plantmate/your-plantmate.html', context=context_dict)
 
 
