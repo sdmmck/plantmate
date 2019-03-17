@@ -48,6 +48,7 @@
                         {% endif %}
                         </p>
                         {% if user.is_authenticated %}
+
             <script>
                 plantIsInWishlist = false;
                 plantIsInSavedPlants = false;
@@ -112,6 +113,7 @@
                 </div>
 
         {% endif %}
+
                     </div><!--end card body-->
                 </div><!--end card-->
             </div><!--end class"col-md-6" with card in it-->
@@ -194,7 +196,6 @@
             });
         });
     </script>
-
 <script>
     if (plantIsInWishlist) {
         document.getElementById("wishlist_button").style.display = "none";
