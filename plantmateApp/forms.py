@@ -12,11 +12,15 @@ class BusinessForm(forms.ModelForm):
                               help_text="Enter the Business address.")
     lat = forms.CharField(widget=forms.HiddenInput(), required=True)
     long = forms.CharField(widget=forms.HiddenInput(), required=True)
+    url = forms.CharField(required=False)
+    email = forms.CharField(required=False)
+    phone = forms.CharField(required=False)
+    opening_hours = forms.CharField(required=False)
 
     class Meta:
 
         model = Business
-        fields = ('name', 'address', 'lat', 'long')
+        fields = ('name', 'address', 'lat', 'long', 'phone', 'email', 'opening_hours', 'url')
 
 
 class PlantForm(forms.ModelForm):
@@ -92,7 +96,10 @@ class WishlistPlantForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     plant_slug = forms.HiddenInput()
     body = forms.Textarea()
+    likes = forms.HiddenInput()
+    dislikes = forms.HiddenInput()
+
     class Meta:
         model = Comment
-        fields = ('plant_slug', 'body')
-        exclude = ('approved_comment',)
+        fields = ('plant_slug', 'body' )
+        exclude = ('approved_comment', )
