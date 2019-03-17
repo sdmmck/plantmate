@@ -4,20 +4,29 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 
-class Business (models.Model):
+class Business(models.Model):
     name = models.CharField(max_length=128, unique=True, default="")
     address = models.TextField(unique=True, default="")
-    phone = models.CharField(max_length=128, unique=False, default="")
+    phone = models.CharField(max_length=20, unique=False, default="")
     email = models.CharField(max_length=128, unique=False, default="")
-    hours = models.CharField(max_length=128, unique=False, default="")
-    weekend_hours = models.CharField(max_length=128, unique=False, default="")
+    opening_hours = models.CharField(max_length=256, unique=False, default="")
     lat = models.CharField(max_length=20, unique=False, default="")
     long = models.CharField(max_length=20, unique=False, default="")
-    url = models.URLField()
+    url = models.URLField(unique=False)
     slug = models.SlugField()
 
+    def get_unique_slug(self):
+        slug = slugify(self.name)
+        unique_slug = slug
+        num = 1
+        while Business.objects.filter(slug=unique_slug).exists():
+            unique_slug = '{}-{}'.format(slug, num)
+            num += 1
+        return unique_slug
+
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
+        if not self.slug:
+            self.slug = self.get_unique_slug()
         super(Business, self).save(*args, **kwargs)
 
     class Meta:
@@ -27,7 +36,7 @@ class Business (models.Model):
         return self.name
 
 
-class Plant (models.Model):
+class Plant(models.Model):
     size_choices = (("small", "Small"), ("medium", "Medium"), ("large", "Large"))
     climate_choices = (("cool", "Cool"), ("warm", "Warm"))
     light_choices = (("sunny", "Sunny"), ("shady", "Shady"))
@@ -35,16 +44,17 @@ class Plant (models.Model):
 
     name = models.CharField(max_length=128, unique=True)
     latin_name = models.CharField(max_length=128, unique=True)
-    size = models.CharField(max_length=128, unique=False,  blank=False, default="Small", choices=size_choices)
+    size = models.CharField(max_length=128, unique=False, blank=False, default="Small", choices=size_choices)
     characteristics = models.CharField(max_length=128, unique=False)
     climate = models.CharField(max_length=128, unique=False, blank=False, default="cool", choices=climate_choices)
     light = models.CharField(max_length=128, unique=False, blank=False, default="sunny", choices=light_choices)
-    room = models.CharField(max_length=128, unique=False, blank=False, default="Living-room/Bedroom", choices=room_choices)
+    room = models.CharField(max_length=128, unique=False, blank=False, default="Living-room/Bedroom",
+                            choices=room_choices)
     pet = models.CharField(max_length=128, unique=False)
     slug = models.SlugField()
     url = models.URLField()
     picture = models.ImageField(upload_to='main_plant_images', blank=True, null=True)
-    #DESCRIPTION UNIQUE NEEDS TO BE CHANGED TO TRUE AND BLANK TO FALSE WHEN REAL DESCRIPTIONS ADDED
+    # DESCRIPTION UNIQUE NEEDS TO BE CHANGED TO TRUE AND BLANK TO FALSE WHEN REAL DESCRIPTIONS ADDED
     description = models.TextField(unique=False, blank=True)
 
     def save(self, *args, **kwargs):
@@ -58,7 +68,7 @@ class Plant (models.Model):
         return self.name
 
 
-class PlantImage (models.Model):
+class PlantImage(models.Model):
     picture = models.ImageField(upload_to='media/user_profile_images', blank=True, null=True)
     plant_name = models.CharField(max_length=128, unique=False, default=" ")
 
@@ -70,7 +80,6 @@ class PlantImage (models.Model):
 
 
 class UserProfile(models.Model):
-
     user = models.OneToOneField(User)
     website = models.URLField(blank=True)
     picture = models.ImageField(upload_to='profile_images', blank=True)

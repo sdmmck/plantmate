@@ -12,11 +12,15 @@ class BusinessForm(forms.ModelForm):
                               help_text="Enter the Business address.")
     lat = forms.CharField(widget=forms.HiddenInput(), required=True)
     long = forms.CharField(widget=forms.HiddenInput(), required=True)
+    url = forms.CharField(required=False)
+    email = forms.CharField(required=False)
+    phone = forms.CharField(required=False)
+    opening_hours = forms.CharField(required=False)
 
     class Meta:
 
         model = Business
-        fields = ('name', 'address', 'lat', 'long')
+        fields = ('name', 'address', 'lat', 'long', 'phone', 'email', 'opening_hours', 'url')
 
 
 class PlantForm(forms.ModelForm):
