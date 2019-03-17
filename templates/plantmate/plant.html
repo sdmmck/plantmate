@@ -54,7 +54,14 @@
                 {% endif %}
                 </p>
 
-                            {% if user.is_authenticated %}
+
+
+    </div><!--end card body-->
+</div><!--end card-->
+</div><!--end class"col-md-6" with card in it-->
+</div><!-- end row-->
+
+            {% if user.is_authenticated %}
 
 
                 <script>
@@ -109,6 +116,8 @@
                     }
                 </script>
 
+                <a href="/plant-list/{{ plant.slug }}/add-image">Add a new image</a><br/>
+
                 {% for wish in wishlistplants %}
                     {% ifequal wish.wishlist_plant plant.slug %}
                         <form method="post" action="{% url 'remove_wishlist_plant' %}">
@@ -131,14 +140,6 @@
                     {% endifequal %}
                 {% endfor %}
             {% endif %}
-
-    </div><!--end card body-->
-</div><!--end card-->
-</div><!--end class"col-md-6" with card in it-->
-</div><!-- end row-->
-
-
-
 
 <!---- COMMENT BOX ---------------------------------------------------------------------------------------------->
  {% if user.is_authenticated %}
@@ -181,7 +182,7 @@
     {% endfor %}
 
     {% endif %}
-        {% else %}
+     {% else %}
     Plant has not been added
     {% endif %}
 
@@ -189,3 +190,4 @@
 
 
 {% endblock %}
+
