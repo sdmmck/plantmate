@@ -125,11 +125,11 @@ def like_comment(request):
         com_id = request.GET['comment_id']
     likes = 0
     if com_id:
-        com = Comment.objects.get(id=int(com_id))
-        if com:
-            likes = com.likes + 1
-            com.likes = likes
-            com.save()
+        comment = Comment.objects.get(id=int(com_id))
+        if comment:
+            likes = comment.likes + 1
+            comment.likes = likes
+            comment.save()
     return HttpResponse(likes)
 
 
