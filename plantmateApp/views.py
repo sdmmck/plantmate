@@ -114,9 +114,8 @@ def add_comment(request):
                 return show_plant(request, comment.plant_slug)
             else:
                 form = CommentForm()
-    template = 'plantmate/add-comment.html'
     context_dict = {'form': form}
-    return render(request, template, context=context_dict)
+    return render(request, 'plantmate/myaccount.html', context=context_dict)
 
 
 @login_required

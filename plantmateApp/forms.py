@@ -99,8 +99,7 @@ class CommentForm(forms.ModelForm):
     likes = forms.HiddenInput()
     dislikes = forms.HiddenInput()
 
-
     class Meta:
         model = Comment
-        fields = ('plant_slug', 'body')
-        exclude = ('approved_comment',)
+        fields = ('plant_slug', 'body' )
+        exclude = ('approved_comment', )

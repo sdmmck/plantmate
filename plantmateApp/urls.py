@@ -29,5 +29,5 @@ urlpatterns = [
     url(r'^myaccount/add_profile_image/$', views.add_profile_image, name='add_profile_image'),
     url(r'^plants-as-list/$', views.plants_as_list, name='plants_as_list'),
     url(r'^like_comment/', views.like_comment, name='like_comment'),
-    url(r'dislike_comment/', views.like_comment, name='dislike_comment'),
+    url(r'^dislike_comment/', views.dislike_comment, name='dislike_comment'),
 ]
