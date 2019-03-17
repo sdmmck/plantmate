@@ -14,19 +14,17 @@
             <h2><i>{{ plant.latin_name }}</i></h2><br/>
         </div>
         <!-- END JUMBOTRON ---------------------------------------------------------------------------------------------------->
-        <div class="row">
+<div class="row">
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body align-items-center d-flex justify-content-center">
-                        <img src="{% static plant.picture %}" width="380" height="400" class="img-circle"
+                        <img src="{% static plant.picture %}" width="380" height="400"
                              alt="picture of plant"/><br/>
                     </div>
-
-
                     {% if user.is_authenticated %}
                         <div class="card-body align-items-center d-flex justify-content-center">
                             <a class="btn btn-success" href="/plant-list/{{ plant.slug }}/add-image"
-                               role="button">add a new image</a>
+                               role="button" >add a new image</a>
                         </div>
                     {% endif %}
                 </div>
@@ -50,82 +48,72 @@
                         {% endif %}
                         </p>
                         {% if user.is_authenticated %}
-                            <script>
-                                plantIsInWishlist = false;
-                                plantIsInSavedPlants = false;
-                            </script>
-                            {% for wish in wishlistplants %}
-                                {% ifequal wish.wishlist_plant plant.slug %}
-                                    <script>
-                                        plantIsInWishlist = true;
-                                    </script>
-                                {% endifequal %}
-                            {% endfor %}
-                            {% for saved in saved_plants %}
-                                {% ifequal saved.saved_plant plant.slug %}
-                                    <script>
-                                        plantIsInSavedPlants = true;
-                                    </script>
-                                {% endifequal %}
-                            {% endfor %}
-                            <div class="row">
+
+            <script>
+                plantIsInWishlist = false;
+                plantIsInSavedPlants = false;
+            </script>
+            {% for wish in wishlistplants %}
+                {% ifequal wish.wishlist_plant plant.slug %}
+                    <script>
+                        plantIsInWishlist = true;
+                    </script>
+                {% endifequal %}
+            {% endfor %}
+            {% for saved in saved_plants %}
+                {% ifequal saved.saved_plant plant.slug %}
+                    <script>
+                        plantIsInSavedPlants = true;
+                    </script>
+                {% endifequal %}
+            {% endfor %}
+             <div class="row">
+                <div class="col-sm-6">
+                    <div id="saved_button" style="display: block">
+                        <form method="post" action="{% url 'save_plant' %}">
+                            {% csrf_token %}
+                            <input type="hidden" id="saved_plant" name="saved_plant" value={{ plant.slug }}>
+                            <button type="submit" name="saved_plants" class="btn btn-success">add to my plants</button>
+                        </form>
+                    </div>
+                    {% for saved in saved_plants %}
+                        {% ifequal saved.saved_plant plant.slug %}
+                                <form method="post" action="{% url 'remove_saved_plant' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" id="saved_plant" name="saved_plant" value={{ plant.slug }}>
+                                    <button type="submit" name="remove_saved_plant" class="btn btn-success">remove from my plants</button>
+                                </form>
+
+                         {% endifequal %}
+                     {% endfor %}
+
+                </div>
+
+                <div class="col-sm-6">
+                    <div id="wishlist_button" style="display: block">
+                        <form method="post" action="{% url 'wishlist_plant' %}">
+                            {% csrf_token %}
+                            <input type="hidden" id="wishlist_plant" name="wishlist_plant" value={{ plant.slug }}>
+                            <button type="submit" name="wishlist" class="btn btn-success">add to wishlist</button>
+                        </form>
+                    </div>
+
+                    {% for wish in wishlistplants %}
+                        {% ifequal wish.wishlist_plant plant.slug %}
                             <div class="col-sm-6">
-                                <div id="saved_button" style="display: block">
-                                    <form method="post" action="{% url 'save_plant' %}">
-                                        {% csrf_token %}
-                                        <input type="hidden" id="saved_plant" name="saved_plant"
-                                               value={{ plant.slug }}>
-                                        <button type="submit" name="saved_plants" class="btn btn-success">add to my
-                                            plants
-                                        </button>
-                                    </form>
-                                </div>
-                                {% for saved in saved_plants %}
-                                    {% ifequal saved.saved_plant plant.slug %}
-                                        <form method="post" action="{% url 'remove_saved_plant' %}">
-                                            {% csrf_token %}
-                                            <input type="hidden" id="saved_plant" name="saved_plant"
-                                                   value={{ plant.slug }}>
-                                            <button type="submit" name="remove_saved_plant" class="btn btn-success">
-                                                remove
-                                                from
-                                                my plants
-                                            </button>
-                                        </form>
-                                    {% endifequal %}
-                                {% endfor %}
+                                <form method="post" action="{% url 'remove_wishlist_plant' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" id="remove_wishlist_plant" name="wishlist_plant"
+                                           value={{ plant.slug }}>
+                                    <button type="submit" name="remove_wishlist" class="btn btn-success">remove from wishlist</button>
+                                </form>
                             </div>
-                            <div class="col-sm-6">
-                                <div id="wishlist_button" style="display: block">
-                                    <form method="post" action="{% url 'wishlist_plant' %}">
-                                        {% csrf_token %}
-                                        <input type="hidden" id="wishlist_plant" name="wishlist_plant"
-                                               value={{ plant.slug }}>
-                                        <button type="submit" name="wishlist" class="btn btn-success">add to wishlist
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div id="wishlist_button" style="display: block">
-                                    <form method="post" action="{% url 'wishlist_plant' %}">
-                                        {% csrf_token %}
-                                        <input type="hidden" id="wishlist_plant" name="wishlist_plant"
-                                               value={{ plant.slug }}>
+                        {% endifequal %}
+                    {% endfor %}
+                </div>
 
-                                        <button type="submit" name="remove_wishlist" class="btn btn-success">remove from
-                                            wishlist
-                                        </button>
+        {% endif %}
 
-                                    </form>
-                                </div>
-
-
-                            </div>
-
-
-                        {% endif %}
-                        </div>
                     </div><!--end card body-->
                 </div><!--end card-->
             </div><!--end class"col-md-6" with card in it-->
@@ -208,20 +196,18 @@
             });
         });
     </script>
-
-    <script>
-        if (plantIsInWishlist) {
-            document.getElementById("wishlist_button").style.display = "none";
-        } else {
-            document.getElementById("wishlist_button").style.display = "block";
-        }
-        if (plantIsInSavedPlants) {
-            document.getElementById("saved_button").style.display = "none";
-        } else {
-            document.getElementById("saved_button").style.display = "block";
-        }
-    </script>
-
+<script>
+    if (plantIsInWishlist) {
+        document.getElementById("wishlist_button").style.display = "none";
+    } else {
+        document.getElementById("wishlist_button").style.display = "block";
+    }
+    if (plantIsInSavedPlants) {
+        document.getElementById("saved_button").style.display = "none";
+    } else {
+        document.getElementById("saved_button").style.display = "block";
+    }
+</script>
 {% endblock %}
 
 
