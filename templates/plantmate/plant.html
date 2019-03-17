@@ -112,10 +112,11 @@
                 </div>
 
         {% endif %}
-                    </div><!--end card body-->
-                </div><!--end card-->
-            </div><!--end class"col-md-6" with card in it-->
-        </div><!-- end row-->
+                    </div>
+                </div>
+            </div>
+        </div>
+</div> <!-- do not delete, end of row!! ----------->
 
         <!---- COMMENT BOX ---------------------------------------------------------------------------------------------->
 
@@ -168,6 +169,7 @@
     {% else %}
         <p>no plant added yet with this name!</p>
     {% endif %}
+
     <!----AJAX FUNCTIONALITY FOR LIKING/DISLIKING COMMENTS--->
     <script src="{% static '/javascript/jquery.min.js' %}"></script>
     <script rel="javascript" type="text/javascript">
@@ -208,6 +210,3 @@
     }
 </script>
 {% endblock %}
-
-
-

@@ -27,28 +27,27 @@ my account
 </div>
 <div class="row">
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="container" >
 
                 <h2>My Plants</h2>
                 {% if saved_plants %}
-                {% for saved in saved_plants %}
-                    <div class="card" style="width: 10rem; height: 15rem">
-                        <img src="{% static saved.picture %}" class="card-img-top" alt="{{ saved.name }}">
-                            <div class="card-body">
-                                <h6 class="card-title">{{ saved.name }}</h6>
-                                <a href="/plant-list/{{ saved.slug }}" class=" btn-primary stretched-link"></a>
-                            </div>
-                    </div>
+                    {% for saved in saved_plants %}
+                        <div class="card" style="width: 10rem; height: 15rem">
+                            <img src="{% static saved.picture %}" class="card-img-top" alt="{{ saved.name }}">
+                                <div class="card-body">
+                                    <h6 class="card-title">{{ saved.name }}</h6>
+                                    <a href="/plant-list/{{ saved.slug }}" class=" btn-primary stretched-link"></a>
+                                </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
 
-
-            {% endfor %}
-            {% endif %}
         </div>
     </div>
 
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="container" >
 
 

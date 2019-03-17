@@ -30,7 +30,11 @@ plant a-z
 </ul>
 {% endif %}
 {% if user.is_authenticated %}
-<a href="{% url 'add_plant' %}">add a new plant</a><br/>
+  <div class="col-md-4">
+<a class="btn btn-success" href="{% url 'add_plant' %}"
+                               role="button" >Add a New Plant</a>
+  </div>
+
 {% else %}
 <p>You can add your own plant if you <a href="{% url 'add_plant' %}">log in</a> or <a href="{% url 'add_plant' %}">sign
     up!</a><br/>
