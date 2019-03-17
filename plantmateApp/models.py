@@ -123,6 +123,8 @@ class Comment(models.Model):
     body = models.TextField(unique=False, default=" ")
     created_date = models.DateTimeField(default=timezone.now)
     approved_comment = models.BooleanField(default=True)
+    likes = models.IntegerField(default=0)
+    dislikes = models.IntegerField(default=0)
 
     def approve(self):
         self.approved_comment = True
