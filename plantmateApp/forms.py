@@ -96,6 +96,10 @@ class WishlistPlantForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     plant_slug = forms.HiddenInput()
     body = forms.Textarea()
+    likes = forms.HiddenInput()
+    dislikes = forms.HiddenInput()
+
+
     class Meta:
         model = Comment
         fields = ('plant_slug', 'body')

@@ -143,6 +143,16 @@
                             {{ comment.body }}
                         </p>
                     </div>
+                    <div class="card-footer">
+                            <button id="like_button" data-likecomid="{{ comment.id }}"
+                                    class="btn btn-outline-primary btn-sm" type="button">
+                                Like
+                            </button> <strong id="like_count">{{ comment.likes }}</strong>
+                            <button id="dislike_button" data-discomid="{{ comment.id }}"
+                                    class="btn btn-outline-primary btn-sm" type="button">
+                                Dislike
+                            </button> <strong id="dislike_count">{{ comment.dislikes }}</strong>
+                    </div>
                 </div>
                 <hr>
             {% empty %}
@@ -154,6 +164,34 @@
         No plant with this name has been added yet.
     {% endif %}
 </div>
+    <!----AJAX FUNCTIONALITY FOR LIKING/DISLIKING COMMENTS--->
+    <script src="{% static '/javascript/jquery.min.js' %}"></script>
+    <script rel="javascript" type="text/javascript">
+    $(document).ready(function() {
+        $('#like_button').click(function(){
+            var comid;
+            comid = $(this).attr("data-likecomid");
+            console.log(comid);
+            $.get("{% url 'like_comment' %}", {comment_id: comid}, function(data) {
+                    console.log("in get function");
+                    $('#like_count').html(data);
+                    console.log("html data");
+                });
+        });
+        $('#dislike_button').click(function(){
+            var comid;
+            comid = $(this).attr("data-discomid");
+            console.log(comid);
+            $.get("{% url 'dislike_comment' %}", {comment_id: comid}, function(data){
+                console.log("in get function");
+                $('#dislike_count').html(data);
+                console.log("printed html data");
+            });
+        });
+    });
+</script>
+
+{% endblock %}
 
 <script>
     if (plantIsInWishlist) {
@@ -168,5 +206,4 @@
     }
 </script>
 
-{% endblock %}
 
