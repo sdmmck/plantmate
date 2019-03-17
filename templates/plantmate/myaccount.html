@@ -1,69 +1,181 @@
 {% extends "plantmate/base.html" %}
 {% load staticfiles %}
 {% block head_block %}
-{% block title_block %}
-my account
-{% endblock %}
+    {% block title_block %}
+        my account
+    {% endblock %}
 {% endblock %}
 
 
 {% block body_block %}
+    <body onload="onload()">
+    <div class="jumbotron">
 
-<div class="jumbotron">
+        <h1>Hi {{ username }}!</h1><br>
 
-    <h1>Hi {{ username }}!</h1><br>
-
-    {% if user_profile.picture %}
-        <img src="{% static user_profile.picture %}" alt="profile picture" width="100px" height="100px"/><br>
-    {% else %}
-        <form id="profile_image_form" method="post" action="{% url 'add_profile_image' %}"
-              enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ profile_image_form.as_p }}
-            <input type="submit" name="submit" value="add a profile image"/>
-        </form>
-    {% endif %}
-
-</div>
-<div class="row">
-    <div class="col-md-6">
-        <h2>my plants</h2>
-        {% if saved_plants %}
-        {% for saved in saved_plants %}
-        <a href="/plant-list/{{ saved.slug }}">{{ saved.name }}</a>
-        <img src="{% static saved.picture %}" width="100">
-        </br>
-        {% endfor %}
-        {% endif %}
-    </div>
-    <div class="col-md-6">
-        <h2>wishlist</h2>
-        {% if wishlist_plants %}
-        {% for wish in wishlist_plants %}
-        <a href="/plant-list/{{ wish.slug }}">{{ wish.name }}</a>
-        <img src="{% static wish.picture %}" width="100">
-        </br>
-        {% endfor %}
+        {% if user_profile.picture %}
+            <img src="{% static user_profile.picture %}" alt="profile picture" width="100px" height="100px"/><br>
+        {% else %}
+            <form id="profile_image_form" method="post" action="{% url 'add_profile_image' %}"
+                  enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ profile_image_form.as_p }}
+                <input type="submit" name="submit" value="add a profile image"/>
+            </form>
         {% endif %}
 
     </div>
-</div>
     <div class="row">
-        <div class="col-md-12">
-
-            {% if businesses%}
-                {% for business in businesses %}
-
-                {%  endfor %}
+        <div class="col-md-6">
+            <h2>my plants</h2>
+            {% if saved_plants %}
+                {% for saved in saved_plants %}
+                    <a href="/plant-list/{{ saved.slug }}">{{ saved.name }}</a>
+                    <img src="{% static saved.picture %}" width="100">
+                    </br>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <h2>wishlist</h2>
+            {% if wishlist_plants %}
+                {% for wish in wishlist_plants %}
+                    <a href="/plant-list/{{ wish.slug }}">{{ wish.name }}</a>
+                    <img src="{% static wish.picture %}" width="100">
+                    </br>
+                {% endfor %}
             {% endif %}
 
-            <h3>nearest plant shop</h3>
-            name<br>
-            species stocked<br>
-            opening hours<br>
-            view more<br><br><br><br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 id="nearest_business">nearest plant shop</h3>
+            <h5 id="business_name"></h5>
+            <div id="business_address"></div>
+            <div id="business_opening_hours"></div>
+            <a href="" id="business_link">more</a>
+            <div id="loading_map">loading map . . .</div>
+            <div id="googleMap" style="width:75%;height:400px;"></div>
         </div>
     </div>
 
 
-    {% endblock %}
+    <script>
+        let businessSlug = "";
+        let businessLat;
+        let businessLong;
+        let businessName;
+
+        let localBusinesses = [];
+
+        function onload() {
+
+
+            {% for business in businesses %}
+                localBusinesses.push(["{{ business.slug }}", {{ business.lat }}, {{ business.long }}, "{{ business.name }}"]);
+            {% endfor %}
+
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(UserLocation);
+            } else {
+                alert('GLASGOW');
+            }
+        }
+
+        //get the location
+        function UserLocation(position) {
+            NearestBusiness(position.coords.latitude, position.coords.longitude);
+        }
+
+        // Convert degrees to something mysterious and mathematical and maybe relating to the shape of the earth
+        function Deg2Rad(deg) {
+            return deg * Math.PI / 180;
+        }
+
+        // yet more maths - best not to think too hard about this stuff
+        function PythagorasEquirectangular(lat1, lon1, lat2, lon2) {
+            lat1 = Deg2Rad(lat1);
+            lat2 = Deg2Rad(lat2);
+            lon1 = Deg2Rad(lon1);
+            lon2 = Deg2Rad(lon2);
+            const R = 6371; // km
+            const x = (lon2 - lon1) * Math.cos((lat1 + lat2) / 2);
+            const y = (lat2 - lat1);
+            const d = Math.sqrt(x * x + y * y) * R;
+            return d;
+        }
+
+        // now let's find those plant shops
+        function NearestBusiness(latitude, longitude) {
+            let minDif = 99999;
+            let closest;
+
+            for (let index = 0; index < localBusinesses.length; ++index) {
+                let dif = PythagorasEquirectangular(latitude, longitude, localBusinesses[index][1], localBusinesses[index][2]);
+                if (dif < minDif) {
+                    closest = index;
+                    minDif = dif;
+                }
+            }
+
+            businessSlug = localBusinesses[closest][0];
+            businessLat = localBusinesses[closest][1];
+            businessLong = localBusinesses[closest][2];
+            businessName = localBusinesses[closest][3];
+
+
+            {% for business in businesses %}
+
+                if ('{{ business.slug }}' === localBusinesses[closest][0]) {
+                    document.getElementById("business_name").innerHTML = '{{ business.name }}';
+                    document.getElementById("business_address").innerHTML = '{{ business.address }}';
+                    document.getElementById("business_opening_hours").innerHTML = '{{ business.opening_hours }}';
+                    document.getElementById("business_link").href = "{% url 'business-list' %}{{ business.slug }}";
+                }
+            {% endfor %}
+
+            initMap();
+        }
+    </script>
+
+    <script>
+        function initMap() {
+
+            const lat = Number(businessLat);
+            const lng = Number(businessLong);
+
+            let mapProp = {
+                center: {lat: lat, lng: lng},
+                zoom: 15,
+            };
+
+            // Create new map
+            let map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+
+            // Add marker
+            let marker = new google.maps.Marker({
+                position: {lat: lat, lng: lng},
+
+                map: map
+            });
+
+            let infoWindow = new google.maps.InfoWindow({
+                content: businessName
+            });
+
+            marker.addListener('click', function () {
+                infoWindow.open(map, marker);
+            });
+
+            document.getElementById("loading_map").style.display = "hidden";
+        }
+    </script>
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1_mwAa6UhCMVkPr4XIk-XFSXlD0Fwkmw&libraries=places"></script>
+
+
+    </body>
+{% endblock %}

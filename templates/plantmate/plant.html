@@ -173,8 +173,8 @@
     <!----AJAX FUNCTIONALITY FOR LIKING/DISLIKING COMMENTS--->
     <script src="{% static '/javascript/jquery.min.js' %}"></script>
     <script rel="javascript" type="text/javascript">
-        $(document).ready(function () {
-            $('#like_button').click(function () {
+
+            $('#like_button').on('click',(function () {
                 var comid;
                 comid = $(this).attr("data-likecomid");
                 console.log(comid);
@@ -183,7 +183,8 @@
                     $('#like_count').html(data);
                     console.log("html data");
                 });
-            });
+            }));
+
             $('#dislike_button').click(function () {
                 var comid;
                 comid = $(this).attr("data-discomid");
@@ -194,7 +195,7 @@
                     console.log("printed html data");
                 });
             });
-        });
+
     </script>
 <script>
     if (plantIsInWishlist) {
