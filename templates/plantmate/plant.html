@@ -13,7 +13,7 @@
             <h2><i>{{ plant.latin_name }}</i></h2><br/>
         </div>
         <!-- END JUMBOTRON ---------------------------------------------------------------------------------------------------->
-        <div class="row">
+        < class="row">
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body align-items-center d-flex justify-content-center">
@@ -148,46 +148,50 @@
                                     class="btn btn-outline-primary btn-sm" type="button">
                                 Like
                             </button> <strong id="like_count">{{ comment.likes }}</strong>
-                            <button id="dislike_button" data-discomid="{{ comment.id }}"
+                            <button id="dislike_button" data-dislikeid="{{ comment.id }}"
                                     class="btn btn-outline-primary btn-sm" type="button">
                                 Dislike
                             </button> <strong id="dislike_count">{{ comment.dislikes }}</strong>
+                        </div>
                     </div>
-                </div>
-                <hr>
-            {% empty %}
-                <p>no comments yet. be the first!</p>
-                <hr>
-            {% endfor %}
+                    <hr>
+                {% empty %}
+                    <p>no comments yet. be the first!</p>
+                    <hr>
+                {% endfor %}
+            {% endif %}
+    </div>
+        {% else %}
+            No plant with this name has been added yet.
         {% endif %}
-    {% else %}
-        No plant with this name has been added yet.
-    {% endif %}
-</div>
     <!----AJAX FUNCTIONALITY FOR LIKING/DISLIKING COMMENTS--->
     <script src="{% static '/javascript/jquery.min.js' %}"></script>
     <script rel="javascript" type="text/javascript">
     $(document).ready(function() {
-        $('#like_button').click(function(){
-            var comid;
-            comid = $(this).attr("data-likecomid");
-            console.log(comid);
-            $.get("{% url 'like_comment' %}", {comment_id: comid}, function(data) {
-                    console.log("in get function");
-                    $('#like_count').html(data);
-                    console.log("html data");
-                });
-        });
-        $('#dislike_button').click(function(){
-            var comid;
-            comid = $(this).attr("data-discomid");
-            console.log(comid);
-            $.get("{% url 'dislike_comment' %}", {comment_id: comid}, function(data){
-                console.log("in get function");
-                $('#dislike_count').html(data);
-                console.log("printed html data");
+        {% for comment in comments %}
+            $('#like_button').click(function(){
+                var comid;
+                comid = $(this).attr("data-likecomid");
+                console.log(comid);
+                $.get("{% url 'like_comment' %}", {like_id: comid}, function(data) {
+                        console.log(data);
+                        console.log("in get function");
+                        $('#like_count').html(data);
+                        console.log("html data");
+                    });
             });
-        });
+            $('#dislike_button').click(function(){
+                var comid;
+                comid = $(this).attr("data-dislikeid");
+                console.log(comid);
+                $.get("{% url 'dislike_comment' %}", {dislike_id: comid}, function(data){
+                    console.log("in get function");
+                    console.log(data);
+                    $('#dislike_count').html(data);
+                    console.log("printed html data");
+                });
+            });
+        {% endfor %}
     });
 </script>
 
