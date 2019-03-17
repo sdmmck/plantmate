@@ -27,24 +27,31 @@ my account
 </div>
 <div class="row">
     <div class="col-md-6">
-        <h2>my plants</h2>
-        {% if saved_plants %}
-        {% for saved in saved_plants %}
-        <a href="/plant-list/{{ saved.slug }}">{{ saved.name }}</a>
-        <img src="{% static saved.picture %}" width="100">
-        </br>
-        {% endfor %}
-        {% endif %}
+        <div class="container" >
+                <h2>My Plants</h2>
+                {% if saved_plants %}
+                {% for saved in saved_plants %}
+                <a href="/plant-list/{{ saved.slug }}">{{ saved.name }}</a>
+                <img src="{% static saved.picture %}" width="100">
+
+                </br>
+            {% endfor %}
+            {% endif %}
+        </div>
     </div>
     <div class="col-md-6">
-        <h2>wishlist</h2>
-        {% if wishlist_plants %}
-        {% for wish in wishlist_plants %}
-        <a href="/plant-list/{{ wish.slug }}">{{ wish.name }}</a>
-        <img src="{% static wish.picture %}" width="100">
-        </br>
-        {% endfor %}
-        {% endif %}
+        <div class="container" >
+
+                <h2>wishlist</h2>
+                {% if wishlist_plants %}
+                {% for wish in wishlist_plants %}
+                <a href="/plant-list/{{ wish.slug }}">{{ wish.name }}</a>
+                <img src="{% static wish.picture %}" width="100">
+                </br>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
 
     </div>
 </div>
