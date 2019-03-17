@@ -2,8 +2,10 @@ from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from plantmateApp.models import Business, Plant, PlantImage, UserWishlistPlants, UserSavedPlants, UserProfile, User, Comment
-from plantmateApp.forms import BusinessForm, UserForm, ProfileImageForm, PlantForm, ImageForm, SavePlantForm, WishlistPlantForm, CommentForm
+from plantmateApp.models import Business, Plant, PlantImage, UserWishlistPlants, UserSavedPlants, UserProfile, User, \
+    Comment
+from plantmateApp.forms import BusinessForm, UserForm, ProfileImageForm, PlantForm, ImageForm, SavePlantForm, \
+    WishlistPlantForm, CommentForm
 from django.template.defaultfilters import slugify
 import json
 from django.core.serializers.json import DjangoJSONEncoder
@@ -15,13 +17,9 @@ def home(request):
 
 
 def businesslist(request):
-    context_dict = {}
-    try:
-        business_list = Business.objects.order_by('-name')
-        context_dict = {'businesses': business_list}
 
-    except Plant.DoesNotExist:
-        context_dict['business'] = None
+    business_list = Business.objects.order_by('-name')
+    context_dict = {'businesses': business_list}
 
     return render(request, 'plantmate/business-list.html', context=context_dict)
 
@@ -47,8 +45,8 @@ def add_business(request):
         form = BusinessForm(request.POST)
 
         if form.is_valid():
-            form.save(commit=True)
-            return show_business(request, slugify(form.__getitem__('name').value()))
+            business = form.save(commit=True)
+            return show_business(request, business.slug)
 
         else:
             print(form.errors)
@@ -105,30 +103,16 @@ def your_plantmate(request):
 
 @login_required
 def add_comment(request):
-    context_dict = {} 
-    # plant = Plant.objects.get(slug=plant_name_slug)
     if request.user.is_authenticated():
-        print ("First if ------------------------------------------------------------")
         form = CommentForm(request.POST)
         if request.method == 'POST':
-            print ("Second if  ------------------------------------------------------------")
-            # plant = request.POST.get('plant')
-            # print (plant)
-            # form.fields['plant'].choices = Plant.objects.filter(slug=plant)
-            # print(form.fields['plant'].choices)
             if form.is_valid():
-
-                print ("Third if  ------------------------------------------------------------")
                 comment = form.save(commit=False)
                 comment.user = request.user
-                print(comment.plant_slug)
                 comment.plant = Plant.objects.get(slug=comment.plant_slug)
-                print(comment.plant)
                 comment.save()
                 return show_plant(request, comment.plant_slug)
             else:
-                print("IT FAILED!")
-                print(form.errors)
                 form = CommentForm()
     template = 'plantmate/add-comment.html'
     context_dict = {'form': form}
@@ -159,11 +143,11 @@ def add_image(request, plant_name_slug):
 
     return render(request, 'plantmate/add-image.html', context=context_dict)
 
+
 # have made this login_required to avoid error coming up when user is not logged in
 
 
 def show_plant(request, plant_name_slug):
-
     image = set()
 
     try:
@@ -193,7 +177,6 @@ def show_plant(request, plant_name_slug):
 
 @login_required
 def add_plant(request):
-
     form = PlantForm(request.POST)
 
     if request.method == 'POST':
@@ -209,11 +192,10 @@ def add_plant(request):
         else:
             print(form.errors)
     return render(request, 'plantmate/add-plant.html', {'form': form})
-  
+
 
 @login_required
 def remove_wishlist_plant(request):
-
     if request.method == 'POST':
         form = WishlistPlantForm(request.POST)
 
@@ -231,11 +213,10 @@ def remove_wishlist_plant(request):
 
 @login_required
 def remove_saved_plant(request):
-
     if request.method == 'POST':
         form = SavePlantForm(request.POST)
         if form.is_valid():
-            saved_plant=request.POST.get('saved_plant')
+            saved_plant = request.POST.get('saved_plant')
             plant = UserSavedPlants.objects.filter(saved_plant=saved_plant)
             for p in plant:
                 p.delete()
@@ -270,7 +251,7 @@ def add_image(request, plant_name_slug):
 
     return render(request, 'plantmate/add-image.html', context=context_dict)
 
-  
+
 def quiz(request):
     context_dict = {}
     plants = plants_as_list()
@@ -300,7 +281,6 @@ def contact(request):
 
 
 def myaccount(request):
-
     profile_image_form = ProfileImageForm(data=request.POST)
     saved_plants = set()
     wishlist_plants = set()
@@ -313,7 +293,8 @@ def myaccount(request):
     for saved in UserSavedPlants.objects.filter(user=request.user):
         saved_plants.add(Plant.objects.get(slug=saved.saved_plant))
 
-    context_dict = {'username': username, 'wishlist_plants': wishlist_plants, 'saved_plants': saved_plants, 'profile_image_form': profile_image_form, 'user_profile': user_profile}
+    context_dict = {'username': username, 'wishlist_plants': wishlist_plants, 'saved_plants': saved_plants,
+                    'profile_image_form': profile_image_form, 'user_profile': user_profile}
     return render(request, 'plantmate/myaccount.html', context=context_dict)
 
 
@@ -345,11 +326,9 @@ def my_plants(request):
 
 
 def add_profile_image(request):
-
     context_dict = {}
 
     user = UserProfile.objects.get_or_create(user=request.user)[0]
-
 
     if request.method == 'POST':
         form = ProfileImageForm(request.POST)

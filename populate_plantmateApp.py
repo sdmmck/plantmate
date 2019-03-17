@@ -10,31 +10,28 @@ from plantmateApp.models import Business, Plant
 
 def populate():
     local_businesses = [
-        {"title": "blooms",
-         "url": "http://bloomsglasgow.co.uk/",
-         "address": "182 Dumbarton Rd, Glasgow",
-         "phone": "+44 (0)141 334 8552",
-         "email": "INFO@BLOOMSGLASGOW.CO.UK",
-         "hours": "MON - FRIDAY 9:00 - 5:30",
-         "weekend_hours": "SAT 9:00 - 5:00",
-         "lat": "55.870668",
-         "long": "-4.300317"},
-        {"title": "Apercu",
+        # {"name": "blooms",
+        #  "url": "http://bloomsglasgow.co.uk/",
+        #  "address": "182 Dumbarton Rd, Glasgow",
+        #  "phone": "+44 (0)141 334 8552",
+        #  "email": "INFO@BLOOMSGLASGOW.CO.UK",
+        #  "opening_hours": "MON - FRIDAY 9:00 - 5:30",
+        #  "lat": "55.870668",
+        #  "long": "-4.300317"},
+        {"name": "Apercu",
          "url": "https://www.instagram.com/apercuglasgow/?hl=en",
          "address": "617 Pollokshaws Road, Glasgow",
          "phone": "",
          "email": "",
-         "hours": "Wednesday - Sunday 10.30-5.30",
-         "weekend_hours": "",
+         "opening_hours": "Wednesday - Sunday 10.30-5.30",
          "lat": "55.837192",
          "long": "-4.269045"},
-        {"title": "Roots, Fruits & Flowers",
+        {"name": "Roots, Fruits & Flowers",
          "url": "https://www.rootsfruitsflowershop.com",
          "address": "451 Great Western Road, Glasgow",
          "phone": "0141 334 3530",
          "email": "flowers@rootsfruitsandflowers.com",
-         "hours": "Monday - Saturday : 09.00-5.00",
-         "weekend_hours": "Sunday: Closed",
+         "opening_hours": "Monday - Saturday : 09.00-5.00",
          "lat": "55.875217",
          "long": "-4.281234"}
     ]
@@ -236,17 +233,16 @@ def populate():
 
 
 def add_business(business):
-    p = Business.objects.get_or_create(name=business["title"],
-                                       address=business["address"],
-                                       lat=business["lat"],
-                                       long=business["long"],
-                                       phone=business["phone"],
-                                       email=business["email"],
-                                       hours=business["hours"],
-                                       weekend_hours=business["weekend_hours"])[0]
-    p.url = business["url"]
-    p.save()
-    return p
+    business = Business.objects.get_or_create(name=business["name"],
+                                              address=business["address"],
+                                              lat=business["lat"],
+                                              long=business["long"],
+                                              phone=business["phone"],
+                                              email=business["email"],
+                                              url=business["url"],
+                                              opening_hours=business["opening_hours"])[0]
+    business.save()
+    return business
 
 
 def add_plant(plant):

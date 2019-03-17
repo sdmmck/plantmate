@@ -66,12 +66,9 @@ function updateDoc() {
     document.getElementById("climate").innerText = "Climate: " + plant.climate;
     document.getElementById("light").innerText = "Light: " + plant.light;
     document.getElementById("pet").innerText = "Suitable for pets: " + plant.pet;
-    
-    updateDocInline();
-
-}
-
-function updateAuthenticatedDocElements() {
     document.getElementById("wishlist_plant").value = plant.slug;
     document.getElementById("saved_plant").value = plant.slug;
+
+    updateDocInline();
+
 }
