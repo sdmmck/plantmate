@@ -89,9 +89,17 @@ def wishlist_plant(request):
 
 
 def your_plantmate(request):
-    context_dict = {}
     plants = plants_as_list()
-    context_dict['plants'] = plants
+
+    if request.user.is_authenticated():
+        wishlistplants = UserWishlistPlants.objects.filter(user=request.user)
+        saved_plants = UserSavedPlants.objects.filter(user=request.user)
+        context_dict = {'plants': plants, 'wishlistplants': wishlistplants,
+                        'saved_plants': saved_plants}
+
+    else:
+        context_dict = {'plants': plants}
+
     return render(request, 'plantmate/your-plantmate.html', context=context_dict)
 
 
@@ -151,7 +159,8 @@ def add_image(request, plant_name_slug):
 
     return render(request, 'plantmate/add-image.html', context=context_dict)
 
-#have made this login_required to avoid error coming up when user is not logged in
+# have made this login_required to avoid error coming up when user is not logged in
+
 
 def show_plant(request, plant_name_slug):
 
@@ -296,7 +305,7 @@ def myaccount(request):
     saved_plants = set()
     wishlist_plants = set()
     username = User.objects.get(username=request.user)
-    # user_profile = UserProfile.objects.get(user=username)
+    user_profile = UserProfile.objects.get_or_create(user=username)[0]
 
     for wish in UserWishlistPlants.objects.filter(user=request.user):
         wishlist_plants.add(Plant.objects.get(slug=wish.wishlist_plant))
@@ -304,8 +313,7 @@ def myaccount(request):
     for saved in UserSavedPlants.objects.filter(user=request.user):
         saved_plants.add(Plant.objects.get(slug=saved.saved_plant))
 
-    # 'user_profile': user_profile
-    context_dict = {'username': username, 'wishlist_plants': wishlist_plants, 'saved_plants': saved_plants, 'profile_image_form': profile_image_form}
+    context_dict = {'username': username, 'wishlist_plants': wishlist_plants, 'saved_plants': saved_plants, 'profile_image_form': profile_image_form, 'user_profile': user_profile}
     return render(request, 'plantmate/myaccount.html', context=context_dict)
 
 
@@ -340,21 +348,20 @@ def add_profile_image(request):
 
     context_dict = {}
 
-    user = request.user
+    user = UserProfile.objects.get_or_create(user=request.user)[0]
+
 
     if request.method == 'POST':
         form = ProfileImageForm(request.POST)
 
         if form.is_valid():
-            image = form.save(commit=False)
-            image.user = user
             if 'picture' in request.FILES:
-                image.picture = request.FILES['picture']
-            image.save()
-            context_dict['image'] = image
+                user.picture = (request.FILES['picture'])
+            user.save()
+            context_dict['image'] = user.picture
         else:
             print(form.errors)
-            return myaccount(request)
+        return myaccount(request)
 
     return render(request, 'plantmate/myaccount.html', context=context_dict)
 

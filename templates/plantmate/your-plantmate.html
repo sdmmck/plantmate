@@ -1,26 +1,65 @@
-<!--
 {% extends "plantmate/base.html" %}
 {% load staticfiles %}
+{% load static %}
 {% block head_block %}
-
     {% block title_block %}
         <title>Your plantmate</title>
     {% endblock %}
 {% endblock %}
 {% block body_block %}
-    <div ><H4 id="hi">WELCOME TO QUIZ</H4></div>
-    </br>
-    <input type="button" name="button" value="button" onclick="buttons()">
+    <body onload="onload()">
+    {% for plant in plants %}
+        <script>
+            let allplants = JSON.parse('{{plant|safe|escapejs}}');
+        </script>
+    {% endfor %}
+    <div id="results">
+        <H4 id="match"></H4></div>
+    <br>
+    </div>
+    <div id="description"></div>
+    <br>
+    <img id="image" src="" alt="your plantmate">
+    <ul id="list_of_criteria">
+        <li id="size"></li>
+        <li id="characteristics"></li>
+        <li id="room"></li>
+        <li id="climate"></li>
+        <li id="light"></li>
+        <li id="pet"></li>
+    </ul>
 
-     <script>
-    let allplants = "yo";
+    <form id="show_plant">
+        <button type="submit" value="more information">more information</button>
+    </form>
+
+    {% if user.is_authenticated %}
+        <div id="saved_button">
+            <form method="post" action="{% url 'save_plant' %}">
+                {% csrf_token %}
+                <input type="hidden" id="saved_plant" name="saved_plant" value="">
+                <button type="submit" name="saved_plants">add plant to my plants</button>
+            </form>
+        </div>
+        <div id="wishlist_button">
+            <form method="post" action="{% url 'wishlist_plant' %}">
+                {% csrf_token %}
+                <input type="hidden" id="wishlist_plant" name="wishlist_plant" value="">
+                <button type="submit" name="wishlist">add plant to my wishlist</button>
+            </form>
+        </div>
+        <script>
+        updateAuthenticatedDocElements();
+        </script>
+    {% endif %}
+
+    <script type="text/javascript">
+        function updateDocInline() {
+            document.getElementById("show_plant").action = {% url 'plant_list' %}+plant.slug;
+            document.getElementById("image").src = {% get_static_prefix %}+plant.picture;
+        }
     </script>
 
-    {% for plant in plants %}
-        {{ plant }}
-    {% endfor %}
-
     <script type="text/javascript" src={% static "javascript/quiz.js" %}></script>
-
+    </body>
 {% endblock %}
--->
