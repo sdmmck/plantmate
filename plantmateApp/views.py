@@ -120,6 +120,36 @@ def add_comment(request):
 
 
 @login_required
+def like_comment(request):
+    com_id = None
+    if request.method == 'GET':
+        com_id = request.GET['comment_id']
+    likes = 0
+    if com_id:
+        com = Comment.objects.get(id=int(com_id))
+        if com:
+            likes = com.likes + 1
+            com.likes = likes
+            com.save()
+    return HttpResponse(likes)
+
+
+@login_required
+def dislike_comment(request):
+    com_id = None
+    if request.method == 'GET':
+        com_id = request.GET['comment_id']
+    dislikes = 0
+    if com_id:
+        com = Comment.objects.get(id=int(com_id))
+        if com:
+            dislikes = com.dislikes + 1
+            com.dislikes = dislikes
+            com.save()
+    return HttpResponse(dislikes)
+
+
+@login_required
 def add_image(request, plant_name_slug):
     context_dict = {}
 
