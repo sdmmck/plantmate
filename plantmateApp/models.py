@@ -1,20 +1,18 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.utils import timezone
 
 
 class Business (models.Model):
-    name = models.CharField(max_length=128, unique=True)
-    address = models.CharField(max_length=128, unique=True, default=" ")
-    phone = models.CharField(max_length=128, unique=False, default=" ")
-    email = models.CharField(max_length=128, unique=False, default=" ")
-    hours = models.CharField(max_length=128, unique=False, default=" ")
-    weekend_hours = models.CharField(max_length=128, unique=False, default=" ")
-    lat = models.CharField(max_length=20, unique=False)
-    long = models.CharField(max_length=20, unique=False)
+    name = models.CharField(max_length=128, unique=True, default="")
+    address = models.TextField(unique=True, default="")
+    phone = models.CharField(max_length=128, unique=False, default="")
+    email = models.CharField(max_length=128, unique=False, default="")
+    hours = models.CharField(max_length=128, unique=False, default="")
+    weekend_hours = models.CharField(max_length=128, unique=False, default="")
+    lat = models.CharField(max_length=20, unique=False, default="")
+    long = models.CharField(max_length=20, unique=False, default="")
     url = models.URLField()
     slug = models.SlugField()
 
@@ -33,7 +31,7 @@ class Plant (models.Model):
     size_choices = (("small", "Small"), ("medium", "Medium"), ("large", "Large"))
     climate_choices = (("cool", "Cool"), ("warm", "Warm"))
     light_choices = (("sunny", "Sunny"), ("shady", "Shady"))
-    room_choices = (("Living-room/Bedroom", "living-room/bedroom"), ("Kitchen/Bathroom", "kitchen/bathroom"))
+    room_choices = (("living-room/bedroom", "Living-room/Bedroom"), ("kitchen/bathroom", "Kitchen/Bathroom"))
 
     name = models.CharField(max_length=128, unique=True)
     latin_name = models.CharField(max_length=128, unique=True)
