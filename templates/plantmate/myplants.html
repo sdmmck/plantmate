@@ -2,18 +2,24 @@
 {% load staticfiles %}
 {% block head_block %}
     {% block title_block %}
-        my plants
+        My Plants
     {% endblock %}
 {% endblock %}
 {% block body_block %}
 <div class="jumbotron">
-    <h1>my plants</h1>
+    <h1>My Plants</h1>
 </div>
     {% if plants %}
         {% for plant in plants %}
-            <a href="/plant-list/{{ plant.slug }}">{{ plant.name }}</a>
-            <img src="{% static plant.picture %}" width="100" class="img-circle">
-            </br>
+    <div class="card" style="width: 18rem;">
+        <img src="{% static plant.picture %}" class="card-img-top" alt="{{ plant.name }}">
+        <div class="card-body">
+            <h5 class="card-title">{{ plant.name }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ plant.latin_name }}</h6>
+            <a href="/plant-list/{{ plant.slug }}" class=" btn-primary stretched-link"></a>
+        </div>
+    </div>
+
         {% endfor %}
     {% endif %}
 {% endblock %}

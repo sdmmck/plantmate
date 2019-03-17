@@ -114,9 +114,8 @@ def add_comment(request):
                 return show_plant(request, comment.plant_slug)
             else:
                 form = CommentForm()
-    template = 'plantmate/add-comment.html'
     context_dict = {'form': form}
-    return render(request, template, context=context_dict)
+    return render(request, 'plantmate/myaccount.html', context=context_dict)
 
 
 @login_required
@@ -316,6 +315,7 @@ def myaccount(request):
     wishlist_plants = set()
     username = User.objects.get(username=request.user)
     user_profile = UserProfile.objects.get_or_create(user=username)[0]
+    businesses = Business.objects.order_by('name')
 
     for wish in UserWishlistPlants.objects.filter(user=request.user):
         wishlist_plants.add(Plant.objects.get(slug=wish.wishlist_plant))
@@ -324,7 +324,7 @@ def myaccount(request):
         saved_plants.add(Plant.objects.get(slug=saved.saved_plant))
 
     context_dict = {'username': username, 'wishlist_plants': wishlist_plants, 'saved_plants': saved_plants,
-                    'profile_image_form': profile_image_form, 'user_profile': user_profile}
+                    'profile_image_form': profile_image_form, 'user_profile': user_profile, 'businesses': businesses}
     return render(request, 'plantmate/myaccount.html', context=context_dict)
 
 
