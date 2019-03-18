@@ -181,7 +181,8 @@ def show_plant(request, plant_name_slug):
         plant = Plant.objects.get(slug=plant_name_slug)
 
         for i in PlantImage.objects.all():
-            image.add(i)
+            if i.plant_name == plant.slug:
+                image.add(i)
 
         comments = Comment.objects.filter(plant_slug=plant_name_slug)
 
@@ -356,7 +357,7 @@ def my_plants(request):
 def add_profile_image(request):
     context_dict = {}
 
-    user = UserProfile.objects.get_or_create(user=request.user)[0]
+    user = UserProfile.objects.get(user=request.user)
 
     if request.method == 'POST':
         form = ProfileImageForm(request.POST)
