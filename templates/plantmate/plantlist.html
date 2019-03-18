@@ -3,36 +3,34 @@
 
 {% block head_block %}
 
-{% block title_block %}
-plant a-z
-{% endblock %}
+    {% block title_block %}
+        plant a-z
+    {% endblock %}
 {% endblock %}
 {% block body_block %}
-<div class="jumbotron">
-    <h1>Plants</h1>
-    <h2>Click on a plant to find out more!</h2>
-</div>
-{% if plants %}
-<ul>
-    {% for plant in plants %}
-    <div class="card" style="width: 18rem;">
-        <img src="{% static plant.picture %}" class="card-img-top" alt="{{ plant.name }}">
-        <div class="card-body">
-            <h5 class="card-title">{{ plant.name }}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">{{ plant.latin_name }}</h6>
-            <a href="{{ plant.slug }}" class=" btn-primary stretched-link"></a>
-        </div>
+    <div class="jumbotron">
+        <h1>Plants</h1>
+        <h2>Click on a plant to find out more!</h2>
     </div>
-    <!--<li><a href="{{ plant.slug }}">{{ plant.name }}</a>
-        <img src="{% static plant.picture %}" width="100" class="rounded-circle"></li>-->
-
-    {% endfor %}
-</ul>
-{% endif %}
-{% if user.is_authenticated %}
-<a href="{% url 'add_plant' %}">add a new plant</a><br/>
-{% else %}
-<p>You can add your own plant if you <a href="{% url 'add_plant' %}">log in</a> or <a href="{% url 'add_plant' %}">sign
-    up!</a><br/>
-</p>{% endif %}
+    {% if plants %}
+        <div class="plants_container" style="display: grid">
+            {% for plant in plants %}
+                <div class="card" style="width: 18rem" >
+                    <img src="{% static plant.picture %}" class="card-img-top" alt="{{ plant.name }}" style="height: 18rem">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ plant.name }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ plant.latin_name }}</h6>
+                        <a href="{{ plant.slug }}" class=" btn-primary stretched-link"></a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if user.is_authenticated %}
+        <a href="{% url 'add_plant' %}">add a new plant</a><br/>
+    {% else %}
+        <p>You can add your own plant if you <a href="{% url 'add_plant' %}">log in</a> or <a
+                href="{% url 'add_plant' %}">sign
+            up!</a><br/>
+        </p>{% endif %}
 {% endblock %}
