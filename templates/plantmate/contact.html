@@ -1,4 +1,4 @@
-{% extends "plantmate/base.html" %}
+{% extends "plantmate/../plantmate/base.html" %}
 {% load staticfiles %}
 {% block head_block %}
     {% block title_block %}
@@ -12,7 +12,7 @@
         0141 557 1110<br><br>
         <img src="{% static 'images/office1.jpg' %}" width="200" height="250" alt="plantmate contact"/>
 </div>
-
+<form role="form" id="plant_form" method="post" enctype="multipart/form-data" action="{% url 'add_plant' %}">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -41,5 +41,6 @@
                 <input type="submit" class="btn btn-success btn-send" value="Send message">
             </div>
         </div>
+        </form>
     {% endblock %}
 {% endblock %}

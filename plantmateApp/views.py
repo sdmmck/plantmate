@@ -1,14 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from plantmateApp.models import Business, Plant, PlantImage, UserWishlistPlants, UserSavedPlants, UserProfile, User, \
     Comment
-from plantmateApp.forms import BusinessForm, UserForm, ProfileImageForm, PlantForm, ImageForm, SavePlantForm, \
+from plantmateApp.forms import BusinessForm, ProfileImageForm, PlantForm, ImageForm, SavePlantForm, \
     WishlistPlantForm, CommentForm
 from django.template.defaultfilters import slugify
-import json
-from django.core.serializers.json import DjangoJSONEncoder
 
 
 def home(request):
@@ -375,33 +373,6 @@ def add_profile_image(request):
     return render(request, 'plantmate/myaccount.html', context=context_dict)
 
 
-def register(request):
-    return render(request, 'plantmate/register.html')
-#     print("register method reached ----------------------------------------------------------------------")
-#     registered = False
-#     if request.method == 'POST':
-#         print("first if reached ----------------------------------------------------------------------")
-#         user_form = UserForm(data=request.POST)
-#         profile_form = UserProfileForm(data=request.POST)
-#         if user_form.is_valid() and profile_form.is_valid():
-#             user = user_form.save()
-#             user.set_password(user.password)
-#             user.save()
-#
-#             profile = profile_form.save(commit=False)
-#             profile.user = user
-#             print (profile.user)
-#             print (profile)
-#             if 'picture' in request.FILES:
-#                 profile.picture = request.FILES['picture']
-#             profile.save()
-#             registered = True
-#         else:
-#             print(user_form.errors, profile_form.errors)
-#     else:
-#         user_form = UserForm()
-#         profile_form = UserProfileForm()
-#     return render(request, 'plantmate/register.html',
-#                   {'user_form': user_form,
-#                    'profile_form': profile_form,
-#                    'registered': registered})
+def change_password(request):
+    return render(request, 'registration/password_change,html')
+

@@ -1,15 +1,17 @@
-{% extends "plantmate/base.html" %}
+{% extends "plantmate/../plantmate/base.html" %}
 {% load staticfiles %}
 {% block head_block %}
     {% block title_block %}
         my account
+
     {% endblock %}
+
 {% endblock %}
 
 
 {% block body_block %}
-    <body onload="onload()">
-<div class="jumbotron">
+    <div class="jumbotron">
+
 
     <h1>Hi {{ username }}!</h1><br>
 
@@ -71,29 +73,33 @@
     <div class="row">
         <div class="col-md-12">
             <h3 id="nearest_business">nearest plant shop</h3>
+            <div id="googleMap" style="width:75%;height:400px;"></div>
             <h5 id="business_name"></h5>
             <div id="business_address"></div>
+            <br>
+            <p><strong>Opening hours:</strong>
+
             <div id="business_opening_hours"></div>
-            <a href="" id="business_link">more</a>
+            <a href="" id="business_link">more info</a>
             <div id="loading_map">loading map . . .</div>
-            <div id="googleMap" style="width:75%;height:400px;"></div>
         </div>
     </div>
 
+    <script type="text/javascript">
 
-    <script>
+        window.onload = function () {
+            findNearestBusiness()
+        };
+
         let businessSlug = "";
         let businessLat;
         let businessLong;
         let businessName;
-
         let localBusinesses = [];
 
-        function onload() {
-
-
+        function findNearestBusiness() {
             {% for business in businesses %}
-                localBusinesses.push(["{{ business.slug }}", {{ business.lat }}, {{ business.long }}, "{{ business.name }}"]);
+                localBusinesses.push(["{{ business.slug }}", "{{ business.lat }}", "{{ business.long }}", "{{ business.name }}"]);
             {% endfor %}
 
 
@@ -150,8 +156,8 @@
 
                 if ('{{ business.slug }}' === localBusinesses[closest][0]) {
                     document.getElementById("business_name").innerHTML = '{{ business.name }}';
-                    document.getElementById("business_address").innerHTML = '{{ business.address }}';
-                    document.getElementById("business_opening_hours").innerHTML = '{{ business.opening_hours }}';
+                    document.getElementById("business_address").innerText = "{{ business.address | escapejs }}";
+                    document.getElementById("business_opening_hours").innerHTML = '{{ business.opening_hours | linebreaks | escapejs }}';
                     document.getElementById("business_link").href = "{% url 'business-list' %}{{ business.slug }}";
                 }
             {% endfor %}
@@ -161,6 +167,7 @@
     </script>
 
     <script>
+
         function initMap() {
 
             const lat = Number(businessLat);
@@ -173,6 +180,7 @@
 
             // Create new map
             let map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+            document.getElementById("loading_map").style.display = "none";
 
             // Add marker
             let marker = new google.maps.Marker({
@@ -189,12 +197,12 @@
                 infoWindow.open(map, marker);
             });
 
-            document.getElementById("loading_map").style.display = "hidden";
+
         }
     </script>
 
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1_mwAa6UhCMVkPr4XIk-XFSXlD0Fwkmw&libraries=places"></script>
 
-    </body>
+
 {% endblock %}
