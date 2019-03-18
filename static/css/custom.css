@@ -42,8 +42,21 @@ body {
     grid-gap: 1rem;
 }
 
-.jumbotron_row{
+.jumbotron_row {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
+
+#homepage_image {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+}
+
+#quiz_button {
+    text-align: left;
+    margin-left: 60px;
+}
+
