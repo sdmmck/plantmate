@@ -7,10 +7,6 @@ import datetime
 from plantmateApp.forms import CommentForm
 
 class PlantModelTest(TestCase):
-    def setUp(self):
-        Plant.objects.create(name="Rose Painted Calathea", latin_name="Calathea roseopticta Dottie",
-        size="small", characteristics="Air purifying", climate="warm", light="sunny", picture="images/rose-painted-calathea.jpg",
-        pet="no", room="Kitchen/Bathroom", description="Calatheas come")
 
     def test_slug_line_creation(self):
         """
