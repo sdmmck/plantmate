@@ -128,16 +128,18 @@ def like_comment(request):
         likecom = Comment.objects.get(id=int(likecom_id))
         if likecom:
             if disabled == 'true':
-                # button becomes disabled upon liking. as user can only have one vote per comment, this must be removed
-                # from like and added to dislike if user changes mind
+                # Button was disabled, meaning user has voted before and is changing their vote
                 likes = likecom.likes - 1
-                print("likes decreased---------------------------------------------")
-                print(likes)
+                # likes decreased
+
             elif disabled == 'false':
-                # increases like value as normal
+                #Button not disabled
+                likes=likecom.likes
+
+            elif disabled == 'null':
+                # Implement button press
                 likes = likecom.likes + 1
-                print("likes increased---------------------------------------------")
-                print(likes)
+
             likecom.likes = likes
             likecom.save()
     return HttpResponse(likes)
@@ -156,13 +158,18 @@ def dislike_comment(request):
         dislikecom = Comment.objects.get(id=int(discom_id))
         if dislikecom:
             if disabled == 'true':
+               # Button was disabled, meaning user has voted before and is changing their vote
                 dislikes = dislikecom.dislikes - 1
-                print("dislikes decreased---------------------------------------------")
-                print(dislikes)
+                # dislikes decreased
+
             elif disabled == 'false':
+                #Button not disabled
+                dislikes = dislikecom.dislikes
+
+            elif disabled == 'null':
+                # Implementing button press
                 dislikes = dislikecom.dislikes + 1
-                print("dislikes increased---------------------------------------------")
-                print(dislikes)
+                # Dislikes increased
             dislikecom.dislikes = dislikes
             dislikecom.save()
     return HttpResponse(dislikes)
