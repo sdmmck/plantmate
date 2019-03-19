@@ -5,6 +5,15 @@
     padding-bottom: 20px;
 }
 
+a {
+    color: #4fa543;
+}
+
+a:hover {
+  color: #b299a9;
+  text-decoration: none;
+}
+
 @font-face {
   font-family: 'spartanmb-black';
   src: url('/static/fonts/spartanmb-black-webfont.woff') format('woff'),
@@ -65,12 +74,13 @@ body {
 
 }
 
-.plants_container {
+.plants_container, .myplants_container, .mywishlist_container {
     display: grid;
     padding: 1rem;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     grid-gap: 1rem;
 }
+
 
 .my_account_plants_container {
     display: grid;
@@ -78,6 +88,7 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     grid-gap: 1rem;
 }
+
 
 .jumbotron_row {
     display: flex;
@@ -117,7 +128,7 @@ body {
     color: black;
 }
 
-
 .nav-link{
      font-family: 'spartanmb-semibold';
 }
+

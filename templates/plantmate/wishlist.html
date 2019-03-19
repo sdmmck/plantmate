@@ -13,6 +13,7 @@
     <h1>My Wishlist</h1>
 </div>
     {% if plants %}
+    <div class="mywishlist_container" style="display: grid">
         {% for plant in plants %}
              <div class="card" style="width: 18rem;">
         <img src="{% static plant.picture %}" class="card-img-top" alt="{{ plant.name }}">
@@ -23,6 +24,7 @@
         </div>
     </div>
         {% endfor %}
+    </div>
     {% endif %}
 <!-- these need fixed --------------------------------------------------------------------------------->
  <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>
