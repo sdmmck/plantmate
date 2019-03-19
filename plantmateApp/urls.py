@@ -27,4 +27,6 @@ urlpatterns = [
     url(r'^plants-as-list/$', views.plants_as_list, name='plants_as_list'),
     url(r'^like_comment/', views.like_comment, name='like_comment'),
     url(r'^dislike_comment/', views.dislike_comment, name='dislike_comment'),
+    url(r'^contact/$', views.contact, name='contact'),
+    url(r'^email-sent/$', views.successful_email, name='successful_email'),
 ]
