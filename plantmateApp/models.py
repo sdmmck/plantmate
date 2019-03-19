@@ -122,14 +122,14 @@ class Comment(models.Model):
     plant = models.ForeignKey(Plant)
     plant_slug = models.CharField(max_length=128, default=" ")
     body = models.TextField(unique=False, default=" ")
-    # created_date = models.DateTimeField('date published')
+    created_date = models.DateTimeField(default=timezone.now)
     approved_comment = models.BooleanField(default=True)
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
 
-    # def recently_published(self):
-    #     now = timezone.now()
-    #     return now - datetime.timedelta(days=2) <= self.created_date <= now
+    def recently_published(self):
+        now = timezone.now()
+        return now - datetime.timedelta(days=2) <= self.created_date <= now
 
     def approve(self):
         self.approved_comment = True
