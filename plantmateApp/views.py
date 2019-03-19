@@ -1,12 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from plantmateApp.models import Business, Plant, PlantImage, UserWishlistPlants, UserSavedPlants, UserProfile, User, \
     Comment
 from plantmateApp.forms import BusinessForm, ProfileImageForm, PlantForm, ImageForm, SavePlantForm, \
-    WishlistPlantForm, CommentForm
+    WishlistPlantForm, CommentForm, ContactForm
 from django.template.defaultfilters import slugify
+from django.core.mail import send_mail, BadHeaderError
 
 
 def home(request):
@@ -304,7 +305,26 @@ def signup(request):
 
 
 def contact(request):
-    context_dict = {}
+
+    if request.method == 'GET':
+        form = ContactForm()
+    else:
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+            try:
+                send_mail(subject, message, email, ['rosemary.ferrier@gmail.com'])
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+            return redirect('successful_email')
+    return render(request, 'plantmate/contact.html', {'form': form})
+
+
+def successful_email(request):
+    form = ContactForm()
+    context_dict = {'success': "success", 'form': form}
     return render(request, 'plantmate/contact.html', context=context_dict)
 
 
@@ -371,7 +391,7 @@ def add_profile_image(request):
             print(form.errors)
         return myaccount(request)
 
-    return render(request, 'plantmate/myaccount.html', context=context_dict)
+    return render(request, 'plantmate/add-profile-image.html', context=context_dict)
 
 
 def change_password(request):

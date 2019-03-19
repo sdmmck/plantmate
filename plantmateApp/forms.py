@@ -48,7 +48,6 @@ class PlantForm(forms.ModelForm):
 
 
 class ImageForm(forms.ModelForm):
-
     picture = forms.ImageField(required=False)
     plant_name = forms.HiddenInput()
 
@@ -66,7 +65,6 @@ class UserForm(forms.ModelForm):
 
 
 class ProfileImageForm(forms.ModelForm):
-
     picture = forms.ImageField(required=False)
 
     class Meta:
@@ -100,3 +98,9 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ('plant_slug', 'body', )
         exclude = ('approved_comment', )
+
+
+class ContactForm(forms.Form):
+    email = forms.EmailField(required=True)
+    subject = forms.CharField(required=True)
+    message = forms.CharField(widget=forms.Textarea, required=True)
