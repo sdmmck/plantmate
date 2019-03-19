@@ -179,16 +179,16 @@
                             </p>
                         </div>
                         <div class="card-footer">
-                            <button class="like-button btn btn-outline-success" data-likecomid="{{ comment.id }}"
-                                    type="button">
+                            <button id="like{{ comment.id }}" class="like-button btn btn-outline-success"
+                                    data-comid="{{ comment.id }}" type="button">
                                 Like
                             </button>
-                            <strong class="like-count">{{ comment.likes }}</strong>
-                            <button class="dislike-button btn btn-outline-danger" data-discomid="{{ comment.id }}"
-                                    type="button">
+                            <strong id="like-count{{ comment.id }}">{{ comment.likes }}</strong>
+                            <button id="dislike{{ comment.id }}" class="dislike-button btn btn-outline-danger"
+                                    data-comid="{{ comment.id }}" type="button">
                                 Dislike
                             </button>
-                            <strong class="dislike-count">{{ comment.dislikes }}</strong>
+                            <strong id="dislike-count{{ comment.id }}">{{ comment.dislikes }}</strong>
                         </div>
                     </div>
                     <hr>
@@ -209,27 +209,27 @@
         $('.like-button').on('click', (function () {
 
             var comid;
-            comid = $(this).attr("data-likecomid");
+            comid = $(this).attr("data-comid");
             console.log(comid);
             $.get("{% url 'like_comment' %}", {comment_id: comid}, function (data) {
                 console.log("in get function");
-                $('.like-count').html(data);
-            //    $('.like-button').prop('disabled', true);
-             //   $('.dislike-button').prop('disabled', false);
+                $('#like-count' + comid).html(data);
+                $('#like' + comid).prop('disabled', true);
+                $('#dislike' + comid).prop('disabled', false);
                 console.log("html data");
             });
         }));
 
-        $('#dislike_button').click(function () {
+        $('.dislike-button').click(function () {
 
             var comid;
-            comid = $(this).attr("data-discomid");
+            comid = $(this).attr("data-comid");
             console.log(comid);
             $.get("{% url 'dislike_comment' %}", {comment_id: comid}, function (data) {
                 console.log("in get function");
-                $('.dislike-count').html(data);
-        //        $('.dislike-button').prop('disabled', true);
-        //        $('.like-button').prop('disabled', false);
+                $('#dislike-count' + comid).html(data);
+                $('#dislike' + comid).prop('disabled', true);
+                $('#like' + comid).prop('disabled', false);
                 console.log("printed html data");
             });
         });
