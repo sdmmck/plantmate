@@ -98,5 +98,6 @@ class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
+
         fields = ('plant_slug', 'body', )
         exclude = ('approved_comment', )

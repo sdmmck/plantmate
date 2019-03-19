@@ -176,16 +176,16 @@
                             </p>
                         </div>
                         <div class="card-footer">
-                            <button id="like_button" data-likecomid="{{ comment.id }}"
-                                    class="btn btn-outline-success" type="button">
+                            <button class="like-button btn btn-outline-success" data-likecomid="{{ comment.id }}"
+                                    type="button">
                                 Like
                             </button>
-                            <strong id="like_count">{{ comment.likes }}</strong>
-                            <button id="dislike_button" data-discomid="{{ comment.id }}"
-                                    class="btn btn-outline-danger" type="button">
+                            <strong class="like-count">{{ comment.likes }}</strong>
+                            <button class="dislike-button btn btn-outline-danger" data-discomid="{{ comment.id }}"
+                                    type="button">
                                 Dislike
                             </button>
-                            <strong id="dislike_count">{{ comment.dislikes }}</strong>
+                            <strong class="dislike-count">{{ comment.dislikes }}</strong>
                         </div>
                     </div>
                     <hr>
@@ -202,28 +202,31 @@
     <script src="{% static '/javascript/jquery.min.js' %}"></script>
     <script rel="javascript" type="text/javascript">
 
-        $('#like_button').on('click', (function () {
+        $('.like-button').on('click', (function () {
             var comid;
             comid = $(this).attr("data-likecomid");
             console.log(comid);
             $.get("{% url 'like_comment' %}", {comment_id: comid}, function (data) {
                 console.log("in get function");
-                $('#like_count').html(data);
+                $('.like-count').html(data);
+            //    $('.like-button').prop('disabled', true);
+             //   $('.dislike-button').prop('disabled', false);
                 console.log("html data");
             });
         }));
 
-        $('#dislike_button').click(function () {
+        $('.dislike-button').click(function () {
             var comid;
             comid = $(this).attr("data-discomid");
             console.log(comid);
             $.get("{% url 'dislike_comment' %}", {comment_id: comid}, function (data) {
                 console.log("in get function");
-                $('#dislike_count').html(data);
+                $('.dislike-count').html(data);
+        //        $('.dislike-button').prop('disabled', true);
+        //        $('.like-button').prop('disabled', false);
                 console.log("printed html data");
             });
         });
-
     </script>
     <script>
         if (plantIsInWishlist) {
@@ -239,6 +242,4 @@
     </script>
      <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>
 {% endblock %}
-
-
 
