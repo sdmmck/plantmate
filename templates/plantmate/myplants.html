@@ -12,7 +12,7 @@
     {% if plants %}
     <div class="myplants_container" style="display: grid">
         {% for plant in plants %}
-        <div class="card" style="width: 18rem;">
+        <div class="card text-center" style="width: 18rem;">
             <img src="{% static plant.picture %}" class="card-img-top" alt="{{ plant.name }}">
             <div class="card-body">
                 <h5 class="card-title">{{ plant.name }}</h5>
@@ -24,6 +24,7 @@
 
         {% endfor %}
     </div>
+<a href="{% url 'plant_list' %}">Return to A-Z list of plants</a>
     {% endif %}
      <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>
 {% endblock %}
