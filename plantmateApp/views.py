@@ -118,16 +118,16 @@ def add_comment(request):
 
 @login_required
 def like_comment(request):
-    com_id = None
+    likecom_id = None
     if request.method == 'GET':
-        com_id = request.GET['like_id']
+        likecom_id = request.GET['comment_id']
     likes = 0
-    if com_id:
-        comment = Comment.objects.get(id=int(com_id))
-        if comment:
-            likes = comment.likes + 1
-            comment.likes = likes
-            comment.save()
+    if likecom_id:
+        likecom = Comment.objects.get(id=int(likecom_id))
+        if likecom:
+            likes = likecom.likes + 1
+            likecom.likes = likes
+            likecom.save()
     return HttpResponse(likes)
 
 
@@ -135,7 +135,7 @@ def like_comment(request):
 def dislike_comment(request):
     discom_id = None
     if request.method == 'GET':
-        discom_id = request.GET['dislike_id']
+        discom_id = request.GET['comment_id']
     dislikes = 0
     if discom_id:
         dislikecom = Comment.objects.get(id=int(discom_id))
