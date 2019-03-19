@@ -106,7 +106,6 @@
                     document.getElementById("url").value = place.website;
                     document.getElementById("business_details").style.display="block";
 
-
                     let addressAsString = "";
                     let openinghoursAsString = "";
 
@@ -115,7 +114,6 @@
                     for (let i = 1; i < place.address_components.length; i++) {
                         addressAsString += place.address_components[i].long_name + "\n";
                     }
-
 
                     for (let i = 0; i < place.opening_hours.weekday_text.length; i++) {
                         openinghoursAsString += place.opening_hours.weekday_text[i] + "\n";

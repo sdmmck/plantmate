@@ -13,19 +13,9 @@
                 {% if user_profile.picture %}
                     <img src="{% static user_profile.picture %}" alt="profile picture" height="100px"/>
                     <br>
-                    <form id="profile_image_form" method="post" action="{% url 'add_profile_image' %}"
-                          enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {{ profile_image_form.as_p }}
-                        <input type="submit" name="submit" value="change profile image"/>
-                    </form>
+                    <button onclick="location.href='{% url 'add_profile_image' %}'">change profile picture</button>
                 {% else %}
-                    <form id="profile_image_form" method="post" action="{% url 'add_profile_image' %}"
-                          enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {{ profile_image_form.as_p }}
-                        <input type="submit" name="submit" value="add a profile image"/>
-                    </form>
+                   <button "location.href='{% url 'add_profile_image' %}'">add profile picture</button>
                 {% endif %}
             </div>
         </div>
@@ -91,7 +81,7 @@
             <div id="loading_map">loading map . . .</div>
     </div>
     </div>
-<!--     <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>-->
+
     <script type="text/javascript">
         window.onload = function () {
             findNearestBusiness()

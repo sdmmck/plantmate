@@ -1,47 +1,59 @@
 {% extends "plantmate/../plantmate/base.html" %}
 {% load staticfiles %}
 {% block head_block %}
-    {% block title_block %}
-        contact us at plantmate
-    {% endblock %}
-
-    {% block body_block %}
-<div class="jumbotron">
+{% block title_block %}
+    contact us at plantmate
+{% endblock %}
+{% endblock %}
+{% block body_block %}
+    <div class="jumbotron">
         <h1>contact us</h1>
         plantmate@gmail.com<br>
         0141 557 1110<br><br>
         <img src="{% static 'images/office1.jpg' %}" width="200" height="250" alt="plantmate contact"/>
-</div>
-<form role="form" id="plant_form" method="post" enctype="multipart/form-data" action="{% url 'add_plant' %}">
+    </div>
+    {% if success %}
+        <div>
+        <h3>Thanks for getting in touch with us, we will get back to you as soon as we can. </h3>
+        </div>
+        {% else %}
+    <form role="form" id="form" method="POST" enctype="multipart/form-data" action="{% url 'contact' %}">
+        {% csrf_token %}
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="form_name">Firstname *</label>
-                    <input id="form_name" type="text" name="name" class="form-control" placeholder="Please enter your firstname *" required="required" data-error="Firstname is required.">
+                    <label for="form_name">Subject *</label>
+                    <input id="form_name" type="text" name="subject" class="form-control"
+                           placeholder="Please enter the subject of your enquiry *" required="required"
+                           data-error="Firstname is required.">
                     <div class="help-block with-errors"></div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="form_email">Email *</label>
-                    <input id="form_email" type="email" name="email" class="form-control" placeholder="Please enter your email *" required="required" data-error="Valid email is required.">
+                    <input id="form_email" type="email" name="email" class="form-control"
+                           placeholder="Please enter your email *" required="required"
+                           data-error="Valid email is required.">
                     <div class="help-block with-errors"></div>
                 </div>
             </div>
         </div>
-  <div class="row">
+        <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="form_message">Message *</label>
-                    <textarea id="form_message" name="message" class="form-control" placeholder="Message for me *" rows="4" required="required" data-error="Please, leave us a message."></textarea>
+                    <textarea id="form_message" name="message" class="form-control" placeholder="Message for me *"
+                              rows="4" required="required" data-error="Please, leave us a message."></textarea>
                     <div class="help-block with-errors"></div>
                 </div>
-            </div><br>
+            </div>
+            <br>
             <div class="col-md-12">
                 <input type="submit" class="btn btn-success btn-send" value="Send message">
             </div>
         </div>
-        </form>
-    {% endblock %}
-     <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>
+    </form>
+{% endif %}
+<img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>
 {% endblock %}

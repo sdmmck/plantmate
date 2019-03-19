@@ -5,7 +5,8 @@ urlpatterns = [
     url(r'^$', views.home, name='home'),
     url(r'^sign-up/', views.signup, name='signup'),
     url(r'^contact/', views.contact, name='contact'),
-    url(r'^myaccount/$', views.myaccount, name='myaccount'),
+	url(r'^contact-success/', views.contact_success, name='contact-success'),
+	url(r'^myaccount/$', views.myaccount, name='myaccount'),
     url(r'^quiz/$', views.quiz, name='quiz'),
     url(r'^business-list/$', views.businesslist, name='business-list'),
     url(r'^add-business/$', views.add_business, name='add_business'),
@@ -26,4 +27,6 @@ urlpatterns = [
     url(r'^plants-as-list/$', views.plants_as_list, name='plants_as_list'),
     url(r'^like_comment/', views.like_comment, name='like_comment'),
     url(r'^dislike_comment/', views.dislike_comment, name='dislike_comment'),
+    url(r'^contact/$', views.contact, name='contact'),
+    url(r'^email-sent/$', views.successful_email, name='successful_email'),
 ]
