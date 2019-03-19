@@ -10,17 +10,20 @@
     <h1>My Plants</h1>
 </div>
     {% if plants %}
+    <div class="myplants_container" style="display: grid">
         {% for plant in plants %}
-    <div class="card" style="width: 18rem;">
-        <img src="{% static plant.picture %}" class="card-img-top" alt="{{ plant.name }}">
-        <div class="card-body">
-            <h5 class="card-title">{{ plant.name }}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">{{ plant.latin_name }}</h6>
-            <a href="/plant-list/{{ plant.slug }}" class=" btn-primary stretched-link"></a>
+        <div class="card" style="width: 18rem;">
+            <img src="{% static plant.picture %}" class="card-img-top" alt="{{ plant.name }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ plant.name }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ plant.latin_name }}</h6>
+                <a href="/plant-list/{{ plant.slug }}" class=" btn-primary stretched-link"></a>
+            </div>
         </div>
-    </div>
+
 
         {% endfor %}
+    </div>
     {% endif %}
      <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>
 {% endblock %}

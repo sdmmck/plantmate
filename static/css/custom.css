@@ -74,12 +74,13 @@ body {
 
 }
 
-.plants_container {
+.plants_container, .myplants_container, .mywishlist_container {
     display: grid;
     padding: 1rem;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     grid-gap: 1rem;
 }
+
 
 .my_account_plants_container {
     display: grid;
@@ -87,6 +88,7 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     grid-gap: 1rem;
 }
+
 
 .jumbotron_row {
     display: flex;
