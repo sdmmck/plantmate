@@ -1,0 +1,21 @@
+{% extends "plantmate/../plantmate/base.html" %}
+{% load staticfiles %}
+{% block head_block %}
+    {% block title_block %}
+        Contact us
+    {% endblock %}
+{% endblock %}
+
+{% block body_block %}
+    {% include 'plantmate/contact-header.html' %}
+
+    <div>
+    <br>
+        <h2>Message sent!</h2>
+    <br>
+    <br>
+    </div>
+
+    <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>
+
+{% endblock %}

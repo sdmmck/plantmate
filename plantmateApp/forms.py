@@ -96,11 +96,13 @@ class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
+
         fields = ('plant_slug', 'body', )
         exclude = ('approved_comment', )
-
+        
 
 class ContactForm(forms.Form):
     email = forms.EmailField(required=True)
     subject = forms.CharField(required=True)
     message = forms.CharField(widget=forms.Textarea, required=True)
+
