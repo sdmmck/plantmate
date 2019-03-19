@@ -42,14 +42,14 @@
     </form>
 
 
-    <div id="saved_button" display = "hidden">
+    <div id="saved_button" display="hidden">
         <form method="post" action="{% url 'save_plant' %}">
             {% csrf_token %}
             <input type="hidden" id="saved_plant" name="saved_plant" value="">
             <button type="submit" name="saved_plants">add plant to my plants</button>
         </form>
     </div>
-    <div id="wishlist_button" display = "hidden">
+    <div id="wishlist_button" display="hidden">
         <form method="post" action="{% url 'wishlist_plant' %}">
             {% csrf_token %}
             <input type="hidden" id="wishlist_plant" name="wishlist_plant" value="">
@@ -66,5 +66,6 @@
     </script>
 
     <script type="text/javascript" src={% static "javascript/quiz.js" %}></script>
+    <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>
     </body>
 {% endblock %}
