@@ -105,3 +105,9 @@ body {
 .nav-link{
      font-family: 'spartanmb-semibold';
 }
+
+.btn-group{
+  max-height:100px;
+    padding: 30px;
+    margin-right: 120px;
+}

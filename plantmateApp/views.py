@@ -205,6 +205,56 @@ def show_plant(request, plant_name_slug):
     return render(request, 'plantmate/plant.html', context_dict)
 
 
+def filter_plant(request):
+
+    context_dict = {}
+    print (request.GET)
+
+    if request.GET['category'] == 'pets':
+        if 'filter' in request.GET:
+            plant_a_z = Plant.objects.filter(pet=request.GET['filter'])
+            plant_a_z = plant_a_z.order_by('name')
+            context_dict['pet_plants'] = plant_a_z
+        else:
+            plant_a_z = Plant.objects.order_by('name')
+    if request.GET['category'] == 'characteristics':
+        if 'filter' in request.GET:
+            if request.GET['filter'] == 'easy':
+                plant_a_z = Plant.objects.filter(characteristics="Easy to care for")
+            elif request.GET['filter'] == 'trailing':
+                plant_a_z = Plant.objects.filter(characteristics="Trailing")
+            elif request.GET['filter'] == 'air':
+                plant_a_z = Plant.objects.filter(characteristics="Air purifying")
+            plant_a_z = plant_a_z.order_by('name')
+            context_dict['characteristic_plants'] = plant_a_z
+        else:
+            plant_a_z = Plant.objects.order_by('name')
+    if request.GET['category'] == 'size':
+        if 'filter' in request.GET:
+            plant_a_z = Plant.objects.filter(size=request.GET['filter'])
+            plant_a_z = plant_a_z.order_by('name')
+            context_dict['size_plants'] = plant_a_z
+        else:
+            plant_a_z = Plant.objects.order_by('name')
+    if request.GET['category'] == 'sun':
+        if 'filter' in request.GET:
+            plant_a_z = Plant.objects.filter(light=request.GET['filter'])
+            plant_a_z = plant_a_z.order_by('name')
+            context_dict['sun_plants'] = plant_a_z
+        else:
+            plant_a_z = Plant.objects.order_by('name')
+    if request.GET['category'] == 'climate':
+        if 'filter' in request.GET:
+            plant_a_z = Plant.objects.filter(climate=request.GET['filter'])
+            plant_a_z = plant_a_z.order_by('name')
+            context_dict['climate_plants'] = plant_a_z
+        else:
+            plant_a_z = Plant.objects.order_by('name')
+
+    context_dict['plants'] = plant_a_z
+    return render(request, 'plantmate/plantlist.html', context=context_dict)
+
+
 @login_required
 def add_plant(request):
     form = PlantForm(request.POST)

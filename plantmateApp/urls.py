@@ -29,4 +29,5 @@ urlpatterns = [
     url(r'^dislike_comment/', views.dislike_comment, name='dislike_comment'),
     url(r'^contact/$', views.contact, name='contact'),
     url(r'^email-sent/$', views.successful_email, name='successful_email'),
+    url(r'^filter-plant/$', views.filter_plant, name='filter_plant'),
 ]
