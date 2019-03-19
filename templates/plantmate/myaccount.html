@@ -11,7 +11,7 @@
             <h1>Hi {{ username }}!</h1>
             <div class="profile_picture">
                 {% if user_profile.picture %}
-                    <img src="{% static user_profile.picture %}" alt="profile picture" width="100px" height="100px"/>
+                    <img src="{% static user_profile.picture %}" alt="profile picture" height="100px"/>
                     <br>
                     <form id="profile_image_form" method="post" action="{% url 'add_profile_image' %}"
                           enctype="multipart/form-data">
@@ -87,6 +87,7 @@
             <div id="loading_map">loading map . . .</div>
     </div>
     </div>
+     <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>
     <script type="text/javascript">
 
         window.onload = function () {
@@ -203,4 +204,5 @@
     </script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1_mwAa6UhCMVkPr4XIk-XFSXlD0Fwkmw&libraries=places"></script>
+ <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>
 {% endblock %}
