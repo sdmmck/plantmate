@@ -88,60 +88,32 @@
     </div>
     </div>
     <script type="text/javascript">
-
         window.onload = function () {
             findNearestBusiness()
         };
-
-<<<<<<< HEAD
-    <div class="col-md-4">
-        <div class="container" >
-
-                <h2>My Plants</h2>
-                {% if saved_plants %}
-                    {% for saved in saved_plants %}
-                        <div class="card" style="width: 10rem; height: 15rem">
-                            <img src="{% static saved.picture %}" class="card-img-top" alt="{{ saved.name }}">
-                                <div class="card-body">
-                                    <h6 class="card-title">{{ saved.name }}</h6>
-                                    <a href="/plant-list/{{ saved.slug }}" class=" btn-primary stretched-link"></a>
-                                </div>
-                        </div>
-                    {% endfor %}
-                {% endif %}
-
-        </div>
-    </div>
-=======
         let businessSlug = "";
         let businessLat;
         let businessLong;
         let businessName;
         let localBusinesses = [];
-
         function findNearestBusiness() {
             {% for business in businesses %}
                 localBusinesses.push(["{{ business.slug }}", "{{ business.lat }}", "{{ business.long }}", "{{ business.name }}"]);
             {% endfor %}
-
-
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(UserLocation);
             } else {
                 alert('GLASGOW');
             }
         }
-
         //get the location
         function UserLocation(position) {
             NearestBusiness(position.coords.latitude, position.coords.longitude);
         }
-
         // Convert degrees to something mysterious and mathematical and maybe relating to the shape of the earth
         function Deg2Rad(deg) {
             return deg * Math.PI / 180;
         }
-
         // yet more maths - best not to think too hard about this stuff
         function PythagorasEquirectangular(lat1, lon1, lat2, lon2) {
             lat1 = Deg2Rad(lat1);
@@ -154,12 +126,10 @@
             const d = Math.sqrt(x * x + y * y) * R;
             return d;
         }
-
         // now let's find those plant shops
         function NearestBusiness(latitude, longitude) {
             let minDif = 99999;
             let closest;
-
             for (let index = 0; index < localBusinesses.length; ++index) {
                 let dif = PythagorasEquirectangular(latitude, longitude, localBusinesses[index][1], localBusinesses[index][2]);
                 if (dif < minDif) {
@@ -167,15 +137,11 @@
                     minDif = dif;
                 }
             }
-
             businessSlug = localBusinesses[closest][0];
             businessLat = localBusinesses[closest][1];
             businessLong = localBusinesses[closest][2];
             businessName = localBusinesses[closest][3];
-
-
             {% for business in businesses %}
-
                 if ('{{ business.slug }}' === localBusinesses[closest][0]) {
                     document.getElementById("business_name").innerHTML = '{{ business.name }}';
                     document.getElementById("business_address").innerText = "{{ business.address | escapejs }}";
@@ -183,48 +149,31 @@
                     document.getElementById("business_link").href = "{% url 'business-list' %}{{ business.slug }}";
                 }
             {% endfor %}
->>>>>>> 8fdb00b542577389e9b8e7e7b0b8f9f41c009952
-
             initMap();
         }
     </script>
     <script>
-
-<<<<<<< HEAD
-    <div class="col-md-4">
-        <div class="container" >
-=======
         function initMap() {
->>>>>>> 8fdb00b542577389e9b8e7e7b0b8f9f41c009952
-
             const lat = Number(businessLat);
             const lng = Number(businessLong);
-
             let mapProp = {
                 center: {lat: lat, lng: lng},
                 zoom: 15,
             };
-
             // Create new map
             let map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
             document.getElementById("loading_map").style.display = "none";
-
             // Add marker
             let marker = new google.maps.Marker({
                 position: {lat: lat, lng: lng},
-
                 map: map
             });
-
             let infoWindow = new google.maps.InfoWindow({
                 content: businessName
             });
-
             marker.addListener('click', function () {
                 infoWindow.open(map, marker);
             });
-
-
         }
     </script>
     <script async defer

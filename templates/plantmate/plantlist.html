@@ -12,24 +12,6 @@
         <h1>Plants</h1>
         <h2>Click on a plant to find out more!</h2>
     </div>
-<<<<<<< HEAD
-    <!--<li><a href="{{ plant.slug }}">{{ plant.name }}</a>
-        <img src="{% static plant.picture %}" width="100" class="rounded-circle"></li>-->
-
-    {% endfor %}
-</ul>
-{% endif %}
-{% if user.is_authenticated %}
-  <div class="col-md-4">
-<a class="btn btn-success" href="{% url 'add_plant' %}"
-                               role="button" >Add a New Plant</a>
-  </div>
-
-{% else %}
-<p>You can add your own plant if you <a href="{% url 'add_plant' %}">log in</a> or <a href="{% url 'add_plant' %}">sign
-    up!</a><br/>
-</p>{% endif %}
-=======
     {% if plants %}
         <div class="plants_container" style="display: grid">
             {% for plant in plants %}
@@ -51,5 +33,4 @@
                 href="{% url 'add_plant' %}">sign
             up!</a><br/>
         </p>{% endif %}
->>>>>>> 8fdb00b542577389e9b8e7e7b0b8f9f41c009952
 {% endblock %}
