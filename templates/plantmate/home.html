@@ -1,24 +1,41 @@
-{% extends "plantmate/base.html" %}
+{% extends "plantmate/../plantmate/base.html" %}
 {% load staticfiles %}
 {% block head_block %}
-{% block title_block %}
-    Home
-{% endblock %}
+    {% block title_block %}
+        Home
+    {% endblock %}
 {% endblock %}
 
 {% block body_block %}
-<div class="jumbotron">
-    <h1>Welcome to plantmate!</h1>
-    Find your perfect plant<br><br><br>
-    <a class="btn btn-primary btn-lg" href="/quiz/" role="button">take the quiz</a>
-</div>
+    <style type="text/css">
+        #homepage_image {
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            left:0;
+        }
+    #quiz_button{
+        text-align: left;
+        margin-left: 60px;
+    }
+
+    </style>
+    <div class="flex-column">
+    <div class="jumbotron">
+        <h1>Plantmate</h1>
+        Find your perfect plant
+    </div>
     {#<a href="/business-list">Local Business List</a><br />#}
     {#<a href="/plant-list">Plant A-Z</a><br />#}
 
     {#<a href="/login">login</a><br />#}
     {#<a href="/sign-up">sign up</a><br />#}
     {#<a href="/contact">contact us</a><br />#}
-    
-<img src="{% static 'images/test.jpg' %}" alt ="test picture" />
+    <div id="quiz_button">
+        <a class="btn btn-outline-success" href="/quiz/" role="button">take the quiz</a>
+        </div>
+    <img id="homepage_image" src="{% static 'images/flowerpots4.png' %}" alt="plantmate"/>
+</div>
 
+    </div>
 {% endblock %}

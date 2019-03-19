@@ -2,6 +2,7 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.utils import timezone
+import datetime
 
 
 class Business(models.Model):
@@ -119,12 +120,16 @@ class UserWishlistPlants(models.Model):
 class Comment(models.Model):
     user = models.ForeignKey(User)
     plant = models.ForeignKey(Plant)
-    plant_slug = models.CharField(max_length=128)
+    plant_slug = models.CharField(max_length=128, default=" ")
     body = models.TextField(unique=False, default=" ")
-    created_date = models.DateTimeField(default=timezone.now)
+    created_date = models.DateTimeField('date published')
     approved_comment = models.BooleanField(default=True)
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
+
+    def recently_published(self):
+        now = timezone.now()
+        return now - datetime.timedelta(days=2) <= self.created_date <= now
 
     def approve(self):
         self.approved_comment = True

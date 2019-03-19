@@ -74,7 +74,6 @@ class ProfileImageForm(forms.ModelForm):
         fields = ('picture',)
 
 
-
 class SavePlantForm(forms.ModelForm):
     saved_plant = forms.HiddenInput()
 
@@ -96,10 +95,8 @@ class WishlistPlantForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     plant_slug = forms.HiddenInput()
     body = forms.Textarea()
-    likes = forms.HiddenInput()
-    dislikes = forms.HiddenInput()
 
     class Meta:
         model = Comment
-        fields = ('plant_slug', 'body' )
+        fields = ('plant_slug', 'body', )
         exclude = ('approved_comment', )
