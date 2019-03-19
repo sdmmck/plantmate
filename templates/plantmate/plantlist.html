@@ -15,8 +15,9 @@
     {% if plants %}
         <div class="plants_container" style="display: grid">
             {% for plant in plants %}
-                <div class="card" style="width: 18rem" >
-                    <img src="{% static plant.picture %}" class="card-img-top" alt="{{ plant.name }}" style="height: 18rem">
+                <div class="card" style="width: 18rem">
+                    <img src="{% static plant.picture %}" class="card-img-top" alt="{{ plant.name }}"
+                         style="height: 18rem">
                     <div class="card-body">
                         <h5 class="card-title">{{ plant.name }}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">{{ plant.latin_name }}</h6>
@@ -33,4 +34,5 @@
                 href="{% url 'add_plant' %}">sign
             up!</a><br/>
         </p>{% endif %}
+     <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>
 {% endblock %}

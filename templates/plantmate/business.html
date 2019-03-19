@@ -46,6 +46,7 @@
                 marker.addListener('click', function () {
                     infoWindow.open(map, marker);
                 });
+                console.log();
             }
         </script>
 
@@ -55,4 +56,5 @@
     {% else %}
         This business has not been added yet!
     {% endif %}
+     <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>
 {% endblock %}
