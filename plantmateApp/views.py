@@ -122,11 +122,24 @@ def like_comment(request):
     likecom_id = None
     if request.method == 'GET':
         likecom_id = request.GET['comment_id']
+        disabled = request.GET['disable_button']
     likes = 0
     if likecom_id:
         likecom = Comment.objects.get(id=int(likecom_id))
         if likecom:
-            likes = likecom.likes + 1
+            if disabled == 'true':
+                # Button was disabled, meaning user has voted before and is changing their vote
+                likes = likecom.likes - 1
+                # likes decreased
+
+            elif disabled == 'false':
+                #Button not disabled
+                likes=likecom.likes
+
+            elif disabled == 'null':
+                # Implement button press
+                likes = likecom.likes + 1
+
             likecom.likes = likes
             likecom.save()
     return HttpResponse(likes)
@@ -137,11 +150,26 @@ def dislike_comment(request):
     discom_id = None
     if request.method == 'GET':
         discom_id = request.GET['comment_id']
+        disabled = request.GET['disable_button']
+
     dislikes = 0
+
     if discom_id:
         dislikecom = Comment.objects.get(id=int(discom_id))
         if dislikecom:
-            dislikes = dislikecom.dislikes + 1
+            if disabled == 'true':
+               # Button was disabled, meaning user has voted before and is changing their vote
+                dislikes = dislikecom.dislikes - 1
+                # dislikes decreased
+
+            elif disabled == 'false':
+                #Button not disabled
+                dislikes = dislikecom.dislikes
+
+            elif disabled == 'null':
+                # Implementing button press
+                dislikes = dislikecom.dislikes + 1
+                # Dislikes increased
             dislikecom.dislikes = dislikes
             dislikecom.save()
     return HttpResponse(dislikes)
