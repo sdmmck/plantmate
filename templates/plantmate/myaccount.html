@@ -15,7 +15,9 @@
                     <br>
                     <button onclick="location.href='{% url 'add_profile_image' %}'" class="btn btn-outline-success">change profile picture</button>
                 {% else %}
+
                    <button onclick="location.href='{% url 'add_profile_image' %}'" class="btn btn-outline-success">add profile picture</button>
+
                 {% endif %}
             </div>
         </div>
@@ -29,7 +31,7 @@
                 <div class="my_account_plants_container">
                     {% if saved_plants %}
                         {% for saved in saved_plants %}
-                            <div class="card" style="width: 10rem; height: 15rem">
+                            <div class="card text-center" style="width: 10rem; height: 15rem">
                                 <img src="{% static saved.picture %}" class="card-img-top" alt="{{ saved.name }}"
                                      style="height: 10rem">
                                 <div class="card-body">
@@ -48,7 +50,7 @@
                 <div class="my_account_plants_container">
                     {% if wishlist_plants %}
                         {% for wish in wishlist_plants %}
-                            <div class="card" style="width: 10rem; height: 15rem">
+                            <div class="card text-center" style="width: 10rem; height: 15rem">
                                 <img src="{% static wish.picture %}" class="card-img-top" alt="{{ wish.name }}"
                                      style="height: 10rem">
                                 <div class="card-body">
