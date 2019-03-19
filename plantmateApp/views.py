@@ -308,6 +308,11 @@ def contact(request):
     return render(request, 'plantmate/contact.html', context=context_dict)
 
 
+def contact_success(request):
+    context_dict = {}
+    return render(request, 'plantmate/contact-success.html', context=context_dict)
+
+
 def myaccount(request):
     profile_image_form = ProfileImageForm(data=request.POST)
     saved_plants = set()

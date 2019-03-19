@@ -1,18 +1,15 @@
 {% extends "plantmate/../plantmate/base.html" %}
 {% load staticfiles %}
-{% block head_block %}
-    {% block title_block %}
-        contact us at plantmate
-    {% endblock %}
-
-    {% block body_block %}
-<div class="jumbotron">
-        <h1>contact us</h1>
-        plantmate@gmail.com<br>
-        0141 557 1110<br><br>
-        <img src="{% static 'images/office1.jpg' %}" width="200" height="250" alt="plantmate contact"/>
-</div>
-<form role="form" id="plant_form" method="post" enctype="multipart/form-data" action="{% url 'add_plant' %}">
+{#{% block head_block %}#}
+{#    {% block title_block %}#}
+{#        contact us at plantmate#}
+{#    {% endblock %}#}
+{##}
+{#{%  endblock %}#}
+{% block body_block %}
+   {% include 'plantmate/contact-header.html' %}
+    <form role="form" id="plant_form" method="post" enctype="multipart/form-data" action="{% url 'contact-success' %}">
+        {% csrf_token %}
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -29,7 +26,7 @@
                 </div>
             </div>
         </div>
-  <div class="row">
+        <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="form_message">Message *</label>
@@ -41,7 +38,8 @@
                 <input type="submit" class="btn btn-success btn-send" value="Send message">
             </div>
         </div>
-        </form>
-    {% endblock %}
-     <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>
+    </form>
+
+    <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>
+
 {% endblock %}
