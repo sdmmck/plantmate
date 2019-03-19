@@ -60,9 +60,12 @@ class BusinessTests(TestCase):
 class CommentFormTests(TestCase):
    
     def test_valid_data(self):
+        time = timezone.now()
+        comment_time = Comment(created_date=time)
         form = CommentForm({
             'plant_slug': "rose-painted-calathea",
-            'body': "Hi there"
+            'body': "Hi there",
+            'created_date': comment_time
         })
         self.assertTrue(form.is_valid())
         comment = form.save()

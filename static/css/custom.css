@@ -68,4 +68,10 @@ body {
 
         }
 
+#search-box {
+    background-color: rgb(208, 230, 173);
+    font-family: Georgia;
+    color: black;
+}
+
 
