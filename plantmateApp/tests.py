@@ -58,11 +58,11 @@ class BusinessTests(TestCase):
         self.assertQuerysetEqual(response.context['businesses'], [])
 
 class CommentFormTests(TestCase):
-        
+   
     def test_valid_data(self):
         form = CommentForm({
             'plant_slug': "rose-painted-calathea",
-            'body': "Hi there",
+            'body': "Hi there"
         })
         self.assertTrue(form.is_valid())
         comment = form.save()
