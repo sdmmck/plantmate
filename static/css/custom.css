@@ -90,17 +90,33 @@ body {
     width: 100%;
     bottom: 0;
     left: 0;
+    z-index: -3;
 }
 
 #quiz_button {
     text-align: left;
     margin-left: 60px;
     margin-bottom: 100px;
+    z-index: -1;
 }
 
 #border_image {
     height: 100px;
 }
+
+
+        #border_image {
+
+            height: 100px;
+
+        }
+
+#search-box {
+    background-color: rgb(208, 230, 173);
+    font-family: Georgia;
+    color: black;
+}
+
 
 .nav-link{
      font-family: 'spartanmb-semibold';
