@@ -1,4 +1,4 @@
-{% extends "plantmate/base.html" %}
+{% extends "plantmate/../plantmate/base.html" %}
 {% load staticfiles %}
 
 {% block head_block %}
@@ -115,6 +115,6 @@
     <div id="results">
         <h1 id="hi"></h1>
     </div>
-
+ <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>
 {% endblock %}
 
