@@ -207,16 +207,34 @@
     <script rel="javascript" type="text/javascript">
 
         $('.like-button').on('click', (function () {
-
             var comid;
             comid = $(this).attr("data-comid");
-            console.log(comid);
-            $.get("{% url 'like_comment' %}", {comment_id: comid}, function (data) {
-                console.log("in get function");
-                $('#like-count' + comid).html(data);
-                $('#like' + comid).prop('disabled', true);
-                $('#dislike' + comid).prop('disabled', false);
-                console.log("html data");
+            var is_disabled;
+            if($('#dislike' + comid).hasClass('disabled')){
+                //if user has voted already and selected dislike before, this will be disabled
+                is_disabled=true;
+            }
+            else{
+                is_disabled=false;
+            }
+            $.ajax({
+                type: 'GET',
+                url: "{% url 'like_comment' %}",
+                data: {comment_id: comid, "disable_button": "null"},
+                success: function(data){
+                    $('#like-count' + comid).html(data);
+                    $('#like' + comid).addClass('disabled').prop('disabled', true); //adds 'disabled' into class tag
+
+                    $.ajax({
+                        type: 'GET',
+                        url: "{% url 'dislike_comment' %}",
+                        data: {comment_id: comid, "disable_button": is_disabled},
+                        success: function(data){
+                            $('#dislike-count' + comid).html(data);
+                            $('#dislike' + comid).removeClass('disabled').prop('disabled', false);
+                        }
+                    });
+                }
             });
         }));
 
@@ -224,15 +242,35 @@
 
             var comid;
             comid = $(this).attr("data-comid");
-            console.log(comid);
-            $.get("{% url 'dislike_comment' %}", {comment_id: comid}, function (data) {
-                console.log("in get function");
-                $('#dislike-count' + comid).html(data);
-                $('#dislike' + comid).prop('disabled', true);
-                $('#like' + comid).prop('disabled', false);
-                console.log("printed html data");
+            var is_disabled;
+            if($('#like' + comid).hasClass('disabled')){
+                //disabled if user has already liked the comment
+                is_disabled=true;
+            }
+            else{
+                is_disabled=false;
+            }
+            $.ajax({
+                type: 'GET',
+                url: "{% url 'dislike_comment' %}",
+                data: {comment_id: comid, "disable_button": "null"},
+                success: function(data){
+                    $('#dislike-count' + comid).html(data);
+                    $('#dislike' + comid).addClass('disabled').prop('disabled', true);
+
+                    $.ajax({
+                        type: 'GET',
+                        url: "{% url 'like_comment' %}",
+                        data: {comment_id: comid, "disable_button": is_disabled},
+                        success: function(data){
+                            $('#like-count' + comid).html(data);
+                            $('#like' + comid).removeClass('disabled').prop('disabled', false);
+                        }
+                    });
+                }
             });
         });
+
     </script>
     <script>
         if (plantIsInWishlist) {
