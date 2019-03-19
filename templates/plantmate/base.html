@@ -9,15 +9,14 @@
 <link rel="icon" href="{% static 'images/testicon.ico' %}" alt="test icon">
 
 <html>
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
-
-<!--font awesome????-->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-      integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 
 <head>
+    <!--font awesome????-->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+          integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">
     <title>
         plantmate
@@ -77,9 +76,6 @@
 <!-- END OF NAVIGATION BAR -------------------------------------------------------------------------------------->
 <div>
     {% block body_block %}
-
-
-
     {% endblock %}
 </div>
 <script src="{% static 'javascript/bootstrap.min.js' %}"></script>

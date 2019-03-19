@@ -1,12 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from plantmateApp.models import Business, Plant, PlantImage, UserWishlistPlants, UserSavedPlants, UserProfile, User, \
     Comment
 from plantmateApp.forms import BusinessForm, ProfileImageForm, PlantForm, ImageForm, SavePlantForm, \
-    WishlistPlantForm, CommentForm
+    WishlistPlantForm, CommentForm, ContactForm
 from django.template.defaultfilters import slugify
+from django.core.mail import send_mail, BadHeaderError
 
 
 def home(request):
@@ -118,31 +119,31 @@ def add_comment(request):
 
 @login_required
 def like_comment(request):
-    com_id = None
+    likecom_id = None
     if request.method == 'GET':
-        com_id = request.GET['comment_id']
+        likecom_id = request.GET['comment_id']
     likes = 0
-    if com_id:
-        comment = Comment.objects.get(id=int(com_id))
-        if comment:
-            likes = comment.likes + 1
-            comment.likes = likes
-            comment.save()
+    if likecom_id:
+        likecom = Comment.objects.get(id=int(likecom_id))
+        if likecom:
+            likes = likecom.likes + 1
+            likecom.likes = likes
+            likecom.save()
     return HttpResponse(likes)
 
 
 @login_required
 def dislike_comment(request):
-    com_id = None
+    discom_id = None
     if request.method == 'GET':
-        com_id = request.GET['comment_id']
+        discom_id = request.GET['comment_id']
     dislikes = 0
-    if com_id:
-        com = Comment.objects.get(id=int(com_id))
-        if com:
-            dislikes = com.dislikes + 1
-            com.dislikes = dislikes
-            com.save()
+    if discom_id:
+        dislikecom = Comment.objects.get(id=int(discom_id))
+        if dislikecom:
+            dislikes = dislikecom.dislikes + 1
+            dislikecom.dislikes = dislikes
+            dislikecom.save()
     return HttpResponse(dislikes)
 
 
@@ -304,8 +305,32 @@ def signup(request):
 
 
 def contact(request):
-    context_dict = {}
+
+    if request.method == 'GET':
+        form = ContactForm()
+    else:
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+            try:
+                send_mail(subject, message, email, ['rosemary.ferrier@gmail.com'])
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+            return redirect('successful_email')
+    return render(request, 'plantmate/contact.html', {'form': form})
+
+
+def successful_email(request):
+    form = ContactForm()
+    context_dict = {'success': "success", 'form': form}
     return render(request, 'plantmate/contact.html', context=context_dict)
+
+
+def contact_success(request):
+    context_dict = {}
+    return render(request, 'plantmate/contact-success.html', context=context_dict)
 
 
 def myaccount(request):
@@ -371,7 +396,7 @@ def add_profile_image(request):
             print(form.errors)
         return myaccount(request)
 
-    return render(request, 'plantmate/myaccount.html', context=context_dict)
+    return render(request, 'plantmate/add-profile-image.html', context=context_dict)
 
 
 def change_password(request):

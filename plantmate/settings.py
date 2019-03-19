@@ -96,6 +96,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 # Authorisation
 # if true, users can register
 REGISTRATION_OPEN = True
