@@ -7,21 +7,6 @@
 {% endblock %}
 
 {% block body_block %}
-    <style type="text/css">
-
-      #homepage_image {
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-            right: 0;
-        }
-
-        #quiz_button {
-            text-align: left;
-            margin-left: 60px;
-        }
-
-    </style>
     <div class="flex-column">
         <div class="jumbotron">
             <h1>Plantmate</h1>
@@ -34,7 +19,7 @@
         {#<a href="/sign-up">sign up</a><br />#}
         {#<a href="/contact">contact us</a><br />#}
         <div id="quiz_button">
-            <a class="btn btn-outline-success" href="/quiz/" role="button">take the quiz</a>
+            <a href="/quiz/" role="button">take the quiz</a>
         </div>
         <img id="homepage_image" src="{% static 'images/flowerpots4.png' %}" alt="plantmate"/>
 
