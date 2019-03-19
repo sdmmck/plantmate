@@ -5,6 +5,15 @@
     padding-bottom: 20px;
 }
 
+a {
+    color: #4fa543;
+}
+
+a:hover {
+  color: #b299a9;
+  text-decoration: none;
+}
+
 h1 {
     font-family: "Spartan MB";
     font-weight: bold;
@@ -67,5 +76,6 @@ body {
             height: 100px;
 
         }
+
 
 

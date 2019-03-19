@@ -15,7 +15,7 @@
     <p id="business-address"></p>
     <div>
         {% if user.is_authenticated %}
-            <a href="{% url 'add_business' %}">add a new business</a><br/>
+            <p>If you can't find the business you're looking for, you can <a href="{% url 'add_business' %}">add a new business</a><br/></p>
         {% endif %}
     </div>
     <div id="map_loading"><p>map loading . . . </p></div>
@@ -46,7 +46,7 @@
                 zoom: 6,
             };
 
-            // if there is geolocation:
+            <!--// if there is geolocation:
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function (position) {
                     const here = {
@@ -61,14 +61,15 @@
                     document.getElementById("map_loading").style.display = "none";
                 });
 
-            } else {
+            } else {-->
+
                 // if there isn't any geolocation let's center on Glasgow:
                 map = new google.maps.Map(document.getElementById("googleMap"), glasgow);
                 addMarkers();
                 document.getElementById("map_loading").style.display = "none";
-            }
+     <!--       }
         }
-
+-->
         // function for adding markers
 
 

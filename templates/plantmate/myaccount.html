@@ -33,7 +33,9 @@
     <div class="row">
         <div class="col-md-6">
             <div class="container">
-                <h2>My Plants</h2>
+
+                    <h2><a href="{% url 'my_plants' %}">My Plants</a></h2>
+
                 <div class="my_account_plants_container">
                     {% if saved_plants %}
                         {% for saved in saved_plants %}
@@ -52,7 +54,7 @@
         </div>
         <div class="col-md-6">
             <div class="container">
-                <h2>My Wishlist</h2>
+                <h2><a href="{% url 'wishlist' %}">My Wishlist</a></h2>
                 <div class="my_account_plants_container">
                     {% if wishlist_plants %}
                         {% for wish in wishlist_plants %}
@@ -83,11 +85,13 @@
             <br>
             <p><strong>Opening hours:</strong>
             <div id="business_opening_hours"></div>
-            <a href="" id="business_link">more info</a>
+            <a href="" id="business_link">...more info</a><br>
+            <p>Not what you're looking for? Find more plant shops <a href="{% url 'business-list' %}">here</a></p>
+
             <div id="loading_map">loading map . . .</div>
     </div>
     </div>
-     <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>
+<!--     <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>-->
     <script type="text/javascript">
         window.onload = function () {
             findNearestBusiness()

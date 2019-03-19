@@ -117,6 +117,9 @@
                             {% endfor %}
                         </div>
 
+                    {% else %}
+                            <p><i>You can add this plant to a plant list and add your own images if you <a href="{% url 'add_plant' %}">log in</a> or <a href="{% url 'add_plant' %}">sign up</a>!<br/>
+                            </i></p>
                     {% endif %}
 
                     </div><!--end card body-->
@@ -198,8 +201,7 @@
     {% else %}
         <p>no plant added yet with this name!</p>
     {% endif %}
-     <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>
-    <!----AJAX FUNCTIONALITY FOR LIKING/DISLIKING COMMENTS--->
+            <!----AJAX FUNCTIONALITY FOR LIKING/DISLIKING COMMENTS--->
     <script src="{% static '/javascript/jquery.min.js' %}"></script>
     <script rel="javascript" type="text/javascript">
         $('#like_button').on('click', (function () {
