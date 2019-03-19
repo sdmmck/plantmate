@@ -5,17 +5,54 @@
     padding-bottom: 20px;
 }
 
+@font-face {
+  font-family: 'spartanmb-black';
+  src: url('/static/fonts/spartanmb-black-webfont.woff') format('woff'),
+       url('/static/fonts/spartanmb-black-webfont.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'spartanmb-bold';
+  src: url('/static/fonts/spartanmb-bold-webfont.woff') format('woff'),
+       url('/static/fonts/spartanmb-bold-webfont.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'spartanmb-light';
+  src: url('/static/fonts/spartanmb-light-webfont.woff') format('woff'),
+       url('/static/fonts/spartanmb-light-webfont.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'spartanmb-extra-bold';
+  src: url('/static/fonts/spartanmb-extra-bold-webfont.woff') format('woff'),
+       url('/static/fonts/spartanmb-extra-bold-webfont.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'spartanmb-regular';
+  src: url('/static/fonts/spartanmb-regular-webfont.woff') format('woff'),
+       url('/static/fonts/spartanmb-regular-webfont.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'spartanmb-semibold';
+  src: url('/static/fonts/spartanmb-semibold-webfont.woff') format('woff'),
+       url('/static/fonts/spartanmb-semibold-webfont.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'spartanmb-thin';
+  src: url('/static/fonts/spartanmb-thin-webfont.woff') format('woff'),
+       url('/static/fonts/spartanmb-thin-webfont.woff2') format('woff2');
+}
+
+
 h1 {
-    font-family: "Spartan MB";
-    font-weight: bold;
+    font-family: 'spartanmb-extra-bold';
 }
 
 h2 {
-    font-family: "Spartan MB";
+    font-family: 'spartanmb-regular';
 }
 
 h3 {
-    font-family: "Spartan MB";
+    font-family: 'spartanmb-thin';
 }
 
 body {
@@ -49,7 +86,7 @@ body {
 }
 
 #homepage_image {
-    position: absolute;
+    position: fixed;
     width: 100%;
     bottom: 0;
     left: 0;
@@ -58,14 +95,10 @@ body {
 #quiz_button {
     text-align: left;
     margin-left: 60px;
+    margin-bottom: 100px;
 }
 
-
-
-        #border_image {
-
-            height: 100px;
-
-        }
-
+#border_image {
+    height: 100px;
+}
 
