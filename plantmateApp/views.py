@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core import mail
 from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
@@ -232,6 +233,56 @@ def show_plant(request, plant_name_slug):
     return render(request, 'plantmate/plant.html', context_dict)
 
 
+def filter_plant(request):
+
+    context_dict = {}
+    print (request.GET)
+
+    if request.GET['category'] == 'pets':
+        if 'filter' in request.GET:
+            plant_a_z = Plant.objects.filter(pet=request.GET['filter'])
+            plant_a_z = plant_a_z.order_by('name')
+            context_dict['pet_plants'] = plant_a_z
+        else:
+            plant_a_z = Plant.objects.order_by('name')
+    if request.GET['category'] == 'characteristics':
+        if 'filter' in request.GET:
+            if request.GET['filter'] == 'easy':
+                plant_a_z = Plant.objects.filter(characteristics="Easy to care for")
+            elif request.GET['filter'] == 'trailing':
+                plant_a_z = Plant.objects.filter(characteristics="Trailing")
+            elif request.GET['filter'] == 'air':
+                plant_a_z = Plant.objects.filter(characteristics="Air purifying")
+            plant_a_z = plant_a_z.order_by('name')
+            context_dict['characteristic_plants'] = plant_a_z
+        else:
+            plant_a_z = Plant.objects.order_by('name')
+    if request.GET['category'] == 'size':
+        if 'filter' in request.GET:
+            plant_a_z = Plant.objects.filter(size=request.GET['filter'])
+            plant_a_z = plant_a_z.order_by('name')
+            context_dict['size_plants'] = plant_a_z
+        else:
+            plant_a_z = Plant.objects.order_by('name')
+    if request.GET['category'] == 'sun':
+        if 'filter' in request.GET:
+            plant_a_z = Plant.objects.filter(light=request.GET['filter'])
+            plant_a_z = plant_a_z.order_by('name')
+            context_dict['sun_plants'] = plant_a_z
+        else:
+            plant_a_z = Plant.objects.order_by('name')
+    if request.GET['category'] == 'climate':
+        if 'filter' in request.GET:
+            plant_a_z = Plant.objects.filter(climate=request.GET['filter'])
+            plant_a_z = plant_a_z.order_by('name')
+            context_dict['climate_plants'] = plant_a_z
+        else:
+            plant_a_z = Plant.objects.order_by('name')
+
+    context_dict['plants'] = plant_a_z
+    return render(request, 'plantmate/plantlist.html', context=context_dict)
+
+
 @login_required
 def add_plant(request):
     form = PlantForm(request.POST)
@@ -255,13 +306,15 @@ def add_plant(request):
 def remove_wishlist_plant(request):
     if request.method == 'POST':
         form = WishlistPlantForm(request.POST)
-
         if form.is_valid():
             wishlisted_plant = request.POST.get('wishlist_plant')
             plant = UserWishlistPlants.objects.filter(wishlist_plant=wishlisted_plant)
             for p in plant:
                 p.delete()
-            return show_plant(request, wishlisted_plant)
+            if 'next' in request.GET:
+                return wishlist(request)
+            else:
+                return show_plant(request, wishlisted_plant)
 
         else:
             print(form.errors)
@@ -277,11 +330,15 @@ def remove_saved_plant(request):
             plant = UserSavedPlants.objects.filter(saved_plant=saved_plant)
             for p in plant:
                 p.delete()
-            return show_plant(request, saved_plant)
+            if 'next' in request.GET:
+                return my_plants(request)
+            else:
+                return show_plant(request, saved_plant)
 
         else:
             print(form.errors)
     return render(request, 'plantmate/myplants.html', {'form': form})
+
 
 
 @login_required
@@ -340,12 +397,10 @@ def contact(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             subject = form.cleaned_data['subject']
-            email = form.cleaned_data['email']
+            email_address = form.cleaned_data['email']
             message = form.cleaned_data['message']
-            try:
-                send_mail(subject, message, email, ['rosemary.ferrier@gmail.com'])
-            except BadHeaderError:
-                return HttpResponse('Invalid header found.')
+            email = mail.EmailMessage(subject, message, email_address, ['support@plantmate.com'])
+            email.send()
             return redirect('successful_email')
     return render(request, 'plantmate/contact.html', {'form': form})
 
@@ -398,12 +453,13 @@ def wishlist(request):
 
 
 def my_plants(request):
+    form = SavePlantForm(request.POST)
     saved_plants = UserSavedPlants.objects.filter(user=request.user)
     plants = set()
     for saved in saved_plants:
         plants.add(Plant.objects.get(slug=saved.saved_plant))
 
-    context_dict = {'saved_plants': saved_plants, 'plants': plants}
+    context_dict = {'saved_plants': saved_plants, 'plants': plants, 'form': form}
     return render(request, 'plantmate/myplants.html', context=context_dict)
 
 
