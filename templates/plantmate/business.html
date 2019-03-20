@@ -12,15 +12,16 @@
             <h1>{{ business.name }}</h1>
         </div>
         <div class="background_space_medium">
-            <p>{{ business.address | linebreaks }}</p>
-            <p>{{ business.phone }}
-                <br>{{ business.email }}</p>
-            <p><a href="{{ business.url }}">Visit website</a></p>
-            <p><strong>Opening hours:</strong>
-                <br>
-                {{ business.opening_hours | linebreaks }}<br/>
-            </p>
-            <div id="googleMap" style="width:75%;height:400px;"></div>
+            <div style="margin-left: 20%">
+                <p>{{ business.address | linebreaks }}</p>
+                <p>{{ business.phone }}
+                    <br>{{ business.email }}</p>
+                <p><a href="{{ business.url }}">Visit website</a></p>
+                <p style="font-family: spartanmb-bold">Opening hours:</p>
+                    {{ business.opening_hours | linebreaks }}
+                </p>
+            </div>
+            <div id="googleMap" style="width:600px;height:400px;left: 20%; right: 20%; margin-bottom: 60px"></div>
             <br>
         </div>
 

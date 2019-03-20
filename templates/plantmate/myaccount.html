@@ -14,9 +14,8 @@
                     <div class="square_image_100px_radius">
                         <img src="{% static user_profile.picture %}" alt="profile picture" height="100px">
                     </div>
-                    <br>
                     <button onclick=" location.href='{% url 'add_profile_image' %}' " class="btn
-                    btn-outline-success">change profile picture
+                    btn-outline-success">change picture
                     </button>
                 {% else %}
                     <button onclick="location.href='{% url 'add_profile_image' %}'" class="btn btn-outline-success">add
