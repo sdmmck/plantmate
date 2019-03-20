@@ -7,8 +7,10 @@
 {% endblock %}
 
 {% block body_block %}
-    <h1 xmlns="http://www.w3.org/1999/html">add an image </h1>
-    <div>
+    <div class="jumbotron">
+    <h1> Add a profile picture</h1>
+</div>
+    <div class="background_space">
         <form role="form" id="profile_picture" method="post" enctype="multipart/form-data"
               action="." class="btn btn-outline-success">
             {% csrf_token %}
@@ -17,5 +19,4 @@
         </form>
 
     </div>
-     <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>
 {% endblock %}

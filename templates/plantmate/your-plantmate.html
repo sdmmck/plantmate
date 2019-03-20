@@ -21,53 +21,45 @@
     {% endfor %}
     <div id="results">
         <div class="jumbotron">
-            <H4 id="match"></H4></div>
+            <H4 id="match"></H4>
+        </div>
     </div>
     <br>
-    </div>
-
-    <br>
-
-    <img id="image" src="" alt="your plantmate">
-
-    <ul id="list_of_criteria">
-        <li id="size"></li>
-        <li id="characteristics"></li>
-        <li id="room"></li>
-        <li id="climate"></li>
-        <li id="light"></li>
-        <li id="pet"></li>
-    </ul>
-
-    <form id="show_plant">
-        <button type="submit" value="more information">more information</button>
-    </form>
-
-
-    <div id="saved_button" display="hidden">
-        <form method="post" action="{% url 'save_plant' %}">
-            {% csrf_token %}
-            <input type="hidden" id="saved_plant" name="saved_plant" value="">
-            <button type="submit" name="saved_plants">add plant to my plants</button>
+    <div class="background_space">
+        <br>
+        <img id="image" src="" alt="your plantmate">
+        <ul id="list_of_criteria">
+            <li id="size"></li>
+            <li id="characteristics"></li>
+            <li id="room"></li>
+            <li id="climate"></li>
+            <li id="light"></li>
+            <li id="pet"></li>
+        </ul>
+        <form id="show_plant">
+            <button type="submit" value="more information">more information</button>
         </form>
+        <div id="saved_button" display="hidden">
+            <form method="post" action="{% url 'save_plant' %}">
+                {% csrf_token %}
+                <input type="hidden" id="saved_plant" name="saved_plant" value="">
+                <button type="submit" name="saved_plants">add plant to my plants</button>
+            </form>
+        </div>
+        <div id="wishlist_button" display="hidden">
+            <form method="post" action="{% url 'wishlist_plant' %}">
+                {% csrf_token %}
+                <input type="hidden" id="wishlist_plant" name="wishlist_plant" value="">
+                <button type="submit" name="wishlist">add plant to my wishlist</button>
+            </form>
+        </div>
     </div>
-    <div id="wishlist_button" display="hidden">
-        <form method="post" action="{% url 'wishlist_plant' %}">
-            {% csrf_token %}
-            <input type="hidden" id="wishlist_plant" name="wishlist_plant" value="">
-            <button type="submit" name="wishlist">add plant to my wishlist</button>
-        </form>
-    </div>
-</body>
-
+    </body>
     <script type="text/javascript">
         function updateDocInline() {
             document.getElementById("show_plant").action = {% url 'plant_list' %}+plant.slug;
             document.getElementById("image").src = {% get_static_prefix %}+plant.picture;
         }
     </script>
-
     <script type="text/javascript" src={% static "javascript/quiz.js" %}></script>
-    <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>
-
 {% endblock %}

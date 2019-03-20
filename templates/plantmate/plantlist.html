@@ -51,40 +51,37 @@
 
 
 
-
-
-    {% if plants %}
-        <div class="plants_container" style="display: grid">
-            {% for plant in plants %}
+    <div class="background_space">
+        {% if plants %}
+            <div class="plants_container" style="display: grid">
+                {% for plant in plants %}
+                    <div class="card text-center" style="width: 18rem">
+                        <img src="{% static plant.picture %}" class="card-img-top" alt="{{ plant.name }}"
+                             style="height: 18rem">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ plant.name }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ plant.latin_name }}</h6>
+                            <a href="{% url 'plant' plant.slug %}" class=" btn-primary stretched-link"></a>
+                        </div>
+                    </div>
+                {% endfor %}
                 <div class="card text-center" style="width: 18rem">
-                    <img src="{% static plant.picture %}" class="card-img-top" alt="{{ plant.name }}"
-                         style="height: 18rem">
+                    <img src="{% static 'images/disguised_plant.png' %}" class="card-img-top" alt="just a test"
+                         style="height: 18rem"/>
                     <div class="card-body">
-                        <h5 class="card-title">{{ plant.name }}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">{{ plant.latin_name }}</h6>
-                        <a href="{% url 'plant' plant.slug %}" class="btn-primary stretched-link"></a>
+                        <h5 class="card-title">Can't find the plant you're looking for?</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Add a new one here</h6>
+                        <a href="{% url 'add_plant' %}" class=" btn-primary stretched-link"></a>
                     </div>
                 </div>
-            {% endfor %}
-                <div class="card text-center" style="width: 18rem">
-                    <img src="{% static 'images/office1.jpg' %}" class="card-img-top" alt="just a test" style="height: 18rem"/>
-                        <div class="card-body">
-                            <h5 class="card-title">Can't find the plant you're looking for?</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Add a new one here</h6>
-                            <a href="{% url 'add_plant' %}" class=" btn-primary stretched-link"></a>
-                        </div>
-                </div>
-        </div>
-    {% endif %}
-    {% if user.is_authenticated %}
-
-    {% else %}
-        <p>You can add your own plant if you <a href="{% url 'add_plant' %}">log in</a> or <a
-                href="{% url 'add_plant' %}">sign
-            up!</a><br/>
-        </p>{% endif %}
-    <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>
-
+            </div>
+        {% endif %}
+        {% if not user.is_authenticated %}
+            <p>You can add your own plant if you <a href="{% url 'add_plant' %}">log in</a> or <a
+                    href="{% url 'add_plant' %}">sign
+                up!</a><br/>
+            </p>{% endif %}
+    </div>
     <script>
 
 
@@ -101,8 +98,6 @@
             }
         }
     </script>
-
-
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
