@@ -16,11 +16,14 @@
     <div class="mywishlist_container" style="display: grid">
         {% for plant in plants %}
             <div class="card text-center" style="width: 18rem;">
-                <img src="{% static plant.picture %}" href="/plant-list/{{ plant.slug }}" class="card-img-top"
-                     alt="{{ plant.name }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ plant.name }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{ plant.latin_name }}</h6>
+                <a href="/plant-list/{{ plant.slug }}">
+                    <img src="{% static plant.picture %}" class="card-img-top"
+                         alt="{{ plant.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ plant.name }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ plant.latin_name }}</h6>
+                    </div>
+                </a>
                     <form method="post" action="{% url 'remove_wishlist_plant' %}?next={{ "mywishlistpage" }}">
                         {% csrf_token %}
                         <input type="hidden" id="remove_wishlist_plant" name="wishlist_plant"
@@ -29,7 +32,7 @@
                                 class="btn btn-outline-success">remove from wishlist
                         </button>
                     </form>
-                </div>
+
             </div>
         {% endfor %}
     </div>

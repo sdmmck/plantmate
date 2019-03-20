@@ -14,12 +14,14 @@
         {% for plant in plants %}
 
             <div class="card text-center" style="width: 18rem;">
-                <img src="{% static plant.picture %}" href="/plant-list/{{ plant.slug }}" class="card-img-top" alt="{{ plant.name }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ plant.name }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{ plant.latin_name }}</h6>
-                </div>
-                <form method="post" action="{% url 'remove_saved_plant' %}?next={{ "myplantspage" }}">
+                <a href="/plant-list/{{ plant.slug }}">
+                    <img src="{% static plant.picture %}" class="card-img-top" alt="{{ plant.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ plant.name }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ plant.latin_name }}</h6>
+                    </div>
+                </a>
+                <form method="post" action="{% url 'remove_saved_plant' %}?next={{ 'myplantspage' }}">
                     {% csrf_token %}
                     <input type="hidden" id="saved_plant" name="saved_plant" value={{ plant.slug }}>
                     <button type="submit" name="remove_saved_plant" class="btn btn-outline-success">
