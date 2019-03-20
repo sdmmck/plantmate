@@ -13,9 +13,11 @@
                 {% if user_profile.picture %}
                     <img src="{% static user_profile.picture %}" alt="profile picture" height="100px"/>
                     <br>
-                    <button onclick="location.href='{% url 'add_profile_image' %}'">change profile picture</button>
+                    <button onclick="location.href='{% url 'add_profile_image' %}'" class="btn btn-outline-success">change profile picture</button>
                 {% else %}
-                   <button onclick="location.href='{% url 'add_profile_image' %}'">add profile picture</button>
+
+                   <button onclick="location.href='{% url 'add_profile_image' %}'" class="btn btn-outline-success">add profile picture</button>
+
                 {% endif %}
             </div>
         </div>
@@ -23,11 +25,13 @@
     <div class="row">
         <div class="col-md-6">
             <div class="container">
-                <h2>My Plants</h2>
+
+                    <h2><a href="{% url 'my_plants' %}">My Plants</a></h2>
+
                 <div class="my_account_plants_container">
                     {% if saved_plants %}
                         {% for saved in saved_plants %}
-                            <div class="card" style="width: 10rem; height: 15rem">
+                            <div class="card text-center" style="width: 10rem; height: 15rem">
                                 <img src="{% static saved.picture %}" class="card-img-top" alt="{{ saved.name }}"
                                      style="height: 10rem">
                                 <div class="card-body">
@@ -42,11 +46,11 @@
         </div>
         <div class="col-md-6">
             <div class="container">
-                <h2>My Wishlist</h2>
+                <h2><a href="{% url 'wishlist' %}">My Wishlist</a></h2>
                 <div class="my_account_plants_container">
                     {% if wishlist_plants %}
                         {% for wish in wishlist_plants %}
-                            <div class="card" style="width: 10rem; height: 15rem">
+                            <div class="card text-center" style="width: 10rem; height: 15rem">
                                 <img src="{% static wish.picture %}" class="card-img-top" alt="{{ wish.name }}"
                                      style="height: 10rem">
                                 <div class="card-body">
@@ -73,45 +77,40 @@
             <br>
             <p><strong>Opening hours:</strong>
             <div id="business_opening_hours"></div>
-            <a href="" id="business_link">more info</a>
+            <a href="" id="business_link">...more info</a><br>
+            <p>Not what you're looking for? Find more plant shops <a href="{% url 'business-list' %}">here</a></p>
+
             <div id="loading_map">loading map . . .</div>
     </div>
     </div>
-    <script type="text/javascript">
 
+    <script type="text/javascript">
         window.onload = function () {
             findNearestBusiness()
         };
-
         let businessSlug = "";
         let businessLat;
         let businessLong;
         let businessName;
         let localBusinesses = [];
-
         function findNearestBusiness() {
             {% for business in businesses %}
                 localBusinesses.push(["{{ business.slug }}", "{{ business.lat }}", "{{ business.long }}", "{{ business.name }}"]);
             {% endfor %}
-
-
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(UserLocation);
             } else {
                 alert('GLASGOW');
             }
         }
-
         //get the location
         function UserLocation(position) {
             NearestBusiness(position.coords.latitude, position.coords.longitude);
         }
-
         // Convert degrees to something mysterious and mathematical and maybe relating to the shape of the earth
         function Deg2Rad(deg) {
             return deg * Math.PI / 180;
         }
-
         // yet more maths - best not to think too hard about this stuff
         function PythagorasEquirectangular(lat1, lon1, lat2, lon2) {
             lat1 = Deg2Rad(lat1);
@@ -124,12 +123,10 @@
             const d = Math.sqrt(x * x + y * y) * R;
             return d;
         }
-
         // now let's find those plant shops
         function NearestBusiness(latitude, longitude) {
             let minDif = 99999;
             let closest;
-
             for (let index = 0; index < localBusinesses.length; ++index) {
                 let dif = PythagorasEquirectangular(latitude, longitude, localBusinesses[index][1], localBusinesses[index][2]);
                 if (dif < minDif) {
@@ -137,15 +134,11 @@
                     minDif = dif;
                 }
             }
-
             businessSlug = localBusinesses[closest][0];
             businessLat = localBusinesses[closest][1];
             businessLong = localBusinesses[closest][2];
             businessName = localBusinesses[closest][3];
-
-
             {% for business in businesses %}
-
                 if ('{{ business.slug }}' === localBusinesses[closest][0]) {
                     document.getElementById("business_name").innerHTML = '{{ business.name }}';
                     document.getElementById("business_address").innerText = "{{ business.address | escapejs }}";
@@ -153,42 +146,31 @@
                     document.getElementById("business_link").href = "{% url 'business-list' %}{{ business.slug }}";
                 }
             {% endfor %}
-
             initMap();
         }
     </script>
     <script>
-
         function initMap() {
-
             const lat = Number(businessLat);
             const lng = Number(businessLong);
-
             let mapProp = {
                 center: {lat: lat, lng: lng},
                 zoom: 15,
             };
-
             // Create new map
             let map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
             document.getElementById("loading_map").style.display = "none";
-
             // Add marker
             let marker = new google.maps.Marker({
                 position: {lat: lat, lng: lng},
-
                 map: map
             });
-
             let infoWindow = new google.maps.InfoWindow({
                 content: businessName
             });
-
             marker.addListener('click', function () {
                 infoWindow.open(map, marker);
             });
-
-
         }
     </script>
     <script async defer
