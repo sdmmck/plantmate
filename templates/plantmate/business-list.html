@@ -12,17 +12,24 @@
         <h1>Find a plant shop near you...</h1>
     </div>
     <div class="background_space_medium_rare">
-        <h5 id="card-title"></h5>
-        <p id="business-address"></p>
-        <div>
-            {% if user.is_authenticated %}
-                <p>If you can't find the business you're looking for, you can <a href="{% url 'add_business' %}">add a
-                    new business</a><br/></p>
-            {% endif %}
+        <div class="business_details" style="margin-left: 20%">
+            <h5 id="card-title"></h5>
+            <p id="business-address"></p>
         </div>
-        <div id="map_loading"><p>map loading . . . </p></div>
+        <div id="map_loading" style="text-align: center"><p>map loading . . . </p></div>
 
-        <div id="googleMap" style="width:600px;height:400px;"></div>
+        <div id="googleMap" style="width:600px;height:400px;left: 20%; right: 20%; "></div>
+        {% if user.is_authenticated %}
+            <div style="margin-left: 20%;margin-bottom: 70px">
+                <br>
+                <p>If you can't find the business you're looking for, you can
+
+                    <a href="{% url 'add_business' %}" role="button" class="btn btn-outline-success"
+                       style="margin-top: 10px; margin-right: 60px">add a
+                        new business</a>
+                    <br/></p>
+            </div>
+        {% endif %}
     </div>
     <script>
         function addMarkers() {
@@ -35,20 +42,15 @@
             {%  endfor %}
         }
     </script>
-
     <script>
         let map;
 
-
         function initMap() {
-
-
             // default map location set to Glasgow
             const glasgow = {
                 center: {lat: -34.397, lng: 150.644},
                 zoom: 6,
             };
-
             //if there is geolocation:
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function (position) {
@@ -63,9 +65,7 @@
                     addMarkers();
                     document.getElementById("map_loading").style.display = "none";
                 });
-
             } else {
-
                 // if there isn't any geolocation let's center on Glasgow:
                 map = new google.maps.Map(document.getElementById("googleMap"), glasgow);
                 addMarkers();
@@ -75,8 +75,6 @@
 
         // function for adding markers
         function addMarker(coords, businessLink, businessAddress) {
-
-
             let marker = new google.maps.Marker({
                 position: coords,
                 map: map,
@@ -88,7 +86,6 @@
                 infoWindow.open(map, marker);
                 document.getElementById("card-title").innerHTML = businessLink;
                 document.getElementById("business-address").innerText = businessAddress;
-
             });
         }
 

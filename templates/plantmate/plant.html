@@ -133,24 +133,32 @@
                 </div><!--end class"col-md-6" with card in it-->
             </div><!-- end row-->
             <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div id="user_uploaded_plant_images">
-                            {% if image %}
+                {% if image %}
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="user_uploaded_plant_images">
                                 {% for i in image %}
                                     <img src="{% static i.picture %}" height="100"
                                          alt="user uploaded picture of plant"/><br/>
                                 {% endfor %}
+                            </div>
+                            {% if user.is_authenticated %}
+                                <div class="card-body align-items-center d-flex justify-content-center">
+                                    <a class="btn btn-outline-success" href="/plant-list/{{ plant.slug }}/add-image"
+                                       role="button">add a new image</a>
+                                </div>
                             {% endif %}
                         </div>
-                        {% if user.is_authenticated %}
-                            <div class="card-body align-items-center d-flex justify-content-center">
-                                <a class="btn btn-outline-success" href="/plant-list/{{ plant.slug }}/add-image"
-                                   role="button">add a new image</a>
-                            </div>
-                        {% endif %}
                     </div>
-                </div>
+                {% endif %}
+                {% if not image %}
+                    {% if user.is_authenticated %}
+                        <div class="card-body align-items-center d-flex justify-content-center">
+                            <a class="btn btn-outline-success" href="/plant-list/{{ plant.slug }}/add-image"
+                               role="button">add a new image</a>
+                        </div>
+                    {% endif %}
+                {% endif %}
             </div>
 
             <!---- COMMENT BOX ---------------------------------------------------------------------------------------------->

@@ -223,6 +223,16 @@ def populate():
          "room": "Living-room/Bedroom",
          "description": "Yucca is a plant of strong lines and symmetry with its spiky leaves radiating out from the base in an attractive display of nature\'s architecture skills. Striking as a solo specimen in an entry way. Also provides nice contrast to groupings of softer houseplants."},
 
+        {"name": "Corn Plant",
+         "latin_name": "Dracaena fragrans",
+         "size": "Large",
+         "characteristics": "Air purifying",
+         "climate": "Warm",
+         "light": "Sunny",
+         "picture": "images/corn-plant.jpg",
+         "pet": "Yes",
+         "room": "Living-room/Bedroom",
+         "description": "Corn plants are easy to care for and are reknowned and much loved for their air purifying properties. This is one of the best house plants for removing indoor air toxins such as formaldehyde, ammonia, xylene and toluene. This hardy Dracaena is an unbranched, tree-like plant with sword-shaped arching leaves. Those dark-green leaves are 2 ft (60 cm) long and 4 in (10 cm) wide, and have a broad cream-to-yellow stripe down the middle."},
     ]
 
     for business in local_businesses:
