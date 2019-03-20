@@ -18,6 +18,10 @@ SECRET_KEY = '2f=7w03$05_d5xrxd!ulr^zcq@_jni7lj8d75-*_@7^1&8dupr'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+EMAIL_HOST = '127.0.0.1'
+EMAIL_PORT = 1025
+
+
 ALLOWED_HOSTS = []
 
 # Application definition
@@ -96,7 +100,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Authorisation
 # if true, users can register

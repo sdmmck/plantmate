@@ -9,25 +9,32 @@
     {% endblock %}
 {% endblock %}
 {% block body_block %}
-<div class="jumbotron">
-    <h1>My Wishlist</h1>
-</div>
+    <div class="jumbotron">
+        <h1>My Wishlist</h1>
+    </div>
     {% if plants %}
     <div class="mywishlist_container" style="display: grid">
         {% for plant in plants %}
-             <div class="card text-center" style="width: 18rem;">
-        <img src="{% static plant.picture %}" class="card-img-top" alt="{{ plant.name }}">
-        <div class="card-body">
-            <h5 class="card-title">{{ plant.name }}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">{{ plant.latin_name }}</h6>
-
-            <a href="/plant-list/{{ plant.slug }}" class=" btn-primary stretched-link"></a>
-        </div>
-    </div>
+            <div class="card text-center" style="width: 18rem;">
+                <img src="{% static plant.picture %}" href="/plant-list/{{ plant.slug }}" class="card-img-top"
+                     alt="{{ plant.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ plant.name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ plant.latin_name }}</h6>
+                    <form method="post" action="{% url 'remove_wishlist_plant' %}?next={{ "mywishlistpage" }}">
+                        {% csrf_token %}
+                        <input type="hidden" id="remove_wishlist_plant" name="wishlist_plant"
+                               value={{ plant.slug }}>
+                        <button type="submit" name="remove_wishlist"
+                                class="btn btn-outline-success">remove from wishlist
+                        </button>
+                    </form>
+                </div>
+            </div>
         {% endfor %}
     </div>
 <a href="{% url 'plant_list' %}">Return to A-Z list of plants</a>
     {% endif %}
-<!-- these need fixed --------------------------------------------------------------------------------->
- <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>
+    <!-- these need fixed --------------------------------------------------------------------------------->
+    <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>
 {% endblock %}
