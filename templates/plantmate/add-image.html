@@ -7,8 +7,11 @@
 {% endblock %}
 
 {% block body_block %}
-    <h1 xmlns="http://www.w3.org/1999/html">add an image </h1>
-    <div>
+
+    <div class="jumbotron">
+        <h1>Add an image</h1>
+    </div>
+    <div class="background_space_smaller">
         <form role="form" id="picture" method="post" enctype="multipart/form-data"
               action="/plant-list/{{ plant.slug }}/add-image">
             {% csrf_token %}
@@ -28,5 +31,5 @@
         </form>
 
     </div>
-     <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>
+
 {% endblock %}

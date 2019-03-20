@@ -8,19 +8,21 @@
 
 {% block body_block %}
     {% if business %}
-<div class="jumbotron">
-        <h1>{{ business.name }}</h1>
-</div>
-        <p>{{ business.address | linebreaks }}</p>
-        <p>{{ business.phone }}
-        <br>{{ business.email }}</p>
-        <p><a href="{{ business.url }}">Visit website</a></p>
-        <p><strong>Opening hours:</strong>
-        <br>
-            {{ business.opening_hours | linebreaks }}<br/>
-        </p>
-        <div id="googleMap" style="width:75%;height:400px;"></div>
-        <br>
+        <div class="jumbotron">
+            <h1>{{ business.name }}</h1>
+        </div>
+        <div class="background_space_medium">
+            <p>{{ business.address | linebreaks }}</p>
+            <p>{{ business.phone }}
+                <br>{{ business.email }}</p>
+            <p><a href="{{ business.url }}">Visit website</a></p>
+            <p><strong>Opening hours:</strong>
+                <br>
+                {{ business.opening_hours | linebreaks }}<br/>
+            </p>
+            <div id="googleMap" style="width:75%;height:400px;"></div>
+            <br>
+        </div>
 
         <script>
             function initMap() {
@@ -28,15 +30,15 @@
                 var lat = Number("{{ business.lat }}");
                 var lng = Number("{{ business.long }}");
 
-                var mapProp= {
+                var mapProp = {
                     center: {lat: lat, lng: lng},
-                    zoom:14,
+                    zoom: 14,
                 };
                 // Create new map
                 var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
                 // Add marker
                 var marker = new google.maps.Marker({
-                    position: {lat:lat,lng:lng},
+                    position: {lat: lat, lng: lng},
                     map: map
                 });
 
@@ -56,5 +58,4 @@
     {% else %}
         This business has not been added yet!
     {% endif %}
-     <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>
 {% endblock %}
