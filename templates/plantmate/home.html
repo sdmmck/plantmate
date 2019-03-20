@@ -1,0 +1,30 @@
+{% extends "plantmate/../plantmate/base.html" %}
+{% load staticfiles %}
+{% block head_block %}
+    {% block title_block %}
+        Home
+    {% endblock %}
+{% endblock %}
+
+{% block body_block %}
+    <body style="background-image: none">
+    <!-- <div class="flex-column"> -->
+        <div class="jumbotron">
+            <h1>Plantmate</h1>
+            Find your perfect plant
+        </div>
+        {#<a href="/business-list">Local Business List</a><br />#}
+        {#<a href="/plant-list">Plant A-Z</a><br />#}
+
+        {#<a href="/login">login</a><br />#}
+        {#<a href="/sign-up">sign up</a><br />#}
+        {#<a href="/contact">contact us</a><br />#}
+        <div id="quiz_button">
+            <a href="/quiz/" role="button" class="btn btn-outline-success">take the quiz</a>
+        </div>
+        <img id="homepage_image" src="{% static 'images/flowerpots4.png' %}" alt="plantmate"/>
+
+    </div>
+
+</body>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "plantmate/../plantmate/base.html" %}
+{% load staticfiles %}
+{% block head_block %}
+    {% block title_block %}
+        Add a Plant
+    {% endblock %}
+{% endblock %}
+
+{% block body_block %}
+<div class="jumbotron">
+    <h1> Add a Plant</h1>
+</div>
+    <div class="background_space">
+        <form role="form" id="plant_form" method="post" enctype="multipart/form-data" action="{% url 'add_plant' %}">
+            {% csrf_token %}
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+            {% for field in form.visible_fields %}
+                {{ field.errors }}
+                {{ field.help_text }}
+                {{ field }}
+                </br>
+                </br>
+            {% endfor %}
+            <button class="btn btn-outline-success" type="submit" name="" value="Add plant"/>
+            add plant</button>
+        </form>
+
+    </div>
+
+{% endblock %}

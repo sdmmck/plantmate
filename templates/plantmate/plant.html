@@ -1,0 +1,292 @@
+{% extends "plantmate/../plantmate/base.html" %}
+{% load staticfiles %}
+
+{% block head_block %}
+    {% block title_block %}
+        {{ slug }}
+    {% endblock %}
+{% endblock %}
+{% block body_block %}
+    <!-- JUMBOTRON ---------------------------------------------------------------------------------------------------->
+    <div class="jumbotron">
+        {% if plant %}
+            <h1>{{ plant.name }}</h1><br/>
+            <h2><i>{{ plant.latin_name }}</i></h2><br/>
+        {% else %}
+            <h1>plant not found</h1><br/>
+        {% endif %}
+    </div>
+    <!-- END JUMBOTRON ---------------------------------------------------------------------------------------------------->
+    <div class="background_space_large">
+        {% if plant %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="container">
+                        <div class="container-body align-items-center d-flex justify-content-center">
+                            <img src="{% static plant.picture %}" width="380" height="400" style="border-radius: 50%"
+                                 alt="picture of plant"/><br/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Details</h5>
+                            <p class="card-text">
+                                {{ plant.description }}<br/>
+                            <h6 class="card-subtitle mb-2 text-muted">Tags</h6>
+                            Size: {{ plant.size }}<br/>
+                            Climate: {{ plant.climate }}<br/>
+                            Light: {{ plant.light }}<br/>
+                            Room: {{ plant.room }}<br/>
+                            {% if plant.characteristics %}
+                                Special characteristic: {{ plant.characteristics }}<br/>
+                            {% endif %}
+                            {% if plant.pet %}
+                                Suitable for pets: {{ plant.pet }}<br/>
+                            {% endif %}
+                            </p>
+                            {% if user.is_authenticated %}
+                                <script>
+                                    plantIsInWishlist = false;
+                                    plantIsInSavedPlants = false;
+                                </script>
+                                {% for wish in wishlistplants %}
+                                    {% ifequal wish.wishlist_plant plant.slug %}
+                                        <script>
+                                            plantIsInWishlist = true;
+                                        </script>
+                                    {% endifequal %}
+                                {% endfor %}
+                                {% for saved in saved_plants %}
+                                    {% ifequal saved.saved_plant plant.slug %}
+                                        <script>
+                                            plantIsInSavedPlants = true;
+                                        </script>
+                                    {% endifequal %}
+                                {% endfor %}
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div id="saved_button" style="display: block">
+                                            <form method="post" action="{% url 'save_plant' %}">
+                                                {% csrf_token %}
+                                                <input type="hidden" id="saved_plant" name="saved_plant"
+                                                       value={{ plant.slug }}>
+                                                <button type="submit" name="saved_plants"
+                                                        class="btn btn-outline-success">
+                                                    add to my
+                                                    plants
+                                                </button>
+                                            </form>
+                                        </div>
+                                        {% for saved in saved_plants %}
+                                            {% ifequal saved.saved_plant plant.slug %}
+                                                <form method="post" action="{% url 'remove_saved_plant' %}">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" id="saved_plant" name="saved_plant"
+                                                           value={{ plant.slug }}>
+                                                    <button type="submit" name="remove_saved_plant"
+                                                            class="btn btn-outline-success">
+                                                        remove from my plants
+                                                    </button>
+                                                </form>
+                                            {% endifequal %}
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div id="wishlist_button" style="display: block">
+                                            <form method="post" action="{% url 'wishlist_plant' %}">
+                                                {% csrf_token %}
+                                                <input type="hidden" id="wishlist_plant" name="wishlist_plant"
+                                                       value={{ plant.slug }}>
+                                                <button type="submit" name="wishlist" class="btn btn-outline-success">
+                                                    add to
+                                                    wishlist
+                                                </button>
+                                            </form>
+                                        </div>
+                                        {% for wish in wishlistplants %}
+                                            {% ifequal wish.wishlist_plant plant.slug %}
+                                                <div class="col-sm-6">
+                                                    <form method="post" action="{% url 'remove_wishlist_plant' %}">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" id="remove_wishlist_plant"
+                                                               name="wishlist_plant"
+                                                               value={{ plant.slug }}>
+                                                        <button type="submit" name="remove_wishlist"
+                                                                class="btn btn-outline-success">remove from wishlist
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            {% endifequal %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% else %}
+                                <p><i>You can add this plant to a plant list and add your own images if you <a
+                                        href="{% url 'add_plant' %}">log in</a> or <a href="{% url 'add_plant' %}">sign
+                                    up</a>!<br/>
+                                </i></p>
+                            {% endif %}
+                        </div><!--end card body-->
+                    </div><!--end card-->
+                </div><!--end class"col-md-6" with card in it-->
+            </div><!-- end row-->
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div id="user_uploaded_plant_images">
+                            {% if image %}
+                                {% for i in image %}
+                                    <img src="{% static i.picture %}" height="100"
+                                         alt="user uploaded picture of plant"/><br/>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        {% if user.is_authenticated %}
+                            <div class="card-body align-items-center d-flex justify-content-center">
+                                <a class="btn btn-outline-success" href="/plant-list/{{ plant.slug }}/add-image"
+                                   role="button">add a new image</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!---- COMMENT BOX ---------------------------------------------------------------------------------------------->
+
+            {% if user.is_authenticated %}
+                <div class="container">
+                    <h3>Comments</h3><br/>
+                    <form method="POST" name="add_comment" action="{% url 'add_comment' %}">
+                        {% csrf_token %}
+                        <div class="form-group row">
+                            <div class="col-md-10">
+                                <input type="hidden" id="plant_slug" name="plant_slug" value="{{ plant.slug }}">
+                                <input type="text" name="body" id="body" class="form-control round-0"
+                                       placeholder="Leave some advice on caring for this plant...">
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" name="add_comment" class="btn btn-outline-success">Add comment
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    {% for comment in comments %}
+                        <div class="card border-info mb-3">
+                            <div class="card-header">
+                                {{ comment.user }} commented on {{ comment.created_date }}
+                            </div>
+                            <div class="card-body text-primary">
+                                <p class="card-text">
+                                    {{ comment.body }}
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <button id="like{{ comment.id }}" class="like-button btn btn-outline-success"
+                                        data-comid="{{ comment.id }}" type="button">
+                                    Like
+                                </button>
+                                <strong id="like-count{{ comment.id }}">{{ comment.likes }}</strong>
+                                <button id="dislike{{ comment.id }}" class="dislike-button btn btn-outline-danger"
+                                        data-comid="{{ comment.id }}" type="button">
+                                    Dislike
+                                </button>
+                                <strong id="dislike-count{{ comment.id }}">{{ comment.dislikes }}</strong>
+                            </div>
+                        </div>
+                        <hr>
+                    {% empty %}
+                        <p>no comments yet. be the first!</p>
+                        <hr>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% else %}
+            <p>no plant added yet with this name!</p>
+        {% endif %}
+    </div>
+
+
+    <!----AJAX FUNCTIONALITY FOR LIKING/DISLIKING COMMENTS--->
+    <script src="{% static '/javascript/jquery.min.js' %}"></script>
+    <script rel="javascript" type="text/javascript">
+
+        $('.like-button').on('click', (function () {
+            var comid;
+            comid = $(this).attr("data-comid");
+            var is_disabled;
+            if ($('#dislike' + comid).hasClass('disabled')) {
+                //if user has voted already and selected dislike before, this will be disabled
+                is_disabled = true;
+            } else {
+                is_disabled = false;
+            }
+            $.ajax({
+                type: 'GET',
+                url: "{% url 'like_comment' %}",
+                data: {comment_id: comid, "disable_button": "null"},
+                success: function (data) {
+                    $('#like-count' + comid).html(data);
+                    $('#like' + comid).addClass('disabled').prop('disabled', true); //adds 'disabled' into class tag
+
+                    $.ajax({
+                        type: 'GET',
+                        url: "{% url 'dislike_comment' %}",
+                        data: {comment_id: comid, "disable_button": is_disabled},
+                        success: function (data) {
+                            $('#dislike-count' + comid).html(data);
+                            $('#dislike' + comid).removeClass('disabled').prop('disabled', false);
+                        }
+                    });
+                }
+            });
+        }));
+
+        $('.dislike-button').click(function () {
+
+            var comid;
+            comid = $(this).attr("data-comid");
+            var is_disabled;
+            if ($('#like' + comid).hasClass('disabled')) {
+                //disabled if user has already liked the comment
+                is_disabled = true;
+            } else {
+                is_disabled = false;
+            }
+            $.ajax({
+                type: 'GET',
+                url: "{% url 'dislike_comment' %}",
+                data: {comment_id: comid, "disable_button": "null"},
+                success: function (data) {
+                    $('#dislike-count' + comid).html(data);
+                    $('#dislike' + comid).addClass('disabled').prop('disabled', true);
+
+                    $.ajax({
+                        type: 'GET',
+                        url: "{% url 'like_comment' %}",
+                        data: {comment_id: comid, "disable_button": is_disabled},
+                        success: function (data) {
+                            $('#like-count' + comid).html(data);
+                            $('#like' + comid).removeClass('disabled').prop('disabled', false);
+                        }
+                    });
+                }
+            });
+        });
+
+    </script>
+    <script>
+        if (plantIsInWishlist) {
+            document.getElementById("wishlist_button").style.display = "none";
+        } else {
+            document.getElementById("wishlist_button").style.display = "block";
+        }
+        if (plantIsInSavedPlants) {
+            document.getElementById("saved_button").style.display = "none";
+        } else {
+            document.getElementById("saved_button").style.display = "block";
+        }
+    </script>
+{% endblock %}
+
