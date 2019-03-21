@@ -14,34 +14,50 @@
     </div>
 
     <div class="background_space_medium_rare">
+        <div class="row">
+            <div class="col-md-6">
+                <div id="map" style="width:100%;height:400px; margin-left: 20px"></div>
 
-        <div id="map" style="width:600px;height:400px;left: 20%; right: 20%; "></div>
-
-         <div style="margin: 20px 20% 60px 30%;">
-        <input id="search-box" class="controls" type="text" placeholder="Search for a business here" style=" font-size: 14px; font-family: spartanmb-regular;
+                <div style="margin: 20px 20% 60px 30%;">
+                    <input id="search-box" class="controls" type="text" placeholder="Search for a business here" style=" font-size: 14px; font-family: spartanmb-regular;
         text-overflow: ellipsis; width: 300px">
-        </div>
-        <div id="business_details" style="display: none">
-            <form role="form" id="business_form" method="post" enctype="multipart/form-data"
-                  action="{% url 'add_business' %}" class=form-inline">
-                {% csrf_token %}
-                <input type="hidden" name="lat" id="lat">
-                <input type="hidden" name="long" id="long">
-                <input type="text" name="name" id="name" value="" placeholder="name"><br>
-                <input type="text" name="url" id="url" value="" placeholder="website"><br>
-                <textarea cols="50" rows="7" name="address" id="address"
-                          placeholder="Enter an address here or search in the map above"></textarea><br>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div id="business_details" style="display: none">
+                    <form role="form" id="business_form" method="post" enctype="multipart/form-data"
+                          action="{% url 'add_business' %}" class=form-inline">
+                        {% csrf_token %}
+                        <input type="hidden" name="lat" id="lat">
+                        <input type="hidden" name="long" id="long">
+                        <input class="form-control" type="text" name="name" id="name" value="" placeholder="name"><br>
+                        <input class="form-control" type="text" name="url" id="url" value="" placeholder="website"><br>
 
-                <input type="text" name="phone" id="phone" value="" placeholder="phone number"><br>
-                <input type="text" name="email" id="email" value="" placeholder="email address"><br>
-                <textarea cols="50" rows="7" name="opening_hours" id="opening_hours" placeholder="opening hours"
-                ></textarea><br>
+                        <div class="row">
+                            <div class="col-md-5">
+                        <textarea class="form-control" cols="50" rows="7" name="address" id="address"
+                                  placeholder="Enter an address here or search in the map above"></textarea><br>
+                            </div>
+                            <div class="col-md-7">
+                                <textarea class="form-control" cols="50" rows="7" name="opening_hours"
+                                          id="opening_hours" placeholder="opening hours"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <input class="form-control" type="text" name="phone" id="phone" value=""
+                                   placeholder="phone number"><br>
+                            <input class="form-control" type="text" name="email" id="email" value=""
+                                   placeholder="email address"><br>
+                            <br>
+                        </div>
 
-                <button class="btn btn-primary" type="submit" name="submit" value="Add business">
-                    add business
-                </button>
-                </br>
-            </form>
+                        <button class="btn btn-success btn-send" type="submit" name="submit" value="Add business">
+                            add business
+                        </button>
+                        </br>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
