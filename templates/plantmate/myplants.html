@@ -19,7 +19,9 @@
     </div>
     <div class="background_space">
         {% if not plants %}
+
             <h2 style="color:#4fa543; text-align: center; margin-top: 50px">No plants added yet!</h2>
+
         {% endif %}
         {% if plants %}
             <div class="myplants_container" style="display: grid">
@@ -41,10 +43,12 @@
                                 remove from my plants
                             </button>
                         </form>
+                        <br>
                     </div>
                 {% endfor %}
             </div>
             <a></a>
         {% endif %}
+
     </div>
 {% endblock %}

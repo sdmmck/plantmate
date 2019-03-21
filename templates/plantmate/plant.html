@@ -28,8 +28,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-5">
-                    <div class="card">
+                <div class="col-md-6">
+                    <div class="container">
+
                         <div class="card-body">
                             <h5 class="card-title">Details</h5>
                             <p class="card-text">
@@ -100,21 +101,20 @@
                                                 <input type="hidden" id="wishlist_plant" name="wishlist_plant"
                                                        value={{ plant.slug }}>
                                                 <button type="submit" name="wishlist" class="btn btn-outline-success">
-                                                    add to
-                                                    wishlist
+                                                    add to wishlist
                                                 </button>
                                             </form>
                                         </div>
                                         {% for wish in wishlistplants %}
                                             {% ifequal wish.wishlist_plant plant.slug %}
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-12">
                                                     <form method="post" action="{% url 'remove_wishlist_plant' %}">
                                                         {% csrf_token %}
                                                         <input type="hidden" id="remove_wishlist_plant"
                                                                name="wishlist_plant"
                                                                value={{ plant.slug }}>
-                                                        <button type="submit" name="remove_wishlist"
-                                                                class="btn btn-outline-success">remove from wishlist
+                                                        <button type="submit" name="remove_wishlist" class="btn btn-outline-success">
+                                                            remove from wishlist
                                                         </button>
                                                     </form>
                                                 </div>
@@ -160,6 +160,7 @@
                     {% endif %}
                 {% endif %}
             </div>
+        <br>
 
             <!---- COMMENT BOX ---------------------------------------------------------------------------------------------->
 

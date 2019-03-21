@@ -21,8 +21,10 @@
         </div>
     </div>
     <div class="background_space">
+
       {% if not plants %}
             <h2 style="color:#4fa543; text-align: center; margin-top: 50px">No plants added yet!</h2>
+
         {% endif %}
         {% if plants %}
             <div class="mywishlist_container" style="display: grid">
@@ -44,6 +46,7 @@
                                     class="btn btn-outline-success" style="margin-bottom: 20px">remove from wishlist
                             </button>
                         </form>
+                        <br>
 
                     </div>
                 {% endfor %}

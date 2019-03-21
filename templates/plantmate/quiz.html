@@ -9,9 +9,11 @@
 {% block body_block %}
     <script src="../../static/javascript/quiz.js"></script>
     <div class="jumbotron">
-        <h1>plantmate quiz</h1>
+        <h1>Plantmate Quiz</h1>
     </div>
     <div class="background_space">
+        <div class="container">
+
         <div id="quiz_questions">
             <form action="{% url 'your_plantmate' %}" method="get">
                 <strong>What size of plant are you looking for?</strong> <br>
@@ -94,8 +96,12 @@
                     </div>
                 </fieldset>
                 <br>
-                <input id="plant_quiz" type="submit" onclick="buttons()">
+                <input id="plant_quiz" type="submit" onclick="buttons()" class="btn btn-outline-success">
+
             </form>
+            <br>
+            <br>
+        </div>
         </div>
         <div id="results">
             <h1 id="hi"></h1>
