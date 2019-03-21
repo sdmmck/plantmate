@@ -58,19 +58,6 @@ class BusinessTests(TestCase):
         self.assertQuerysetEqual(response.context['businesses'], [])
 
 class CommentFormTests(TestCase):
-   
-    def test_valid_data(self):
-        time = timezone.now()
-        comment_time = Comment(created_date=time)
-        form = CommentForm({
-            'plant_slug': "rose-painted-calathea",
-            'body': "Hi there",
-            'created_date': comment_time
-        })
-        self.assertTrue(form.is_valid())
-        comment = form.save()
-        self.assertEqual(comment.plant_slug, "rose-painted-calathea")
-        self.assertEqual(comment.body, "Hi there")
     
     def test_with_blank(self):
         form = CommentForm({})
