@@ -1,10 +1,10 @@
 from django.test import TestCase
-from django.test.client import Client
-from plantmateApp.models import Plant, Business, Comment
+from plantmateApp.models import Plant, Comment
 from django.core.urlresolvers import reverse
 from django.utils import timezone
 import datetime
 from plantmateApp.forms import CommentForm
+
 
 class PlantModelTest(TestCase):
 
@@ -15,6 +15,7 @@ class PlantModelTest(TestCase):
         plant = Plant(name='Rose Painted Calathea')
         plant.save()
         self.assertEqual(plant.slug, 'rose-painted-calathea')
+
 
 class CommentModelTests(TestCase):
 
@@ -46,6 +47,7 @@ class CommentModelTests(TestCase):
         recent_comment = Comment(created_date=time)
         self.assertIs(recent_comment.recently_published(), True)
 
+
 class BusinessTests(TestCase):
 
     def test_business_template_with_no_map(self):
@@ -56,6 +58,7 @@ class BusinessTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "map loading")
         self.assertQuerysetEqual(response.context['businesses'], [])
+
 
 class CommentFormTests(TestCase):
     

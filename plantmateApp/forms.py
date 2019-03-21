@@ -1,7 +1,5 @@
-
 from plantmateApp.models import Business, Plant, PlantImage, UserSavedPlants, UserWishlistPlants, Comment
 from django import forms
-from django.contrib.auth.models import User
 from plantmateApp.models import UserProfile
 
 
@@ -18,7 +16,6 @@ class BusinessForm(forms.ModelForm):
     opening_hours = forms.CharField(required=False)
 
     class Meta:
-
         model = Business
         fields = ('name', 'address', 'lat', 'long', 'phone', 'email', 'opening_hours', 'url')
 
@@ -42,7 +39,6 @@ class PlantForm(forms.ModelForm):
     picture = forms.ImageField(required=False)
 
     class Meta:
-
         model = Plant
         fields = ('name', 'latin_name', 'size', 'climate', 'light', 'room', 'picture')
 
@@ -54,14 +50,6 @@ class ImageForm(forms.ModelForm):
     class Meta:
         model = PlantImage
         fields = ('picture', 'plant_name')
-
-
-class UserForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput())
-
-    class Meta:
-        model = User
-        fields = ('username', 'email', 'password')
 
 
 class ProfileImageForm(forms.ModelForm):

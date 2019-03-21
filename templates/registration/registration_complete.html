@@ -1,7 +1,16 @@
-{% extends "plantmate/../plantmate/base.html" %}
+{% extends 'plantmate/../plantmate/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    registered
+{% endblock %}
+
 {% block body_block %}
-    <br/>
-    <br/>
-    <h1>Thanks for registering for an account at plantmate.</h1>
+    <div class="jumbotron">
+        <h1>Registration successful</h1>
+    </div>
+    <div class="background_space_medium_rare" style="margin-bottom: 60px; width:400px; margin-left: 60px">
+       <h2>Thanks for registering for an account at plantmate.</h2>
     <a href="{% url "myaccount" %}">take me to my account page</a>
+    </div>
 {% endblock %}

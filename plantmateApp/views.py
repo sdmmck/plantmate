@@ -2,13 +2,12 @@ from django.contrib.auth.decorators import login_required
 from django.core import mail
 from django.db import IntegrityError
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.http import HttpResponse, JsonResponse
 from plantmateApp.models import Business, Plant, PlantImage, UserWishlistPlants, UserSavedPlants, UserProfile, User, \
     Comment
 from plantmateApp.forms import BusinessForm, ProfileImageForm, PlantForm, ImageForm, SavePlantForm, \
     WishlistPlantForm, CommentForm, ContactForm
 from django.template.defaultfilters import slugify
-from django.core.mail import send_mail, BadHeaderError
 
 
 def home(request):
@@ -25,7 +24,6 @@ def businesslist(request):
 
 def show_business(request, business_name_slug):
     context_dict = {}
-
     try:
         business = Business.objects.get(slug=business_name_slug)
         context_dict['business'] = business
@@ -200,9 +198,6 @@ def add_image(request, plant_name_slug):
     return render(request, 'plantmate/add-image.html', context=context_dict)
 
 
-# have made this login_required to avoid error coming up when user is not logged in
-
-
 def show_plant(request, plant_name_slug):
     image = list()
 
@@ -222,11 +217,9 @@ def show_plant(request, plant_name_slug):
             context_dict = {'plant': plant, 'image': image, 'wishlistplants': wishlistplants,
                             'saved_plants': saved_plants, 'comments': comments,
                             'user_profiles': user_profiles}
-
         else:
             context_dict = {'plant': plant, 'image': image, 'comments': comments,
                             'user_profiles': user_profiles}
-
     except Plant.DoesNotExist:
         context_dict['plant'] = None
     except PlantImage.DoesNotExist:
@@ -390,16 +383,6 @@ def plants_as_list():
     return JsonResponse(plants_list, safe=False)
 
 
-def login(request):
-    context_dict = {}
-    return render(request, 'plantmate/login.html', context=context_dict)
-
-
-def signup(request):
-    context_dict = {}
-    return render(request, 'plantmate/signup.html', context=context_dict)
-
-
 def contact(request):
     if request.method == 'GET':
         form = ContactForm()
@@ -419,11 +402,6 @@ def successful_email(request):
     form = ContactForm()
     context_dict = {'success': "success", 'form': form}
     return render(request, 'plantmate/contact.html', context=context_dict)
-
-
-def contact_success(request):
-    context_dict = {}
-    return render(request, 'plantmate/contact-success.html', context=context_dict)
 
 
 def myaccount(request):
@@ -492,6 +470,3 @@ def add_profile_image(request):
 
     return render(request, 'plantmate/add-profile-image.html', context=context_dict)
 
-
-def change_password(request):
-    return render(request, 'registration/password_change,html')

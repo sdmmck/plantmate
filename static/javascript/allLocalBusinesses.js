@@ -57,11 +57,11 @@ function addMarker(coords, businessLink, businessAddress) {
                     zoom: 14,
                 };
                 // Create new map
-                let map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+                let businessMap = new google.maps.Map(document.getElementById("googleMap"), mapProp);
                 // Add marker
                 let marker = new google.maps.Marker({
                     position: {lat: lat, lng: lng},
-                    map: map
+                    map: businessMap
                 });
 
                 let infoWindow = new google.maps.InfoWindow({
