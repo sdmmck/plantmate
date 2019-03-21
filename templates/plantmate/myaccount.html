@@ -41,6 +41,16 @@ my account
             <div class="container">
                 <h2><a href="{% url 'my_plants' %}">My Plants</a></h2>
                 <div class="my_account_plants_container">
+                    {% if not saved_plants %}
+                    <div class="container">
+                        <div class="card bg-light mb-3 text-center" style="width: 10rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">Add plants</h5>
+                                <a href="{% url 'plant_list' %}" class=" btn-primary stretched-link"></a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
                     {% if saved_plants %}
                     {% for saved in saved_plants %}
                     <div class="card text-center" style="width: 9rem; height: 15rem">
@@ -60,6 +70,16 @@ my account
             <div class="container">
                 <h2><a href="{% url 'wishlist' %}">My Wishlist</a></h2>
                 <div class="my_account_plants_container">
+                    {% if not wishlist_plants %}
+                    <div class="container">
+                        <div class="card bg-light mb-3 text-center" style="width: 10rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">Add plants</h5>
+                                <a href="{% url 'plant_list' %}" class=" btn-primary stretched-link"></a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
                     {% if wishlist_plants %}
                     {% for wish in wishlist_plants %}
                     <div class="card text-center" style="width: 9rem; height: 15rem">
@@ -169,6 +189,8 @@ my account
             initMap();
         }
 
+
+
 </script>
 <script>
         function initMap() {
@@ -193,6 +215,8 @@ my account
                 infoWindow.open(map, marker);
             });
         }
+
+
 
 </script>
 <script async defer
