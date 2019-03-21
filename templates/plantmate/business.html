@@ -1,77 +1,61 @@
 {% extends "plantmate/../plantmate/base.html" %}
 {% load staticfiles %}
+<!----HEADER----------------------------------------------------------------------------------------------------------->
 {% block head_block %}
+    <link rel="script" type="text/javascript" src="{% static 'javascript/allLocalBusinesses.js' %}">
     {% block title_block %}
         {{ slug }}
     {% endblock %}
 {% endblock %}
-
+<!----BODY------------------------------------------------------------------------------------------------------------->
 {% block body_block %}
-    {% if business %}
-        <div class="jumbotron">
+    <!----JUMBOTRON---------------------------------------------------------------------------------------------------->
+    <div class="jumbotron">
+        {% if business %}
             <h1>{{ business.name }}</h1>
-        </div>
-        <div class="background_space_medium">
-            <div class="row" style="margin-left: 20px; margin-right: 20px;">
-                <div class="col-md-7">
-                    <div id="googleMap"
-                         style="width:100%;height:400px; margin-bottom: 60px">
-                    </div>
+        {% else %}
+            <h5>This business has not been added yet!</h5>
+        {% endif %}
+    </div>
+    <!----MAIN-BODY---------------------------------------------------------------------------------------------------->
+    <div class="background_space_medium">
+    {% if business %}
+        <div class="row" style="margin-left: 20px; margin-right: 20px;">
+            <!----MAP-------------------------------------------------------------------------------------------------->
+            <div class="col-md-6">
+                <div id="googleMap"
+                     style="width:100%;height:400px; margin-bottom: 60px">
                 </div>
-                <div class="col-md-5">
-                    <div class="card text-left">
-                        <div class="row">
-                            <div class="col-md-5">
-                                <p style="font-family: spartanmb-bold">Address:</p>
-                                <p>{{ business.address | linebreaks }}</p>
-                            </div>
-                            <div class="col-md-7">
-                                <p style="font-family: spartanmb-bold">Opening hours:</p>
-                                {{ business.opening_hours | linebreaks }}
-                                </p>
-                            </div>
+            </div>
+            <!----BUSINESS-DETAILS------------------------------------------------------------------------------------->
+            <div class="col-md-6">
+                <div class="card text-left" style="padding: 20px">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <p style="font-family: spartanmb-bold">Address:</p>
+                            <p>{{ business.address | linebreaks }}</p>
                         </div>
-                        <p>{{ business.phone }}
-                            <br>{{ business.email }}</p>
-                        <p><a href="{{ business.url }}">Visit website</a></p>
-
+                        <div class="col-md-7">
+                            <p style="font-family: spartanmb-bold">Opening hours:</p>
+                            {{ business.opening_hours | linebreaks }}
+                            </p>
+                        </div>
                     </div>
+                    <p>{{ business.phone }}
+                        <br>{{ business.email }}</p>
+                    <p><a href="{{ business.url }}">Visit website</a></p>
                 </div>
             </div>
         </div>
-
-        <script>
-            function initMap() {
-
-                var lat = Number("{{ business.lat }}");
-                var lng = Number("{{ business.long }}");
-
-                var mapProp = {
-                    center: {lat: lat, lng: lng},
-                    zoom: 14,
-                };
-                // Create new map
-                var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-                // Add marker
-                var marker = new google.maps.Marker({
-                    position: {lat: lat, lng: lng},
-                    map: map
-                });
-
-                var infoWindow = new google.maps.InfoWindow({
-                    content: "{{ business.name }}"
-                });
-                marker.addListener('click', function () {
-                    infoWindow.open(map, marker);
-                });
-                console.log();
-            }
-        </script>
-
-        <script async defer
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1_mwAa6UhCMVkPr4XIk-XFSXlD0Fwkmw&callback=initMap&libraries=places"></script>
-
-    {% else %}
-        This business has not been added yet!
     {% endif %}
+    </div>
+    <!----SCRIPT------------------------------------------------------------------------------------------------------->
+    <script>
+        let lat = Number("{{ business.lat }}");
+        let lng = Number("{{ business.long }}");
+        let businessName = ("{{ business.name }}");
+        let map;
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1_mwAa6UhCMVkPr4XIk-XFSXlD0Fwkmw&callback=initBusinessMap&libraries=places"></script>
 {% endblock %}

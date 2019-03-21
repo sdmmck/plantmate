@@ -1,29 +1,33 @@
 {% extends "plantmate/../plantmate/base.html" %}
 {% load staticfiles %}
+<!----HEAD------------------------------------------------------------------------------------------------------------->
 {% block head_block %}
     {% block title_block %}
         My Plants
     {% endblock %}
 {% endblock %}
+<!----BODY------------------------------------------------------------------------------------------------------------->
 {% block body_block %}
+    <!----JUMBOTRON---------------------------------------------------------------------------------------------------->
     <div class="jumbotron">
         <div class="jumbotron_row">
             <div>
                 <h1>My Plants</h1>
             </div>
             <div>
-                <a href="{% url 'plant_list' %}" role="button" class="btn btn-outline-success" style="margin-top: 10px; margin-right: 60px">Return to A-Z list of
+                <a href="{% url 'plant_list' %}" role="button" class="btn btn-outline-success"
+                   style="margin-top: 10px; margin-right: 60px">Return to A-Z list of
                     plants</a>
             </div>
         </div>
     </div>
+    <!----MAIN-BODY---------------------------------------------------------------------------------------------------->
     <div class="background_space">
         {% if not plants %}
-
             <h2 style="color:#4fa543; text-align: center; margin-top: 50px">No plants added yet!</h2>
-
         {% endif %}
         {% if plants %}
+            <!----MY-PLANTS-------------------------------------------------------------------------------------------->
             <div class="myplants_container" style="display: grid">
                 {% for plant in plants %}
                     <div class="card text-center" style="width: 18rem;">
@@ -39,7 +43,8 @@
                         <form method="post" action="{% url 'remove_saved_plant' %}?next={{ "myplantspage" }}">
                             {% csrf_token %}
                             <input type="hidden" id="saved_plant" name="saved_plant" value={{ plant.slug }}>
-                            <button type="submit" name="remove_saved_plant" class="btn btn-outline-success" style="margin-bottom: 20px">
+                            <button type="submit" name="remove_saved_plant" class="btn btn-outline-success"
+                                    style="margin-bottom: 20px">
                                 remove from my plants
                             </button>
                         </form>
@@ -49,6 +54,5 @@
             </div>
             <a></a>
         {% endif %}
-
     </div>
 {% endblock %}

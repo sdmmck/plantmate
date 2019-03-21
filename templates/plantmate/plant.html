@@ -1,6 +1,6 @@
 {% extends "plantmate/../plantmate/base.html" %}
 {% load staticfiles %}
-
+<!----HEAD------------------------------------------------------------------------------------------------------------->
 {% block head_block %}
     {% block title_block %}
         {{ slug }}
@@ -16,7 +16,8 @@
             <h1>plant not found</h1><br/>
         {% endif %}
     </div>
-    <!-- END JUMBOTRON ---------------------------------------------------------------------------------------------------->
+    <!-- END JUMBOTRON ------------------------------------------------------------------------------------------------>
+    <!-- MAIN BODY ---------------------------------------------------------------------------------------------------->
     <div class="background_space_large">
         {% if plant %}
             <div class="row">
@@ -113,7 +114,8 @@
                                                         <input type="hidden" id="remove_wishlist_plant"
                                                                name="wishlist_plant"
                                                                value={{ plant.slug }}>
-                                                        <button type="submit" name="remove_wishlist" class="btn btn-outline-success">
+                                                        <button type="submit" name="remove_wishlist"
+                                                                class="btn btn-outline-success">
                                                             remove from wishlist
                                                         </button>
                                                     </form>
@@ -132,14 +134,21 @@
                     </div><!--end card-->
                 </div><!--end class"col-md-6" with card in it-->
             </div><!-- end row-->
-            <div class="col-md-12"  style="margin: 20px auto 30px auto;">
+
+            <!---- USER UPLOADED IMAGES ------------------------------------------------------------------------------->
+
+            <div class="col-md-12" style="margin: 20px auto 30px auto;">
                 {% if image %}
                     <div class="card">
                         <div class="card-body">
-                            <div id="user_uploaded_plant_images">
+                            <div class="scrolling-wrapper" id="user_uploaded_plant_images">
                                 {% for i in image %}
-                                    <img src="{% static i.picture %}" height="100"
-                                         alt="user uploaded picture of plant"/><br/>
+                                    <div style="display: inline-block">
+                                        <img id="pop" src="{% static i.picture %}" height="100"
+                                             alt="user uploaded picture" data-toggle="modal" data-target="#imageModal"
+                                             style="cursor: pointer"
+                                             onclick="imageClick('{% static i.picture %}')"/><br/>
+                                    </div>
                                 {% endfor %}
                             </div>
                             {% if user.is_authenticated %}
@@ -160,9 +169,25 @@
                     {% endif %}
                 {% endif %}
             </div>
-        <br>
+            <br>
 
-            <!---- COMMENT BOX ---------------------------------------------------------------------------------------------->
+            <!---- MODAL ---------------------------------------------------------------------------------------------->
+
+            <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-lg"  role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <img src="" id="imagepreview" style="width: 100%" >
+                        </div>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!---- COMMENT BOX ---------------------------------------------------------------------------------------->
 
             {% if user.is_authenticated %}
                 <div class="container">
@@ -187,7 +212,8 @@
                                 {% for user in user_profiles %}
                                     {% ifequal user.user comment.user %}
                                         {% if user.picture %}
-                                            <img src="{% static user.picture %}" style="width: 50px; height: 50px; border-radius: 50%">
+                                            <img src="{% static user.picture %}"
+                                                 style="width: 50px; height: 50px; border-radius: 50%">
                                         {% endif %}
                                     {% endifequal %}
                                 {% endfor %}
@@ -211,11 +237,10 @@
                                 <strong id="dislike-count{{ comment.id }}">{{ comment.dislikes }}</strong>
                             </div>
                         </div>
-                        <hr>
                     {% empty %}
                         <p>no comments yet. be the first!</p>
-                        <hr>
                     {% endfor %}
+                <br>
                 </div>
             {% endif %}
         {% else %}
@@ -223,11 +248,10 @@
         {% endif %}
     </div>
 
+    <!----AJAX FUNCTIONALITY FOR LIKING/DISLIKING COMMENTS------------------------------------------------------------->
 
-    <!----AJAX FUNCTIONALITY FOR LIKING/DISLIKING COMMENTS--->
     <script src="{% static '/javascript/jquery.min.js' %}"></script>
     <script rel="javascript" type="text/javascript">
-
         $('.like-button').on('click', (function () {
             var comid;
             comid = $(this).attr("data-comid");
@@ -291,8 +315,11 @@
             });
         });
 
-    </script>
-    <script>
+        function imageClick(imgsrc) {
+            document.getElementById("imagepreview").src = imgsrc;
+            document.getElementById("imageModal").modal = 'show';
+        }
+
         if (plantIsInWishlist) {
             document.getElementById("wishlist_button").style.display = "none";
         } else {

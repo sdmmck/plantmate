@@ -17,7 +17,6 @@ def home(request):
 
 
 def businesslist(request):
-
     business_list = Business.objects.order_by('-name')
     context_dict = {'businesses': business_list}
 
@@ -134,8 +133,8 @@ def like_comment(request):
                 # likes decreased
 
             elif disabled == 'false':
-                #Button not disabled
-                likes=likecom.likes
+                # Button not disabled
+                likes = likecom.likes
 
             elif disabled == 'null':
                 # Implement button press
@@ -159,12 +158,12 @@ def dislike_comment(request):
         dislikecom = Comment.objects.get(id=int(discom_id))
         if dislikecom:
             if disabled == 'true':
-               # Button was disabled, meaning user has voted before and is changing their vote
+                # Button was disabled, meaning user has voted before and is changing their vote
                 dislikes = dislikecom.dislikes - 1
                 # dislikes decreased
 
             elif disabled == 'false':
-                #Button not disabled
+                # Button not disabled
                 dislikes = dislikecom.dislikes
 
             elif disabled == 'null':
@@ -205,14 +204,14 @@ def add_image(request, plant_name_slug):
 
 
 def show_plant(request, plant_name_slug):
-    image = set()
+    image = list()
 
     try:
         plant = Plant.objects.get(slug=plant_name_slug)
 
-        for i in PlantImage.objects.all():
+        for i in PlantImage.objects.order_by('-id'):
             if i.plant_name == plant.slug:
-                image.add(i)
+                image.append(i)
 
         comments = Comment.objects.filter(plant_slug=plant_name_slug)
         user_profiles = UserProfile.objects.all()
@@ -237,7 +236,6 @@ def show_plant(request, plant_name_slug):
 
 
 def filter_plant(request):
-
     context_dict = {}
     print (request.GET)
 
@@ -354,7 +352,6 @@ def remove_saved_plant(request):
     return render(request, 'plantmate/myplants.html', {'form': form})
 
 
-
 @login_required
 def add_image(request, plant_name_slug):
     context_dict = {}
@@ -404,7 +401,6 @@ def signup(request):
 
 
 def contact(request):
-
     if request.method == 'GET':
         form = ContactForm()
     else:
@@ -499,4 +495,3 @@ def add_profile_image(request):
 
 def change_password(request):
     return render(request, 'registration/password_change,html')
-

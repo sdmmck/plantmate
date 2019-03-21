@@ -1,23 +1,28 @@
 {% extends "plantmate/../plantmate/base.html" %}
 {% load staticfiles %}
+<!----HEADER----------------------------------------------------------------------------------------------------------->
 {% block head_block %}
     {% block title_block %}
         Add an image
     {% endblock %}
 {% endblock %}
-
+<!----BODY------------------------------------------------------------------------------------------------------------->
 {% block body_block %}
+    <!----JUMBOTRON---------------------------------------------------------------------------------------------------->
     <div class="jumbotron">
-    <h1> Add a profile picture</h1>
-</div>
+        <h1> Add a profile picture</h1>
+    </div>
+    <!----MAIN-BODY---------------------------------------------------------------------------------------------------->
     <div class="background_space">
-
-        <form role="form" id="profile_picture" method="post" enctype="multipart/form-data"
-              action="." class="btn btn-outline-success">
-            {% csrf_token %}
-            <input type="file" name="picture" id="picture">
-            <button class="btn btn-outline-warning"type="submit" value="submit">add image</button>
-        </form>
-
+        <div style="margin-left: 20px;">
+            <form role="form" id="profile_picture" method="post" enctype="multipart/form-data"
+                  action=".">
+                {% csrf_token %}
+                <input type="file" name="picture" id="picture">
+                <br>
+                <br>
+                <button class="btn btn-outline-success" type="submit" value="submit">add image</button>
+            </form>
+        </div>
     </div>
 {% endblock %}

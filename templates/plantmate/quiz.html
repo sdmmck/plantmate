@@ -1,19 +1,21 @@
 {% extends "plantmate/../plantmate/base.html" %}
 {% load staticfiles %}
-
+<!----HEAD------------------------------------------------------------------------------------------------------------->
 {% block head_block %}
     {% block title_block %}
         quiz
     {% endblock %}
 {% endblock %}
+<!----BODY------------------------------------------------------------------------------------------------------------->
 {% block body_block %}
     <script src="../../static/javascript/quiz.js"></script>
+    <!----JUMBOTRON---------------------------------------------------------------------------------------------------->
     <div class="jumbotron">
         <h1>Plantmate Quiz</h1>
     </div>
+    <!----MAIN-BODY-QUIZ---------------------------------------------------------------------------------------------------->
     <div class="background_space">
         <div class="container">
-
         <div id="quiz_questions">
             <form action="{% url 'your_plantmate' %}" method="get">
                 <strong>What size of plant are you looking for?</strong> <br>
@@ -97,7 +99,6 @@
                 </fieldset>
                 <br>
                 <input id="plant_quiz" type="submit" onclick="buttons()" class="btn btn-outline-success">
-
             </form>
             <br>
             <br>
