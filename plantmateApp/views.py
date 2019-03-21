@@ -215,15 +215,18 @@ def show_plant(request, plant_name_slug):
                 image.add(i)
 
         comments = Comment.objects.filter(plant_slug=plant_name_slug)
+        user_profiles = UserProfile.objects.all()
 
         if request.user.is_authenticated():
             wishlistplants = UserWishlistPlants.objects.filter(user=request.user)
             saved_plants = UserSavedPlants.objects.filter(user=request.user)
             context_dict = {'plant': plant, 'image': image, 'wishlistplants': wishlistplants,
-                            'saved_plants': saved_plants, 'comments': comments}
+                            'saved_plants': saved_plants, 'comments': comments,
+                            'user_profiles': user_profiles}
 
         else:
-            context_dict = {'plant': plant, 'image': image, 'comments': comments}
+            context_dict = {'plant': plant, 'image': image, 'comments': comments,
+                            'user_profiles': user_profiles}
 
     except Plant.DoesNotExist:
         context_dict['plant'] = None
@@ -243,16 +246,20 @@ def filter_plant(request):
             plant_a_z = Plant.objects.filter(pet=request.GET['filter'])
             plant_a_z = plant_a_z.order_by('name')
             context_dict['pet_plants'] = plant_a_z
+            context_dict['category'] = "Suitable for pets"
         else:
             plant_a_z = Plant.objects.order_by('name')
     if request.GET['category'] == 'characteristics':
         if 'filter' in request.GET:
             if request.GET['filter'] == 'easy':
                 plant_a_z = Plant.objects.filter(characteristics="Easy to care for")
+                context_dict['category'] = "Easy to care for"
             elif request.GET['filter'] == 'trailing':
                 plant_a_z = Plant.objects.filter(characteristics="Trailing")
+                context_dict['category'] = "Trailing"
             elif request.GET['filter'] == 'air':
                 plant_a_z = Plant.objects.filter(characteristics="Air purifying")
+                context_dict['category'] = "Air purifying"
             plant_a_z = plant_a_z.order_by('name')
             context_dict['characteristic_plants'] = plant_a_z
         else:
@@ -262,6 +269,7 @@ def filter_plant(request):
             plant_a_z = Plant.objects.filter(size=request.GET['filter'])
             plant_a_z = plant_a_z.order_by('name')
             context_dict['size_plants'] = plant_a_z
+            context_dict['category'] = request.GET['filter']
         else:
             plant_a_z = Plant.objects.order_by('name')
     if request.GET['category'] == 'sun':
@@ -269,6 +277,7 @@ def filter_plant(request):
             plant_a_z = Plant.objects.filter(light=request.GET['filter'])
             plant_a_z = plant_a_z.order_by('name')
             context_dict['sun_plants'] = plant_a_z
+            context_dict['category'] = request.GET['filter']
         else:
             plant_a_z = Plant.objects.order_by('name')
     if request.GET['category'] == 'climate':
@@ -276,8 +285,13 @@ def filter_plant(request):
             plant_a_z = Plant.objects.filter(climate=request.GET['filter'])
             plant_a_z = plant_a_z.order_by('name')
             context_dict['climate_plants'] = plant_a_z
+            context_dict['category'] = request.GET['filter']
         else:
             plant_a_z = Plant.objects.order_by('name')
+    if request.GET['category'] == 'all':
+        plant_a_z = Plant.objects.order_by('name')
+        context_dict['plants'] = plant_a_z
+        context_dict['category'] = "All Plants"
 
     context_dict['plants'] = plant_a_z
     return render(request, 'plantmate/plantlist.html', context=context_dict)
@@ -437,7 +451,7 @@ def myaccount(request):
 
 def plant_list(request):
     plant_a_z = Plant.objects.order_by('name')
-    context_dict = {'plants': plant_a_z}
+    context_dict = {'plants': plant_a_z, 'category': "filter"}
 
     return render(request, 'plantmate/plantlist.html', context=context_dict)
 

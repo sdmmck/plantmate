@@ -146,7 +146,7 @@ def populate():
          "room": "Kitchen/Bathroom",
          "description": "The rattlesnake plant is a decorative perennial with strappy, spotted leaves and deep purple undersides. Native to the Brazilian rainforest, rattlesnake plant thrives in moist, warm, semi-shady climates. If conditions are just right, the plant produces bright yellow-orange blooms in late spring and early summer. Rattlesnake plant is a real attention-getter, growing to heights of 30 inches and above."},
 
-        {"name": "Straight-Cylindrical Snake Plant",
+        {"name": "Cylindrical Snake Plant",
          "latin_name": "Sanseveieria cylindrica",
          "size": "Medium",
          "characteristics": "Easy to care for",
