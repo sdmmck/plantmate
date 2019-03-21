@@ -1,5 +1,15 @@
-{% extends "plantmate/../plantmate/base.html" %}
+{% extends 'plantmate/../plantmate/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Logged out
+{% endblock %}
+
 {% block body_block %}
-    <h1>Logged Out</h1>
-    <p>You are now logged out.</p>
+    <div class="jumbotron">
+        <h1>Logged out</h1>
+    </div>
+    <div class="background_space_medium_rare" style="margin-bottom: 60px; width:400px; margin-left: 60px">
+       <p style="text-align: center">You are now logged out.</p>
+    </div>
 {% endblock %}
