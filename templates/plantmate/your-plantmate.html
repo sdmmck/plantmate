@@ -3,12 +3,6 @@
 {% load static %}
 <!----HEAD------------------------------------------------------------------------------------------------------------->
 {% block head_block %}
-    {% if user.is_authenticated %}
-        <script>
-            document.getElementById("saved_button").style.display = "block";
-            document.getElementById("wishlist_button").style.display = "block";
-        </script>
-    {% endif %}
     {% block title_block %}
         Your plantmate
     {% endblock %}
@@ -39,11 +33,11 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="container-body align-items-center d-flex justify-content-center">
-                                <div id="saved_button" display="hidden">
+                                <div id="saved_button" style="display: none">
                                     <form method="post" action="{% url 'save_plant' %}">
                                         {% csrf_token %}
                                         <input type="hidden" id="saved_plant" name="saved_plant" value="">
-                                        <button type="submit" name="saved_plants" class="btn btn-outline-success">Add
+                                        <button type="submit" name="saved_plants" class="btn btn-outline-success" >Add
                                             to my plants
                                         </button>
                                     </form>
@@ -52,7 +46,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="container-body align-items-center d-flex justify-content-center">
-                                <div id="wishlist_button" display="hidden">
+                                <div id="wishlist_button" style="display: none">
                                     <form method="post" action="{% url 'wishlist_plant' %}">
                                         {% csrf_token %}
                                         <input type="hidden" id="wishlist_plant" name="wishlist_plant" value="">
@@ -63,6 +57,12 @@
                                 </div>
                             </div>
                         </div>
+                        {% if not user.is_authenticated %}
+                            <p style="margin-left: 20px;"><i>You can save plants to your account when you take the quiz if you <a
+                                        href="{% url 'auth_login' %}">log in</a> or <a href="{% url 'registration_register' %}">sign
+                                    up</a>!<br/>
+                                </i></p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -89,8 +89,13 @@
             </div>
         </div>
     </div>
-    </body>
     <!----SCRIPT------------------------------------------------------------------------------------------------------->
+     {% if user.is_authenticated %}
+        <script>
+            document.getElementById("saved_button").style.display = "block";
+            document.getElementById("wishlist_button").style.display = "block";
+        </script>
+    {% endif %}
     <script type="text/javascript">
         function updateDocInline() {
             document.getElementById("show_plant").action = {% url 'plant_list' %}+plant.slug;
@@ -98,4 +103,5 @@
         }
     </script>
     <script type="text/javascript" src={% static "javascript/quiz.js" %}></script>
+    </body>
 {% endblock %}
