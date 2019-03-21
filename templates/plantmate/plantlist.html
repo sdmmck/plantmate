@@ -18,9 +18,11 @@
                 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
                         aria-haspopup="true"
                         aria-expanded="false">
-                    filter
+                   {{ category }}
                 </button>
                 <div class="dropdown-menu">
+                    <a class="dropdown-item"
+                       href="{% url 'filter_plant' %}?category=all">All</a>
                     <a class="dropdown-item"
                        href="{% url 'filter_plant' %}?category=size&filter=Small">Small</a>
                     <a class="dropdown-item"
@@ -83,8 +85,6 @@
             </p>{% endif %}
     </div>
     <script>
-
-
         function filterSelection(value) {
             if (value === 'no') {
                 document.getElementById(value).style.display = "block";
