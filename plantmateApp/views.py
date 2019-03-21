@@ -17,7 +17,6 @@ def home(request):
 
 
 def businesslist(request):
-
     business_list = Business.objects.order_by('-name')
     context_dict = {'businesses': business_list}
 
@@ -134,8 +133,8 @@ def like_comment(request):
                 # likes decreased
 
             elif disabled == 'false':
-                #Button not disabled
-                likes=likecom.likes
+                # Button not disabled
+                likes = likecom.likes
 
             elif disabled == 'null':
                 # Implement button press
@@ -159,12 +158,12 @@ def dislike_comment(request):
         dislikecom = Comment.objects.get(id=int(discom_id))
         if dislikecom:
             if disabled == 'true':
-               # Button was disabled, meaning user has voted before and is changing their vote
+                # Button was disabled, meaning user has voted before and is changing their vote
                 dislikes = dislikecom.dislikes - 1
                 # dislikes decreased
 
             elif disabled == 'false':
-                #Button not disabled
+                # Button not disabled
                 dislikes = dislikecom.dislikes
 
             elif disabled == 'null':
@@ -205,25 +204,28 @@ def add_image(request, plant_name_slug):
 
 
 def show_plant(request, plant_name_slug):
-    image = set()
+    image = list()
 
     try:
         plant = Plant.objects.get(slug=plant_name_slug)
 
-        for i in PlantImage.objects.all():
+        for i in PlantImage.objects.order_by('-id'):
             if i.plant_name == plant.slug:
-                image.add(i)
+                image.append(i)
 
         comments = Comment.objects.filter(plant_slug=plant_name_slug)
+        user_profiles = UserProfile.objects.all()
 
         if request.user.is_authenticated():
             wishlistplants = UserWishlistPlants.objects.filter(user=request.user)
             saved_plants = UserSavedPlants.objects.filter(user=request.user)
             context_dict = {'plant': plant, 'image': image, 'wishlistplants': wishlistplants,
-                            'saved_plants': saved_plants, 'comments': comments}
+                            'saved_plants': saved_plants, 'comments': comments,
+                            'user_profiles': user_profiles}
 
         else:
-            context_dict = {'plant': plant, 'image': image, 'comments': comments}
+            context_dict = {'plant': plant, 'image': image, 'comments': comments,
+                            'user_profiles': user_profiles}
 
     except Plant.DoesNotExist:
         context_dict['plant'] = None
@@ -234,7 +236,6 @@ def show_plant(request, plant_name_slug):
 
 
 def filter_plant(request):
-
     context_dict = {}
     print (request.GET)
 
@@ -243,16 +244,20 @@ def filter_plant(request):
             plant_a_z = Plant.objects.filter(pet=request.GET['filter'])
             plant_a_z = plant_a_z.order_by('name')
             context_dict['pet_plants'] = plant_a_z
+            context_dict['category'] = "Suitable for pets"
         else:
             plant_a_z = Plant.objects.order_by('name')
     if request.GET['category'] == 'characteristics':
         if 'filter' in request.GET:
             if request.GET['filter'] == 'easy':
                 plant_a_z = Plant.objects.filter(characteristics="Easy to care for")
+                context_dict['category'] = "Easy to care for"
             elif request.GET['filter'] == 'trailing':
                 plant_a_z = Plant.objects.filter(characteristics="Trailing")
+                context_dict['category'] = "Trailing"
             elif request.GET['filter'] == 'air':
                 plant_a_z = Plant.objects.filter(characteristics="Air purifying")
+                context_dict['category'] = "Air purifying"
             plant_a_z = plant_a_z.order_by('name')
             context_dict['characteristic_plants'] = plant_a_z
         else:
@@ -262,6 +267,7 @@ def filter_plant(request):
             plant_a_z = Plant.objects.filter(size=request.GET['filter'])
             plant_a_z = plant_a_z.order_by('name')
             context_dict['size_plants'] = plant_a_z
+            context_dict['category'] = request.GET['filter']
         else:
             plant_a_z = Plant.objects.order_by('name')
     if request.GET['category'] == 'sun':
@@ -269,6 +275,7 @@ def filter_plant(request):
             plant_a_z = Plant.objects.filter(light=request.GET['filter'])
             plant_a_z = plant_a_z.order_by('name')
             context_dict['sun_plants'] = plant_a_z
+            context_dict['category'] = request.GET['filter']
         else:
             plant_a_z = Plant.objects.order_by('name')
     if request.GET['category'] == 'climate':
@@ -276,8 +283,13 @@ def filter_plant(request):
             plant_a_z = Plant.objects.filter(climate=request.GET['filter'])
             plant_a_z = plant_a_z.order_by('name')
             context_dict['climate_plants'] = plant_a_z
+            context_dict['category'] = request.GET['filter']
         else:
             plant_a_z = Plant.objects.order_by('name')
+    if request.GET['category'] == 'all':
+        plant_a_z = Plant.objects.order_by('name')
+        context_dict['plants'] = plant_a_z
+        context_dict['category'] = "All Plants"
 
     context_dict['plants'] = plant_a_z
     return render(request, 'plantmate/plantlist.html', context=context_dict)
@@ -340,7 +352,6 @@ def remove_saved_plant(request):
     return render(request, 'plantmate/myplants.html', {'form': form})
 
 
-
 @login_required
 def add_image(request, plant_name_slug):
     context_dict = {}
@@ -390,7 +401,6 @@ def signup(request):
 
 
 def contact(request):
-
     if request.method == 'GET':
         form = ContactForm()
     else:
@@ -437,7 +447,7 @@ def myaccount(request):
 
 def plant_list(request):
     plant_a_z = Plant.objects.order_by('name')
-    context_dict = {'plants': plant_a_z}
+    context_dict = {'plants': plant_a_z, 'category': "filter"}
 
     return render(request, 'plantmate/plantlist.html', context=context_dict)
 
@@ -485,4 +495,3 @@ def add_profile_image(request):
 
 def change_password(request):
     return render(request, 'registration/password_change,html')
-

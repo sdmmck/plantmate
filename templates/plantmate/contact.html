@@ -1,50 +1,55 @@
 {% extends "plantmate/../plantmate/base.html" %}
 {% load staticfiles %}
+<!----HEADER----------------------------------------------------------------------------------------------------------->
 {% block head_block %}
     {% block title_block %}
         contact us at plantmate
     {% endblock %}
 {% endblock %}
+<!----BODY------------------------------------------------------------------------------------------------------------->
 {% block body_block %}
+    <!----JUMBOTRON---------------------------------------------------------------------------------------------------->
     <div class="jumbotron">
         <h1>contact us</h1>
         plantmate@gmail.com<br>
         0141 557 1110<br>
     </div>
+    <!----MAIN-BODY---------------------------------------------------------------------------------------------------->
     <div class="background_space_medium">
+        <!----SUCCESS-MESSAGE------------------------------------------------------------------------------------------>
         {% if success %}
             <div>
                 <h3>Thanks for getting in touch with us, we will get back to you as soon as we can. </h3>
             </div>
+        <!----CONTACT-FORM--------------------------------------------------------------------------------------------->
         {% else %}
             <form role="form" id="form" method="POST" enctype="multipart/form-data" action="{% url 'contact' %}">
                 {% csrf_token %}
-                <div class="row">
-                    <div class="col-md-6">
+                <div class="row" style="margin-left: 10%">
+                    <div class="col-md-5">
                         <div class="form-group">
                             <label for="form_name">Subject *</label>
                             <input id="form_name" type="text" name="subject" class="form-control"
-                                   placeholder="Please enter the subject of your enquiry *" required="required"
-                                   data-error="Firstname is required.">
+                                   placeholder="What can we help with?" required="required"
+                                   data-error="Subject is required.">
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <div class="form-group">
                             <label for="form_email">Email *</label>
                             <input id="form_email" type="email" name="email" class="form-control"
-                                   placeholder="Please enter your email *" required="required"
+                                   placeholder="Please enter your email address *" required="required"
                                    data-error="Valid email is required.">
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
+                <div class="row" style="margin-left: 10%">
+                    <div class="col-md-10">
                         <div class="form-group">
                             <label for="form_message">Message *</label>
                             <textarea id="form_message" name="message" class="form-control"
-                                      placeholder="Message for me *"
                                       rows="4" required="required" data-error="Please, leave us a message."></textarea>
                             <div class="help-block with-errors"></div>
                         </div>
@@ -56,6 +61,5 @@
                 </div>
             </form>
             </div>
-
         {% endif %}
 {% endblock %}

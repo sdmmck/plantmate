@@ -1,10 +1,7 @@
 // Create new map
 let map;
 
-
-function initMap() {
-
-
+function initBusinessListMap() {
     // default map location set to Glasgow
     const glasgow = {
         center: {lat: -34.397, lng: 150.644},
@@ -35,10 +32,7 @@ function initMap() {
 }
 
 // function for adding markers
-
-
 function addMarker(coords, businessLink, businessAddress) {
-
 
     let marker = new google.maps.Marker({
         position: coords,
@@ -54,4 +48,28 @@ function addMarker(coords, businessLink, businessAddress) {
 
     });
 }
+
+
+ function initBusinessMap() {
+
+                let mapProp = {
+                    center: {lat: lat, lng: lng},
+                    zoom: 14,
+                };
+                // Create new map
+                let map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+                // Add marker
+                let marker = new google.maps.Marker({
+                    position: {lat: lat, lng: lng},
+                    map: map
+                });
+
+                let infoWindow = new google.maps.InfoWindow({
+                    content: businessName
+                });
+                marker.addListener('click', function () {
+                    infoWindow.open(map, marker);
+                });
+                console.log();
+            }
 

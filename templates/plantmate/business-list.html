@@ -1,29 +1,43 @@
 {% extends "plantmate/../plantmate/base.html" %}
 {% load staticfiles %}
+<!----HEADER----------------------------------------------------------------------------------------------------------->
 {% block head_block %}
-
     {% block title_block %}
         Business List
     {% endblock %}
 {% endblock %}
-
+<!----BODY------------------------------------------------------------------------------------------------------------->
 {% block body_block %}
+    <!----JUMBOTRON---------------------------------------------------------------------------------------------------->
     <div class="jumbotron">
         <h1>Find a plant shop near you...</h1>
     </div>
+    <!----MAIN-BODY---------------------------------------------------------------------------------------------------->
     <div class="background_space_medium_rare">
-        <h5 id="card-title"></h5>
-        <p id="business-address"></p>
-        <div>
-            {% if user.is_authenticated %}
-                <p>If you can't find the business you're looking for, you can <a href="{% url 'add_business' %}">add a
-                    new business</a><br/></p>
-            {% endif %}
+        <!----MAP-INFO------------------------------------------------------------------------------------------------->
+        <div class="business_details" style="margin-left: 20%">
+            <h5 id="card-title"></h5>
+            <p id="business-address"></p>
         </div>
-        <div id="map_loading"><p>map loading . . . </p></div>
+        <div id="map_loading" style="text-align: center"><p>map loading . . . </p>
+            <div class="spinner-grow text-secondary" role="status">
+                <span class="sr-only"></span>
+            </div>
+        </div>
+        <!----MAP------------------------------------------------------------------------------------------------------>
+        <div id="googleMap" style="width:600px;height:400px;left: 20%; right: 20%; "></div>
+        {% if user.is_authenticated %}
+            <div style="margin-left: 20%;margin-bottom: 70px">
+                <br>
+                <p>If you can't find the business you're looking for, you can
 
-        <div id="googleMap" style="width:600px;height:400px;"></div>
+                    <a href="{% url 'add_business' %}">add a
+                        new business</a>
+                    <br/></p>
+            </div>
+        {% endif %}
     </div>
+    <!----SCRIPT------------------------------------------------------------------------------------------------------->
     <script>
         function addMarkers() {
             {%  for business in businesses %}
@@ -35,67 +49,7 @@
             {%  endfor %}
         }
     </script>
-
-    <script>
-        let map;
-
-
-        function initMap() {
-
-
-            // default map location set to Glasgow
-            const glasgow = {
-                center: {lat: -34.397, lng: 150.644},
-                zoom: 6,
-            };
-
-            //if there is geolocation:
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    const here = {
-                        center: {
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude
-                        },
-                        zoom: 13,
-                    };
-                    map = new google.maps.Map(document.getElementById("googleMap"), here);
-                    addMarkers();
-                    document.getElementById("map_loading").style.display = "none";
-                });
-
-            } else {
-
-                // if there isn't any geolocation let's center on Glasgow:
-                map = new google.maps.Map(document.getElementById("googleMap"), glasgow);
-                addMarkers();
-                document.getElementById("map_loading").style.display = "none";
-            }
-        }
-
-        // function for adding markers
-        function addMarker(coords, businessLink, businessAddress) {
-
-
-            let marker = new google.maps.Marker({
-                position: coords,
-                map: map,
-            });
-            let infoWindow = new google.maps.InfoWindow({
-                content: businessLink,
-            });
-            marker.addListener('click', function () {
-                infoWindow.open(map, marker);
-                document.getElementById("card-title").innerHTML = businessLink;
-                document.getElementById("business-address").innerText = businessAddress;
-
-            });
-        }
-
-
-    </script>
-
-    {# <script type="text/javascript" src={% static "javascript/allLocalBusinesses.js" %}></script>#}
+    <script type="text/javascript" src={% static "javascript/allLocalBusinesses.js" %}></script>
     <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1_mwAa6UhCMVkPr4XIk-XFSXlD0Fwkmw&callback=initMap"></script>
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1_mwAa6UhCMVkPr4XIk-XFSXlD0Fwkmw&callback=initBusinessListMap"></script>
 {% endblock %}

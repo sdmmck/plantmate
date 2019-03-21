@@ -1,144 +1,73 @@
 {% extends "plantmate/../plantmate/base.html" %}
 {% load staticfiles %}
+
+<!----HEADER----------------------------------------------------------------------------------------------------------->
 {% block head_block %}
-
-
+     <link rel="script" type="text/javascript" src="{% static 'javascript/plantmate-other.js' %}">
     {% block title_block %}
         Add a Business
     {% endblock %}
 {% endblock %}
 
+<!----BODY------------------------------------------------------------------------------------------------------------->
 {% block body_block %}
+    <!----JUMBOTRON---------------------------------------------------------------------------------------------------->
+     <script type="text/javascript" src="{% static 'javascript/plantmate-other.js' %}"></script>
     <div class="jumbotron">
         <h1>Add a Business</h1>
     </div>
-
+    <!----MAIN BODY---------------------------------------------------------------------------------------------------->
     <div class="background_space_medium_rare">
-        <input id="search-box" class="controls" type="text" placeholder="Search for a business here" style=" font-size: 20px;
-        text-overflow: ellipsis;">
-        <div id="map" style=" height: 400px; width: 800px;"></div>
-
-        <div id="business_details" style="display: none">
-            <form role="form" id="business_form" method="post" enctype="multipart/form-data"
-                  action="{% url 'add_business' %}" class=form-inline">
-                {% csrf_token %}
-                <input type="hidden" name="lat" id="lat">
-                <input type="hidden" name="long" id="long">
-                <input type="text" name="name" id="name" value="" placeholder="name"><br>
-                <input type="text" name="url" id="url" value="" placeholder="website"><br>
-                <textarea cols="50" rows="7" name="address" id="address"
-                          placeholder="Enter an address here or search in the map above"></textarea><br>
-
-                <input type="text" name="phone" id="phone" value="" placeholder="phone number"><br>
-                <input type="text" name="email" id="email" value="" placeholder="email address"><br>
-                <textarea cols="50" rows="7" name="opening_hours" id="opening_hours" placeholder="opening hours"
-                ></textarea><br>
-
-                <button class="btn btn-primary" type="submit" name="submit" value="Add business">
-                    add business
-                </button>
-                </br>
-            </form>
+        <div class="row">
+            <!----SEARCH-MAP------------------------------------------------------------------------------------------->
+            <div class="col-md-6">
+                <div id="map" style="width:100%;height:400px; margin-left: 20px"></div>
+                <div style="margin: 20px 20% 60px 30%;">
+                    <input id="search-box" class="controls" type="text" placeholder="Search for a business here" style=" font-size: 14px; font-family: spartanmb-regular;
+        text-overflow: ellipsis; width: 300px">
+                </div>
+            </div>
+            <!----BUSINESS DETAILS------------------------------------------------------------------------------------->
+            <div class="col-md-5">
+                <div id="business_details" style="display: none">
+                    <form role="form" id="business_form" method="post" enctype="multipart/form-data"
+                          action="{% url 'add_business' %}" class=form-inline">
+                        {% csrf_token %}
+                        <input type="hidden" name="lat" id="lat">
+                        <input type="hidden" name="long" id="long">
+                        <input class="form-control" type="text" name="name" id="name" value="" placeholder="name"><br>
+                        <input class="form-control" type="text" name="url" id="url" value="" placeholder="website"><br>
+                        <div class="row">
+                            <div class="col-md-5">
+                        <textarea class="form-control" cols="50" rows="7" name="address" id="address"
+                                  placeholder="Enter an address here or search in the map above"></textarea><br>
+                            </div>
+                            <div class="col-md-7">
+                                <textarea class="form-control" cols="50" rows="7" name="opening_hours"
+                                          id="opening_hours" placeholder="opening hours"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <input class="form-control" type="text" name="phone" id="phone" value=""
+                                   placeholder="phone number"><br>
+                            <input class="form-control" type="text" name="email" id="email" value=""
+                                   placeholder="email address"><br>
+                            <br>
+                        </div>
+                        <button class="btn btn-success btn-send" type="submit" name="submit" value="Add business">
+                            add business
+                        </button>
+                        </br>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
-
+    <!----SCRIPT------------------------------------------------------------------------------------------------------->
     <script>
 
-        function initAutocomplete() {
-            var map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: 55.864237, lng: -4.251806},
-                zoom: 13,
-                mapTypeId: 'roadmap'
-            });
-
-            // Create the search box and link it to the UI element.
-            var input = document.getElementById('search-box');
-            var searchBox = new google.maps.places.SearchBox(input);
-            map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
-
-            // Bias the SearchBox results towards current map's viewport.
-            map.addListener('bounds_changed', function () {
-                searchBox.setBounds(map.getBounds());
-            });
-
-            var markers = [];
-            // Listen for the event fired when the user selects a prediction and retrieve
-            // more details for that place.
-            searchBox.addListener('places_changed', function () {
-                var places = searchBox.getPlaces();
-
-                if (places.length == 0) {
-                    return;
-                }
-
-                // Clear out the old markers.
-                markers.forEach(function (marker) {
-                    marker.setMap(null);
-                });
-                markers = [];
-
-                // For each place, get the icon, name and location.
-                var bounds = new google.maps.LatLngBounds();
-                places.forEach(function (place) {
-                    if (!place.geometry) {
-                        console.log("Returned place contains no geometry");
-                        return;
-                    }
-                    var icon = {
-                        url: place.icon,
-                        size: new google.maps.Size(71, 71),
-                        origin: new google.maps.Point(0, 0),
-                        anchor: new google.maps.Point(17, 34),
-                        scaledSize: new google.maps.Size(25, 25)
-                    };
-
-                    // Create a marker for each place.
-                    markers.push(new google.maps.Marker({
-                        map: map,
-                        icon: icon,
-                        title: place.name,
-                        position: place.geometry.location
-                    }));
-
-
-                    document.getElementById("lat").value = place.geometry.location.lat();
-                    document.getElementById("long").value = place.geometry.location.lng();
-                    document.getElementById("name").value = place.name;
-                    document.getElementById("phone").value = place.formatted_phone_number;
-                    document.getElementById("url").value = place.website;
-                    document.getElementById("business_details").style.display = "block";
-
-                    let addressAsString = "";
-                    let openinghoursAsString = "";
-
-                    addressAsString += place.address_components[0].long_name + " ";
-
-                    for (let i = 1; i < place.address_components.length; i++) {
-                        addressAsString += place.address_components[i].long_name + "\n";
-                    }
-
-                    for (let i = 0; i < place.opening_hours.weekday_text.length; i++) {
-                        openinghoursAsString += place.opening_hours.weekday_text[i] + "\n";
-                    }
-
-                    document.getElementById("address").value = addressAsString;
-                    document.getElementById("opening_hours").value = openinghoursAsString;
-
-
-                    if (place.geometry.viewport) {
-                        // Only geocodes have viewport.
-                        bounds.union(place.geometry.viewport);
-                    } else {
-                        bounds.extend(place.geometry.location);
-                    }
-                });
-                map.fitBounds(bounds);
-            });
-        }
-
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXhTbwURSjqAql1ySbqt0jeefYM8v74uc&libraries=places&callback=initAutocomplete"
-            async defer></script>
 
-    </div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXhTbwURSjqAql1ySbqt0jeefYM8v74uc&libraries=places&callback=initAddBusinessAutocomplete"
+            async defer></script>
 {% endblock %}

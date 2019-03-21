@@ -1,13 +1,14 @@
 {% extends "plantmate/../plantmate/base.html" %}
 {% load staticfiles %}
-
+<!----HEAD-------------------------------------------------------------------------------------------------------------->
 {% block head_block %}
-
     {% block title_block %}
         plant a-z
     {% endblock %}
 {% endblock %}
+<!----BODY------------------------------------------------------------------------------------------------------------->
 {% block body_block %}
+    <!----JUMBOTRON---------------------------------------------------------------------------------------------------->
     <div class="jumbotron">
         <div class="jumbotron_row">
             <div class="title">
@@ -18,9 +19,11 @@
                 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
                         aria-haspopup="true"
                         aria-expanded="false">
-                    filter
+                   {{ category }}
                 </button>
                 <div class="dropdown-menu">
+                    <a class="dropdown-item"
+                       href="{% url 'filter_plant' %}?category=all">All</a>
                     <a class="dropdown-item"
                        href="{% url 'filter_plant' %}?category=size&filter=Small">Small</a>
                     <a class="dropdown-item"
@@ -36,7 +39,7 @@
                     <a class="dropdown-item"
                        href="{% url 'filter_plant' %}?category=sun&filter=Shady">Shaded room</a>
                     <a class="dropdown-item"
-                       href="{% url 'filter_plant' %}?category=pets&filter=yes">plants suitable for pets</a>
+                       href="{% url 'filter_plant' %}?category=pets&filter=Yes">plants suitable for pets</a>
                     <a class="dropdown-item" href="{% url 'filter_plant' %}?category=characteristics&filter=air">Air
                         purifying plants</a>
                     <a class="dropdown-item" href="{% url 'filter_plant' %}?category=characteristics&filter=easy">Easy
@@ -48,9 +51,7 @@
             </div>
         </div>
     </div>
-
-
-
+    <!----MAIN-BODY---------------------------------------------------------------------------------------------------->
     <div class="background_space">
         {% if plants %}
             <div class="plants_container" style="display: grid">
@@ -82,23 +83,7 @@
                 up!</a><br/>
             </p>{% endif %}
     </div>
-    <script>
-
-
-        function filterSelection(value) {
-            if (value === 'no') {
-                document.getElementById(value).style.display = "block";
-                document.getElementById('yes').style.display = "none";
-            } else if (value === 'yes') {
-                document.getElementById(value).style.display = "block";
-                document.getElementById('no').style.display = "none";
-            } else {
-                document.getElementById('no').style.display = "block";
-                document.getElementById('yes').style.display = "block";
-            }
-        }
-    </script>
-
+    <script src="{% static 'javascript/plantmate-other.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
             crossorigin="anonymous"></script>

@@ -6,21 +6,27 @@
 {% endblock %}
 
 {% block body_block %}
-<link href="http://v4-alpha.getbootstrap.com/examples/signin/signin.css" rel="stylesheet"
-      xmlns="http://www.w3.org/1999/html">
-<div class="jumbotron">
-    <h1 class="display-3">Login</h1>
-</div>
-<form class="form-signin" role="form" method="post" action=".">
-    {% csrf_token %}
-    <h2 class="form-signin-heading">Please sign in</h2>
-    <label for="inputUsername" class="sr-only">Username</label>
-    <input type="text" name="username" id="id_username" class="form-control"
-           placeholder="Username" required autofocus>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" name="password" id="id_password" class="form-control"
-           placeholder="Password" required>
-    <button class="btn btn-lg btn-primary btn-block" type="submit" value="Submit" />
-    Sign in</button>
-</form>
+    <div class="jumbotron">
+        <h1>Login</h1>
+    </div>
+    <div class="background_space_medium_rare" style="margin-bottom: 60px; width:400px; margin-left: 60px">
+        <form role="form" method="post" action=".">
+            {% csrf_token %}
+
+            {{ form.username.errors }}
+            {{ form.non_field_errors }}
+
+            <div class="form-group">
+                <label for="inputUsername">Username</label>
+                <input type="text" name="username" id="id_username" class="form-control"
+                       placeholder="Username" required autofocus>
+            </div>
+            <div class="form-group">
+                <label for="input_password">Password</label>
+                <input class="form-control" id="id_password" type="password"
+                       placeholder="Password" name="password" required/>
+            </div>
+            <button type="submit" class="btn btn-success btn-send">Sign in</button>
+        </form>
+    </div>
 {% endblock %}

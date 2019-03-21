@@ -146,7 +146,7 @@ def populate():
          "room": "Kitchen/Bathroom",
          "description": "The rattlesnake plant is a decorative perennial with strappy, spotted leaves and deep purple undersides. Native to the Brazilian rainforest, rattlesnake plant thrives in moist, warm, semi-shady climates. If conditions are just right, the plant produces bright yellow-orange blooms in late spring and early summer. Rattlesnake plant is a real attention-getter, growing to heights of 30 inches and above."},
 
-        {"name": "Straight-Cylindrical Snake Plant",
+        {"name": "Cylindrical Snake Plant",
          "latin_name": "Sanseveieria cylindrica",
          "size": "Medium",
          "characteristics": "Easy to care for",
@@ -223,6 +223,16 @@ def populate():
          "room": "Living-room/Bedroom",
          "description": "Yucca is a plant of strong lines and symmetry with its spiky leaves radiating out from the base in an attractive display of nature\'s architecture skills. Striking as a solo specimen in an entry way. Also provides nice contrast to groupings of softer houseplants."},
 
+        {"name": "Corn Plant",
+         "latin_name": "Dracaena fragrans",
+         "size": "Large",
+         "characteristics": "Air purifying",
+         "climate": "Warm",
+         "light": "Sunny",
+         "picture": "images/corn-plant.jpg",
+         "pet": "Yes",
+         "room": "Living-room/Bedroom",
+         "description": "Corn plants are easy to care for and are reknowned and much loved for their air purifying properties. This is one of the best house plants for removing indoor air toxins such as formaldehyde, ammonia, xylene and toluene. This hardy Dracaena is an unbranched, tree-like plant with sword-shaped arching leaves. Those dark-green leaves are 2 ft (60 cm) long and 4 in (10 cm) wide, and have a broad cream-to-yellow stripe down the middle."},
     ]
 
     for business in local_businesses:
