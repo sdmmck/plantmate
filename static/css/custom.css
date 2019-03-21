@@ -69,7 +69,9 @@ h3 {
     font-family: 'spartanmb-thin';
 }
 
-
+html, body {
+    min-height: 100%;
+}
 
 body {
     font-family: 'spartanmb-regular';
@@ -81,27 +83,27 @@ body {
 }
 
 .background_space {
-    min-height: 550px;
+    min-height: 100%;
     margin-bottom: 40px;
 }
 
 .background_space_large {
-    min-height: 550px;
+    min-height: 100%;
     margin-bottom: 120px;
 }
 
 .background_space_medium {
-    min-height: 425px;
+    min-height: 100%;
     margin-bottom: 40px;
 }
 
 .background_space_medium_rare {
-    min-height: 475px;
+    min-height: 100%;
     margin-bottom: 40px;
 }
 
 .background_space_smaller {
-    min-height: 350px;
+    min-height: 100%;
     margin-bottom: 40px;
 }
 
