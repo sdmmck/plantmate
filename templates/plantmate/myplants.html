@@ -10,6 +10,12 @@
         <h1>My Plants</h1>
     </div>
     <div class="background_space">
+        {% if not plants %}
+        <div class="container">
+        <h5>You don't have any plants in your Plant List. <br>
+        Browse all plantmate plants <a href="{% url 'plant_list' %}">here</a></h5>
+        </div>
+        {% endif %}
         {% if plants %}
             <div class="myplants_container" style="display: grid">
                 {% for plant in plants %}
@@ -30,10 +36,12 @@
                                 remove from my plants
                             </button>
                         </form>
+                        <br>
                     </div>
                 {% endfor %}
             </div>
             <a href="{% url 'plant_list' %}">Return to A-Z list of plants</a>
         {% endif %}
+
     </div>
 {% endblock %}

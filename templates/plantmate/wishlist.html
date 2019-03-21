@@ -13,6 +13,13 @@
         <h1>My Wishlist</h1>
     </div>
     <div class="background_space">
+        <div class="background_space">
+        {% if not plants %}
+            <div class="container">
+        <h5>You don't have any plants in your Wish List. <br>
+        Browse all plantmate plants <a href="{% url 'plant_list' %}">here</a></h5>
+            </div>
+        {% endif %}
         {% if plants %}
             <div class="mywishlist_container" style="display: grid">
                 {% for plant in plants %}
@@ -33,6 +40,7 @@
                                     class="btn btn-outline-success">remove from wishlist
                             </button>
                         </form>
+                        <br>
 
                     </div>
                 {% endfor %}
