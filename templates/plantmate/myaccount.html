@@ -1,101 +1,105 @@
 {% extends "plantmate/../plantmate/base.html" %}
 {% load staticfiles %}
 {% block head_block %}
-    {% block title_block %}
-        my account
-    {% endblock %}
+{% block title_block %}
+my account
+{% endblock %}
 {% endblock %}
 {% block body_block %}
-    <div class="jumbotron">
-        <div class="jumbotron_row">
-            {% if user_profile.picture %}
-                <div class="jumbotron_row_left">
-                    <div class="square_image_100px_radius">
-                        <img src="{% static user_profile.picture %}" alt="profile picture" height="100px">
-                    </div>
-                    <div>
-                        <h1 style="margin-left: 20px;"><br>{{ username }}</h1>
-                    </div>
-                </div>
-                <div style="margin-right: 10px; margin-top: 52px;">
-                    <button onclick=" location.href='{% url 'add_profile_image' %}' " class="btn
+<div class="jumbotron">
+    <div class="jumbotron_row">
+        {% if user_profile.picture %}
+        <div class="jumbotron_row_left">
+            <div class="square_image_100px_radius">
+                <img src="{% static user_profile.picture %}" alt="profile picture" height="100px">
+            </div>
+            <div>
+                <h1 style="margin-left: 20px;"><br>{{ username }}</h1>
+            </div>
+        </div>
+        <div style="margin-right: 10px; margin-top: 52px;">
+            <button onclick=" location.href='{% url 'add_profile_image' %}' " class="btn
                     btn-outline-success">change picture
-                    </button>
+            </button>
+        </div>
+        {% else %}
+        <div>
+            <h1 style="margin-right: 10px"><br>{{ username }}</h1>
+        </div>
+        <div>
+            <button onclick="location.href='{% url 'add_profile_image' %}'" class="btn btn-outline-success">
+                add
+                profile picture
+            </button>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<div class="background_space">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="container">
+                <h2><a href="{% url 'my_plants' %}">My Plants</a></h2>
+                <div class="my_account_plants_container">
+                    {% if saved_plants %}
+                    {% for saved in saved_plants %}
+                    <div class="card text-center" style="width: 9rem; height: 15rem">
+                        <img src="{% static saved.picture %}" class="card-img-top" alt="{{ saved.name }}"
+                             style="height: 9rem">
+                        <div class="card-body">
+                            <h6 class="card-title">{{ saved.name }}</h6>
+                            <a href="/plant-list/{{ saved.slug }}" class=" btn-primary stretched-link"></a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
                 </div>
-            {% else %}
-                <div>
-                    <h1 style="margin-right: 10px"><br>{{ username }}</h1>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="container">
+                <h2><a href="{% url 'wishlist' %}">My Wishlist</a></h2>
+                <div class="my_account_plants_container">
+                    {% if wishlist_plants %}
+                    {% for wish in wishlist_plants %}
+                    <div class="card text-center" style="width: 9rem; height: 15rem">
+                        <img src="{% static wish.picture %}" class="card-img-top" alt="{{ wish.name }}"
+                             style="height: 9rem">
+                        <div class="card-body">
+                            <h6 class="card-title">{{ wish.name }}</h6>
+                            <a href="/plant-list/{{ wish.slug }}" class="btn-primary stretched-link"></a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
                 </div>
-                <div>
-                    <button onclick="location.href='{% url 'add_profile_image' %}'" class="btn btn-outline-success">
-                        add
-                        profile picture
-                    </button>
-                </div>
-            {% endif %}
+            </div>
         </div>
     </div>
-    <div class="background_space">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="container">
-                    <h2><a href="{% url 'my_plants' %}">My Plants</a></h2>
-                    <div class="my_account_plants_container">
-                        {% if saved_plants %}
-                            {% for saved in saved_plants %}
-                                <div class="card text-center" style="width: 9rem; height: 15rem">
-                                    <img src="{% static saved.picture %}" class="card-img-top" alt="{{ saved.name }}"
-                                         style="height: 9rem">
-                                    <div class="card-body">
-                                        <h6 class="card-title">{{ saved.name }}</h6>
-                                        <a href="/plant-list/{{ saved.slug }}" class=" btn-primary stretched-link"></a>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="container">
-                    <h2><a href="{% url 'wishlist' %}">My Wishlist</a></h2>
-                    <div class="my_account_plants_container">
-                        {% if wishlist_plants %}
-                            {% for wish in wishlist_plants %}
-                                <div class="card text-center" style="width: 9rem; height: 15rem">
-                                    <img src="{% static wish.picture %}" class="card-img-top" alt="{{ wish.name }}"
-                                         style="height: 9rem">
-                                    <div class="card-body">
-                                        <h6 class="card-title">{{ wish.name }}</h6>
-                                        <a href="/plant-list/{{ wish.slug }}" class="btn-primary stretched-link"></a>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h2><a href="" id="business_link" style="margin-left: 20px">Nearest Plant Shop</a></h2>
+            <div id="googleMap" style="width:100%;height:400px;margin-bottom: 50px; margin-left: 20px;"></div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <h2><a href="" id="business_link" style="margin-left: 20px">Nearest Plant Shop</a></h2>
-                <div id="googleMap" style="width:100%;height:400px;margin-bottom: 50px; margin-left: 20px;"></div>
-            </div>
-            <div class="col-md-6">
-                <br><br>
-                <h5 id="business_name"></h5>
-                <div id="business_address"></div>
-                <br>
-                <p><strong>Opening hours:</strong>
-                <div id="business_opening_hours"></div>
-                <a href="" id="business_link">...more info</a><br>
-                <p>Not what you're looking for? Find more plant shops <a href="{% url 'business-list' %}">here</a></p>
+        <div class="col-md-6">
+            <br><br>
+            <h5 id="business_name"></h5>
+            <div id="business_address"></div>
+            <br>
+            <p><strong>Opening hours:</strong>
+            <div id="business_opening_hours"></div>
+            <a href="" id="business_link">...more info</a><br>
+            <p>Not what you're looking for? Find more plant shops <a href="{% url 'business-list' %}">here</a></p>
 
-                <div id="loading_map">loading map . . .</div>
+            <div id="loading_map">loading map . . .<br>
+                <div class="spinner-grow text-secondary" role="status">
+                    <span class="sr-only"></span>
+                </div>
             </div>
         </div>
     </div>
-    <script type="text/javascript">
+</div>
+<script type="text/javascript">
         window.onload = function () {
             findNearestBusiness()
         };
@@ -164,8 +168,9 @@
             {% endfor %}
             initMap();
         }
-    </script>
-    <script>
+
+</script>
+<script>
         function initMap() {
             const lat = Number(businessLat);
             const lng = Number(businessLong);
@@ -188,7 +193,8 @@
                 infoWindow.open(map, marker);
             });
         }
-    </script>
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1_mwAa6UhCMVkPr4XIk-XFSXlD0Fwkmw&libraries=places"></script>
+
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1_mwAa6UhCMVkPr4XIk-XFSXlD0Fwkmw&libraries=places"></script>
 {% endblock %}

@@ -2,35 +2,39 @@
 {% load staticfiles %}
 {% block head_block %}
 
-    {% block title_block %}
-        Business List
-    {% endblock %}
+{% block title_block %}
+Business List
+{% endblock %}
 {% endblock %}
 
 {% block body_block %}
-    <div class="jumbotron">
-        <h1>Find a plant shop near you...</h1>
+<div class="jumbotron">
+    <h1>Find a plant shop near you...</h1>
+</div>
+<div class="background_space_medium_rare">
+    <div class="business_details" style="margin-left: 20%">
+        <h5 id="card-title"></h5>
+        <p id="business-address"></p>
     </div>
-    <div class="background_space_medium_rare">
-        <div class="business_details" style="margin-left: 20%">
-            <h5 id="card-title"></h5>
-            <p id="business-address"></p>
+    <div id="map_loading" style="text-align: center"><p>map loading . . . </p>
+        <div class="spinner-grow text-secondary" role="status">
+            <span class="sr-only"></span>
         </div>
-        <div id="map_loading" style="text-align: center"><p>map loading . . . </p></div>
-
-        <div id="googleMap" style="width:600px;height:400px;left: 20%; right: 20%; "></div>
-        {% if user.is_authenticated %}
-            <div style="margin-left: 20%;margin-bottom: 70px">
-                <br>
-                <p>If you can't find the business you're looking for, you can
-
-                    <a href="{% url 'add_business' %}">add a
-                        new business</a>
-                    <br/></p>
-            </div>
-        {% endif %}
     </div>
-    <script>
+
+    <div id="googleMap" style="width:600px;height:400px;left: 20%; right: 20%; "></div>
+    {% if user.is_authenticated %}
+    <div style="margin-left: 20%;margin-bottom: 70px">
+        <br>
+        <p>If you can't find the business you're looking for, you can
+
+            <a href="{% url 'add_business' %}">add a
+                new business</a>
+            <br/></p>
+    </div>
+    {% endif %}
+</div>
+<script>
         function addMarkers() {
             {%  for business in businesses %}
                 addMarker({
@@ -40,8 +44,9 @@
                 );
             {%  endfor %}
         }
-    </script>
-    <script>
+
+</script>
+<script>
         let map;
 
         function initMap() {
@@ -89,9 +94,11 @@
         }
 
 
-    </script>
 
-    {# <script type="text/javascript" src={% static "javascript/allLocalBusinesses.js" %}></script>#}
+</script>
+
+{#
+<script type="text/javascript" src={% static "javascript/allLocalBusinesses.js" %}></script>#}
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1_mwAa6UhCMVkPr4XIk-XFSXlD0Fwkmw&callback=initMap"></script>
 {% endblock %}
