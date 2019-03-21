@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core import mail
 from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
@@ -122,11 +123,24 @@ def like_comment(request):
     likecom_id = None
     if request.method == 'GET':
         likecom_id = request.GET['comment_id']
+        disabled = request.GET['disable_button']
     likes = 0
     if likecom_id:
         likecom = Comment.objects.get(id=int(likecom_id))
         if likecom:
-            likes = likecom.likes + 1
+            if disabled == 'true':
+                # Button was disabled, meaning user has voted before and is changing their vote
+                likes = likecom.likes - 1
+                # likes decreased
+
+            elif disabled == 'false':
+                #Button not disabled
+                likes=likecom.likes
+
+            elif disabled == 'null':
+                # Implement button press
+                likes = likecom.likes + 1
+
             likecom.likes = likes
             likecom.save()
     return HttpResponse(likes)
@@ -137,11 +151,26 @@ def dislike_comment(request):
     discom_id = None
     if request.method == 'GET':
         discom_id = request.GET['comment_id']
+        disabled = request.GET['disable_button']
+
     dislikes = 0
+
     if discom_id:
         dislikecom = Comment.objects.get(id=int(discom_id))
         if dislikecom:
-            dislikes = dislikecom.dislikes + 1
+            if disabled == 'true':
+               # Button was disabled, meaning user has voted before and is changing their vote
+                dislikes = dislikecom.dislikes - 1
+                # dislikes decreased
+
+            elif disabled == 'false':
+                #Button not disabled
+                dislikes = dislikecom.dislikes
+
+            elif disabled == 'null':
+                # Implementing button press
+                dislikes = dislikecom.dislikes + 1
+                # Dislikes increased
             dislikecom.dislikes = dislikes
             dislikecom.save()
     return HttpResponse(dislikes)
@@ -186,15 +215,18 @@ def show_plant(request, plant_name_slug):
                 image.add(i)
 
         comments = Comment.objects.filter(plant_slug=plant_name_slug)
+        user_profiles = UserProfile.objects.all()
 
         if request.user.is_authenticated():
             wishlistplants = UserWishlistPlants.objects.filter(user=request.user)
             saved_plants = UserSavedPlants.objects.filter(user=request.user)
             context_dict = {'plant': plant, 'image': image, 'wishlistplants': wishlistplants,
-                            'saved_plants': saved_plants, 'comments': comments}
+                            'saved_plants': saved_plants, 'comments': comments,
+                            'user_profiles': user_profiles}
 
         else:
-            context_dict = {'plant': plant, 'image': image, 'comments': comments}
+            context_dict = {'plant': plant, 'image': image, 'comments': comments,
+                            'user_profiles': user_profiles}
 
     except Plant.DoesNotExist:
         context_dict['plant'] = None
@@ -202,6 +234,67 @@ def show_plant(request, plant_name_slug):
         context_dict['image'] = None
 
     return render(request, 'plantmate/plant.html', context_dict)
+
+
+def filter_plant(request):
+
+    context_dict = {}
+    print (request.GET)
+
+    if request.GET['category'] == 'pets':
+        if 'filter' in request.GET:
+            plant_a_z = Plant.objects.filter(pet=request.GET['filter'])
+            plant_a_z = plant_a_z.order_by('name')
+            context_dict['pet_plants'] = plant_a_z
+            context_dict['category'] = "Suitable for pets"
+        else:
+            plant_a_z = Plant.objects.order_by('name')
+    if request.GET['category'] == 'characteristics':
+        if 'filter' in request.GET:
+            if request.GET['filter'] == 'easy':
+                plant_a_z = Plant.objects.filter(characteristics="Easy to care for")
+                context_dict['category'] = "Easy to care for"
+            elif request.GET['filter'] == 'trailing':
+                plant_a_z = Plant.objects.filter(characteristics="Trailing")
+                context_dict['category'] = "Trailing"
+            elif request.GET['filter'] == 'air':
+                plant_a_z = Plant.objects.filter(characteristics="Air purifying")
+                context_dict['category'] = "Air purifying"
+            plant_a_z = plant_a_z.order_by('name')
+            context_dict['characteristic_plants'] = plant_a_z
+        else:
+            plant_a_z = Plant.objects.order_by('name')
+    if request.GET['category'] == 'size':
+        if 'filter' in request.GET:
+            plant_a_z = Plant.objects.filter(size=request.GET['filter'])
+            plant_a_z = plant_a_z.order_by('name')
+            context_dict['size_plants'] = plant_a_z
+            context_dict['category'] = request.GET['filter']
+        else:
+            plant_a_z = Plant.objects.order_by('name')
+    if request.GET['category'] == 'sun':
+        if 'filter' in request.GET:
+            plant_a_z = Plant.objects.filter(light=request.GET['filter'])
+            plant_a_z = plant_a_z.order_by('name')
+            context_dict['sun_plants'] = plant_a_z
+            context_dict['category'] = request.GET['filter']
+        else:
+            plant_a_z = Plant.objects.order_by('name')
+    if request.GET['category'] == 'climate':
+        if 'filter' in request.GET:
+            plant_a_z = Plant.objects.filter(climate=request.GET['filter'])
+            plant_a_z = plant_a_z.order_by('name')
+            context_dict['climate_plants'] = plant_a_z
+            context_dict['category'] = request.GET['filter']
+        else:
+            plant_a_z = Plant.objects.order_by('name')
+    if request.GET['category'] == 'all':
+        plant_a_z = Plant.objects.order_by('name')
+        context_dict['plants'] = plant_a_z
+        context_dict['category'] = "All Plants"
+
+    context_dict['plants'] = plant_a_z
+    return render(request, 'plantmate/plantlist.html', context=context_dict)
 
 
 @login_required
@@ -227,13 +320,15 @@ def add_plant(request):
 def remove_wishlist_plant(request):
     if request.method == 'POST':
         form = WishlistPlantForm(request.POST)
-
         if form.is_valid():
             wishlisted_plant = request.POST.get('wishlist_plant')
             plant = UserWishlistPlants.objects.filter(wishlist_plant=wishlisted_plant)
             for p in plant:
                 p.delete()
-            return show_plant(request, wishlisted_plant)
+            if 'next' in request.GET:
+                return wishlist(request)
+            else:
+                return show_plant(request, wishlisted_plant)
 
         else:
             print(form.errors)
@@ -249,11 +344,15 @@ def remove_saved_plant(request):
             plant = UserSavedPlants.objects.filter(saved_plant=saved_plant)
             for p in plant:
                 p.delete()
-            return show_plant(request, saved_plant)
+            if 'next' in request.GET:
+                return my_plants(request)
+            else:
+                return show_plant(request, saved_plant)
 
         else:
             print(form.errors)
     return render(request, 'plantmate/myplants.html', {'form': form})
+
 
 
 @login_required
@@ -312,12 +411,10 @@ def contact(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             subject = form.cleaned_data['subject']
-            email = form.cleaned_data['email']
+            email_address = form.cleaned_data['email']
             message = form.cleaned_data['message']
-            try:
-                send_mail(subject, message, email, ['rosemary.ferrier@gmail.com'])
-            except BadHeaderError:
-                return HttpResponse('Invalid header found.')
+            email = mail.EmailMessage(subject, message, email_address, ['support@plantmate.com'])
+            email.send()
             return redirect('successful_email')
     return render(request, 'plantmate/contact.html', {'form': form})
 
@@ -354,7 +451,7 @@ def myaccount(request):
 
 def plant_list(request):
     plant_a_z = Plant.objects.order_by('name')
-    context_dict = {'plants': plant_a_z}
+    context_dict = {'plants': plant_a_z, 'category': "filter"}
 
     return render(request, 'plantmate/plantlist.html', context=context_dict)
 
@@ -370,12 +467,13 @@ def wishlist(request):
 
 
 def my_plants(request):
+    form = SavePlantForm(request.POST)
     saved_plants = UserSavedPlants.objects.filter(user=request.user)
     plants = set()
     for saved in saved_plants:
         plants.add(Plant.objects.get(slug=saved.saved_plant))
 
-    context_dict = {'saved_plants': saved_plants, 'plants': plants}
+    context_dict = {'saved_plants': saved_plants, 'plants': plants, 'form': form}
     return render(request, 'plantmate/myplants.html', context=context_dict)
 
 

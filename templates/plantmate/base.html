@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="icon" href="{% static 'images/testicon.ico' %}" alt="test icon">
+<link rel="icon" href="{% static 'images/icon.png' %}" alt="test icon">
 
 <html>
 
@@ -29,7 +29,8 @@
 
 <!-- NAVIGATION BAR ------------------------------------------------------------------------------------>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'images/testicon.ico' %}" width="30" height="30"
+    <a class="navbar-brand" href="{% url 'home' %}" style="font-family: spartanmb-semibold; color: #4fa543">
+        <img src="{% static 'images/icon.png' %}" width="30" height="30"
                                                          class="d-inline-block align-top" alt="">plantmate</a>
 
     <!--    </button>-->
@@ -39,7 +40,7 @@
                 <a class="nav-link" href="{% url 'plant_list' %}">A-Z of Plants </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'business-list' %}">Find Local Plant Shops</a>
+                <a class="nav-link" href="{% url 'business-list' %}">Local Plant Shops</a>
             </li>
 
             {% if user.is_authenticated %}

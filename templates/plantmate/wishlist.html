@@ -9,23 +9,49 @@
     {% endblock %}
 {% endblock %}
 {% block body_block %}
-<div class="jumbotron">
-    <h1>My Wishlist</h1>
-</div>
-    {% if plants %}
-    <div class="mywishlist_container" style="display: grid">
-        {% for plant in plants %}
-             <div class="card" style="width: 18rem;">
-        <img src="{% static plant.picture %}" class="card-img-top" alt="{{ plant.name }}">
-        <div class="card-body">
-            <h5 class="card-title">{{ plant.name }}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">{{ plant.latin_name }}</h6>
-            <a href="/plant-list/{{ plant.slug }}" class=" btn-primary stretched-link"></a>
+    <div class="jumbotron">
+         <div class="jumbotron_row">
+            <div>
+                <h1>My Wishlist</h1>
+            </div>
+            <div>
+                <a href="{% url 'plant_list' %}" role="button" class="btn btn-outline-success" style="margin-top: 10px; margin-right: 60px">Return to A-Z list of
+                    plants</a>
+            </div>
         </div>
     </div>
-        {% endfor %}
+    <div class="background_space">
+
+      {% if not plants %}
+            <h2 style="color:#4fa543; text-align: center; margin-top: 50px">No plants added yet!</h2>
+
+        {% endif %}
+        {% if plants %}
+            <div class="mywishlist_container" style="display: grid">
+                {% for plant in plants %}
+                    <div class="card text-center" style="width: 18rem;">
+                        <a href="/plant-list/{{ plant.slug }}">
+                            <img src="{% static plant.picture %}" class="card-img-top"
+                                 alt="{{ plant.name }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ plant.name }}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">{{ plant.latin_name }}</h6>
+                            </div>
+                        </a>
+                        <form method="post" action="{% url 'remove_wishlist_plant' %}?next={{ "mywishlistpage" }}">
+                            {% csrf_token %}
+                            <input type="hidden" id="remove_wishlist_plant" name="wishlist_plant"
+                                   value={{ plant.slug }}>
+                            <button type="submit" name="remove_wishlist"
+                                    class="btn btn-outline-success" style="margin-bottom: 20px">remove from wishlist
+                            </button>
+                        </form>
+                        <br>
+
+                    </div>
+                {% endfor %}
+            </div>
+        <br>
+        {% endif %}
     </div>
-    {% endif %}
-<!-- these need fixed --------------------------------------------------------------------------------->
- <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>
 {% endblock %}

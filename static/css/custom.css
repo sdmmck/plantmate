@@ -10,45 +10,50 @@ a {
 }
 
 a:hover {
-  color: #b299a9;
-  text-decoration: none;
+    color: #b299a9;
+    text-decoration: none;
 }
 
 @font-face {
-  font-family: 'spartanmb-black';
-  src: url('/static/fonts/spartanmb-black-webfont.woff') format('woff'),
-       url('/static/fonts/spartanmb-black-webfont.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'spartanmb-bold';
-  src: url('/static/fonts/spartanmb-bold-webfont.woff') format('woff'),
-       url('/static/fonts/spartanmb-bold-webfont.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'spartanmb-light';
-  src: url('/static/fonts/spartanmb-light-webfont.woff') format('woff'),
-       url('/static/fonts/spartanmb-light-webfont.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'spartanmb-extra-bold';
-  src: url('/static/fonts/spartanmb-extra-bold-webfont.woff') format('woff'),
-       url('/static/fonts/spartanmb-extra-bold-webfont.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'spartanmb-regular';
-  src: url('/static/fonts/spartanmb-regular-webfont.woff') format('woff'),
-       url('/static/fonts/spartanmb-regular-webfont.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'spartanmb-semibold';
-  src: url('/static/fonts/spartanmb-semibold-webfont.woff') format('woff'),
-       url('/static/fonts/spartanmb-semibold-webfont.woff2') format('woff2');
+    font-family: 'spartanmb-black';
+    src: url('/static/fonts/spartanmb-black-webfont.woff') format('woff'),
+    url('/static/fonts/spartanmb-black-webfont.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'spartanmb-thin';
-  src: url('/static/fonts/spartanmb-thin-webfont.woff') format('woff'),
-       url('/static/fonts/spartanmb-thin-webfont.woff2') format('woff2');
+    font-family: 'spartanmb-bold';
+    src: url('/static/fonts/spartanmb-bold-webfont.woff') format('woff'),
+    url('/static/fonts/spartanmb-bold-webfont.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'spartanmb-light';
+    src: url('/static/fonts/spartanmb-light-webfont.woff') format('woff'),
+    url('/static/fonts/spartanmb-light-webfont.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'spartanmb-extra-bold';
+    src: url('/static/fonts/spartanmb-extra-bold-webfont.woff') format('woff'),
+    url('/static/fonts/spartanmb-extra-bold-webfont.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'spartanmb-regular';
+    src: url('/static/fonts/spartanmb-regular-webfont.woff') format('woff'),
+    url('/static/fonts/spartanmb-regular-webfont.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'spartanmb-semibold';
+    src: url('/static/fonts/spartanmb-semibold-webfont.woff') format('woff'),
+    url('/static/fonts/spartanmb-semibold-webfont.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'spartanmb-thin';
+    src: url('/static/fonts/spartanmb-thin-webfont.woff') format('woff'),
+    url('/static/fonts/spartanmb-thin-webfont.woff2') format('woff2');
 }
 
 
@@ -64,7 +69,42 @@ h3 {
     font-family: 'spartanmb-thin';
 }
 
+html, body {
+    min-height: 100%;
+}
+
 body {
+    font-family: 'spartanmb-regular';
+    background-image: url("flowerpotsbordergreen.png");
+    background-position: right 0 bottom 0;
+    background-repeat: no-repeat;
+    background-size: auto 200px;
+
+}
+
+.background_space {
+    min-height: 100%;
+    margin-bottom: 40px;
+}
+
+.background_space_large {
+    min-height: 100%;
+    margin-bottom: 120px;
+}
+
+.background_space_medium {
+    min-height: 100%;
+    margin-bottom: 40px;
+}
+
+.background_space_medium_rare {
+    min-height: 100%;
+    margin-bottom: 40px;
+}
+
+.background_space_smaller {
+    min-height: 100%;
+    margin-bottom: 40px;
 }
 
 #user_uploaded_plant_images {
@@ -77,7 +117,7 @@ body {
 .plants_container, .myplants_container, .mywishlist_container {
     display: grid;
     padding: 1rem;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     grid-gap: 1rem;
 }
 
@@ -85,7 +125,7 @@ body {
 .my_account_plants_container {
     display: grid;
     padding: 1rem;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
     grid-gap: 1rem;
 }
 
@@ -94,6 +134,12 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+.jumbotron_row_left {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
 }
 
 #homepage_image {
@@ -114,24 +160,26 @@ body {
     background: url("https://www.etoffe.com/inter/143761/papier-peint-palm-jungle.jpg") no-repeat scroll 0 0 transparent;
 }
 
-#border_image {
-    height: 100px;
-}
-
-
-        #border_image {
-
-            height: 100px;
-
-        }
-
 #search-box {
     background-color: rgb(208, 230, 173);
     font-family: Georgia;
     color: black;
 }
 
-.nav-link{
-     font-family: 'spartanmb-semibold';
+.nav-link {
+    font-family: 'spartanmb-semibold';
 }
 
+.btn-group {
+    max-height: 100px;
+    padding: 30px;
+    margin-right: 120px;
+}
+
+
+.square_image_100px_radius {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 50%;
+}

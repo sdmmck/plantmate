@@ -1,43 +1,67 @@
 {% extends "plantmate/../plantmate/base.html" %}
 {% load staticfiles %}
 {% block head_block %}
-    {% block title_block %}
-        my account
-    {% endblock %}
+{% block title_block %}
+my account
+{% endblock %}
 {% endblock %}
 {% block body_block %}
-    <div class="jumbotron">
-        <div class="jumbotron_row">
-            <h1>Hi {{ username }}!</h1>
-            <div class="profile_picture">
-                {% if user_profile.picture %}
-                    <img src="{% static user_profile.picture %}" alt="profile picture" height="100px"/>
-                    <br>
-                    <button onclick="location.href='{% url 'add_profile_image' %}'" class="btn btn-outline-success">change profile picture</button>
-                {% else %}
-                   <button onclick="location.href='{% url 'add_profile_image' %}'" class="btn btn-outline-success">add profile picture</button>
-                {% endif %}
+<div class="jumbotron">
+    <div class="jumbotron_row">
+        {% if user_profile.picture %}
+        <div class="jumbotron_row_left">
+            <div class="square_image_100px_radius">
+                <img src="{% static user_profile.picture %}" alt="profile picture" height="100px">
+            </div>
+            <div>
+                <h1 style="margin-left: 20px;"><br>{{ username }}</h1>
             </div>
         </div>
+        <div style="margin-right: 10px; margin-top: 52px;">
+            <button onclick=" location.href='{% url 'add_profile_image' %}' " class="btn
+                    btn-outline-success">change picture
+            </button>
+        </div>
+        {% else %}
+        <div>
+            <h1 style="margin-right: 10px"><br>{{ username }}</h1>
+        </div>
+        <div>
+            <button onclick="location.href='{% url 'add_profile_image' %}'" class="btn btn-outline-success">
+                add
+                profile picture
+            </button>
+        </div>
+        {% endif %}
     </div>
+</div>
+<div class="background_space">
     <div class="row">
         <div class="col-md-6">
             <div class="container">
-
-                    <h2><a href="{% url 'my_plants' %}">My Plants</a></h2>
-
+                <h2><a href="{% url 'my_plants' %}">My Plants</a></h2>
                 <div class="my_account_plants_container">
-                    {% if saved_plants %}
-                        {% for saved in saved_plants %}
-                            <div class="card" style="width: 10rem; height: 15rem">
-                                <img src="{% static saved.picture %}" class="card-img-top" alt="{{ saved.name }}"
-                                     style="height: 10rem">
-                                <div class="card-body">
-                                    <h6 class="card-title">{{ saved.name }}</h6>
-                                    <a href="/plant-list/{{ saved.slug }}" class=" btn-primary stretched-link"></a>
-                                </div>
+                    {% if not saved_plants %}
+                    <div class="container">
+                        <div class="card bg-light mb-3 text-center" style="width: 10rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">Add plants</h5>
+                                <a href="{% url 'plant_list' %}" class=" btn-primary stretched-link"></a>
                             </div>
-                        {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if saved_plants %}
+                    {% for saved in saved_plants %}
+                    <div class="card text-center" style="width: 9rem; height: 15rem">
+                        <img src="{% static saved.picture %}" class="card-img-top" alt="{{ saved.name }}"
+                             style="height: 9rem">
+                        <div class="card-body">
+                            <h6 class="card-title">{{ saved.name }}</h6>
+                            <a href="/plant-list/{{ saved.slug }}" class=" btn-primary stretched-link"></a>
+                        </div>
+                    </div>
+                    {% endfor %}
                     {% endif %}
                 </div>
             </div>
@@ -46,17 +70,27 @@
             <div class="container">
                 <h2><a href="{% url 'wishlist' %}">My Wishlist</a></h2>
                 <div class="my_account_plants_container">
-                    {% if wishlist_plants %}
-                        {% for wish in wishlist_plants %}
-                            <div class="card" style="width: 10rem; height: 15rem">
-                                <img src="{% static wish.picture %}" class="card-img-top" alt="{{ wish.name }}"
-                                     style="height: 10rem">
-                                <div class="card-body">
-                                    <h6 class="card-title">{{ wish.name }}</h6>
-                                    <a href="/plant-list/{{ wish.slug }}" class="btn-primary stretched-link"></a>
-                                </div>
+                    {% if not wishlist_plants %}
+                    <div class="container">
+                        <div class="card bg-light mb-3 text-center" style="width: 10rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">Add plants</h5>
+                                <a href="{% url 'plant_list' %}" class=" btn-primary stretched-link"></a>
                             </div>
-                        {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if wishlist_plants %}
+                    {% for wish in wishlist_plants %}
+                    <div class="card text-center" style="width: 9rem; height: 15rem">
+                        <img src="{% static wish.picture %}" class="card-img-top" alt="{{ wish.name }}"
+                             style="height: 9rem">
+                        <div class="card-body">
+                            <h6 class="card-title">{{ wish.name }}</h6>
+                            <a href="/plant-list/{{ wish.slug }}" class="btn-primary stretched-link"></a>
+                        </div>
+                    </div>
+                    {% endfor %}
                     {% endif %}
                 </div>
             </div>
@@ -64,13 +98,12 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <h3 id="nearest_business">nearest plant shop</h3>
-            <div id="googleMap" style="width:100%;height:400px;"></div>
-
+            <h2><a href="" id="business_link" style="margin-left: 20px">Nearest Plant Shop</a></h2>
+            <div id="googleMap" style="width:100%;height:400px;margin-bottom: 50px; margin-left: 20px;"></div>
         </div>
-    <div class="col-md-6">
-        <br><br>
-        <h5 id="business_name"></h5>
+        <div class="col-md-6">
+            <br><br>
+            <h5 id="business_name"></h5>
             <div id="business_address"></div>
             <br>
             <p><strong>Opening hours:</strong>
@@ -78,11 +111,15 @@
             <a href="" id="business_link">...more info</a><br>
             <p>Not what you're looking for? Find more plant shops <a href="{% url 'business-list' %}">here</a></p>
 
-            <div id="loading_map">loading map . . .</div>
+            <div id="loading_map">loading map . . .<br>
+                <div class="spinner-grow text-secondary" role="status">
+                    <span class="sr-only"></span>
+                </div>
+            </div>
+        </div>
     </div>
-    </div>
-
-    <script type="text/javascript">
+</div>
+<script type="text/javascript">
         window.onload = function () {
             findNearestBusiness()
         };
@@ -91,6 +128,7 @@
         let businessLong;
         let businessName;
         let localBusinesses = [];
+
         function findNearestBusiness() {
             {% for business in businesses %}
                 localBusinesses.push(["{{ business.slug }}", "{{ business.lat }}", "{{ business.long }}", "{{ business.name }}"]);
@@ -101,14 +139,17 @@
                 alert('GLASGOW');
             }
         }
+
         //get the location
         function UserLocation(position) {
             NearestBusiness(position.coords.latitude, position.coords.longitude);
         }
+
         // Convert degrees to something mysterious and mathematical and maybe relating to the shape of the earth
         function Deg2Rad(deg) {
             return deg * Math.PI / 180;
         }
+
         // yet more maths - best not to think too hard about this stuff
         function PythagorasEquirectangular(lat1, lon1, lat2, lon2) {
             lat1 = Deg2Rad(lat1);
@@ -121,6 +162,7 @@
             const d = Math.sqrt(x * x + y * y) * R;
             return d;
         }
+
         // now let's find those plant shops
         function NearestBusiness(latitude, longitude) {
             let minDif = 99999;
@@ -146,8 +188,11 @@
             {% endfor %}
             initMap();
         }
-    </script>
-    <script>
+
+
+
+</script>
+<script>
         function initMap() {
             const lat = Number(businessLat);
             const lng = Number(businessLong);
@@ -170,8 +215,10 @@
                 infoWindow.open(map, marker);
             });
         }
-    </script>
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1_mwAa6UhCMVkPr4XIk-XFSXlD0Fwkmw&libraries=places"></script>
- <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>
+
+
+
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1_mwAa6UhCMVkPr4XIk-XFSXlD0Fwkmw&libraries=places"></script>
 {% endblock %}

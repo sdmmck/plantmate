@@ -59,7 +59,6 @@ function getPlant() {
 function updateDoc() {
 
     document.getElementById("match").innerHTML = "You've been matched with . . . " + plant.name;
-    document.getElementById("description").innerText = plant.description;
     document.getElementById("size").innerText = "Size: " + plant.size;
     document.getElementById("characteristics").innerText = "Special characteristic: " + plant.characteristics;
     document.getElementById("room").innerText = "Room: " + plant.room;

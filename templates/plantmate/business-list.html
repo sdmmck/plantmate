@@ -2,26 +2,39 @@
 {% load staticfiles %}
 {% block head_block %}
 
-    {% block title_block %}
-        Business List
-    {% endblock %}
+{% block title_block %}
+Business List
+{% endblock %}
 {% endblock %}
 
 {% block body_block %}
-    <div class="jumbotron">
-        <h1>Find a plant shop near you...</h1>
+<div class="jumbotron">
+    <h1>Find a plant shop near you...</h1>
+</div>
+<div class="background_space_medium_rare">
+    <div class="business_details" style="margin-left: 20%">
+        <h5 id="card-title"></h5>
+        <p id="business-address"></p>
     </div>
-    <h5 id="card-title"></h5>
-    <p id="business-address"></p>
-    <div>
-        {% if user.is_authenticated %}
-            <p>If you can't find the business you're looking for, you can <a href="{% url 'add_business' %}">add a new business</a><br/></p>
-        {% endif %}
+    <div id="map_loading" style="text-align: center"><p>map loading . . . </p>
+        <div class="spinner-grow text-secondary" role="status">
+            <span class="sr-only"></span>
+        </div>
     </div>
-    <div id="map_loading"><p>map loading . . . </p></div>
-    <div id="googleMap" style="width:600px;height:400px;"></div>
 
-    <script>
+    <div id="googleMap" style="width:600px;height:400px;left: 20%; right: 20%; "></div>
+    {% if user.is_authenticated %}
+    <div style="margin-left: 20%;margin-bottom: 70px">
+        <br>
+        <p>If you can't find the business you're looking for, you can
+
+            <a href="{% url 'add_business' %}">add a
+                new business</a>
+            <br/></p>
+    </div>
+    {% endif %}
+</div>
+<script>
         function addMarkers() {
             {%  for business in businesses %}
                 addMarker({
@@ -31,22 +44,18 @@
                 );
             {%  endfor %}
         }
-    </script>
 
-    <script>
+</script>
+<script>
         let map;
 
-
         function initMap() {
-
-
             // default map location set to Glasgow
             const glasgow = {
                 center: {lat: -34.397, lng: 150.644},
                 zoom: 6,
             };
-
-            <!--// if there is geolocation:
+            //if there is geolocation:
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function (position) {
                     const here = {
@@ -60,22 +69,16 @@
                     addMarkers();
                     document.getElementById("map_loading").style.display = "none";
                 });
-
-            } else {-->
-
+            } else {
                 // if there isn't any geolocation let's center on Glasgow:
                 map = new google.maps.Map(document.getElementById("googleMap"), glasgow);
                 addMarkers();
                 document.getElementById("map_loading").style.display = "none";
-     <!--       }
+            }
         }
--->
+
         // function for adding markers
-
-
         function addMarker(coords, businessLink, businessAddress) {
-
-
             let marker = new google.maps.Marker({
                 position: coords,
                 map: map,
@@ -87,15 +90,15 @@
                 infoWindow.open(map, marker);
                 document.getElementById("card-title").innerHTML = businessLink;
                 document.getElementById("business-address").innerText = businessAddress;
-
             });
         }
 
 
-    </script>
 
-    {# <script type="text/javascript" src={% static "javascript/allLocalBusinesses.js" %}></script>#}
+</script>
+
+{#
+<script type="text/javascript" src={% static "javascript/allLocalBusinesses.js" %}></script>#}
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1_mwAa6UhCMVkPr4XIk-XFSXlD0Fwkmw&callback=initMap"></script>
- <img id="border_image" src="{% static 'images/flowerpotsborder.png' %}" alt="plantmate"/>
 {% endblock %}
