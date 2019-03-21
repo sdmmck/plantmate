@@ -18,9 +18,11 @@
                 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
                         aria-haspopup="true"
                         aria-expanded="false">
-                    filter
+                   {{ category }}
                 </button>
                 <div class="dropdown-menu">
+                    <a class="dropdown-item"
+                       href="{% url 'filter_plant' %}?category=all">All</a>
                     <a class="dropdown-item"
                        href="{% url 'filter_plant' %}?category=size&filter=Small">Small</a>
                     <a class="dropdown-item"
@@ -36,7 +38,7 @@
                     <a class="dropdown-item"
                        href="{% url 'filter_plant' %}?category=sun&filter=Shady">Shaded room</a>
                     <a class="dropdown-item"
-                       href="{% url 'filter_plant' %}?category=pets&filter=yes">plants suitable for pets</a>
+                       href="{% url 'filter_plant' %}?category=pets&filter=Yes">plants suitable for pets</a>
                     <a class="dropdown-item" href="{% url 'filter_plant' %}?category=characteristics&filter=air">Air
                         purifying plants</a>
                     <a class="dropdown-item" href="{% url 'filter_plant' %}?category=characteristics&filter=easy">Easy
@@ -83,8 +85,6 @@
             </p>{% endif %}
     </div>
     <script>
-
-
         function filterSelection(value) {
             if (value === 'no') {
                 document.getElementById(value).style.display = "block";

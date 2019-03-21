@@ -10,8 +10,8 @@
     <!-- JUMBOTRON ---------------------------------------------------------------------------------------------------->
     <div class="jumbotron">
         {% if plant %}
-            <h1>{{ plant.name }}</h1><br/>
-            <h2><i>{{ plant.latin_name }}</i></h2><br/>
+            <h1>{{ plant.name }}</h1>
+            <h2><i>{{ plant.latin_name }}</i></h2>
         {% else %}
             <h1>plant not found</h1><br/>
         {% endif %}
@@ -23,13 +23,14 @@
                 <div class="col-md-6">
                     <div class="container">
                         <div class="container-body align-items-center d-flex justify-content-center">
-                            <img src="{% static plant.picture %}" width="380" height="400" style="border-radius: 50%"
+                            <img src="{% static plant.picture %}" width="500" height="500" style="border-radius: 50%"
                                  alt="picture of plant"/><br/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="container">
+
                         <div class="card-body">
                             <h5 class="card-title">Details</h5>
                             <p class="card-text">
@@ -131,25 +132,33 @@
                     </div><!--end card-->
                 </div><!--end class"col-md-6" with card in it-->
             </div><!-- end row-->
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div id="user_uploaded_plant_images">
-                            {% if image %}
+            <div class="col-md-12"  style="margin: 20px auto 30px auto;">
+                {% if image %}
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="user_uploaded_plant_images">
                                 {% for i in image %}
                                     <img src="{% static i.picture %}" height="100"
                                          alt="user uploaded picture of plant"/><br/>
                                 {% endfor %}
+                            </div>
+                            {% if user.is_authenticated %}
+                                <div class="card-body align-items-center d-flex justify-content-center">
+                                    <a class="btn btn-outline-success" href="/plant-list/{{ plant.slug }}/add-image"
+                                       role="button">add a new image</a>
+                                </div>
                             {% endif %}
                         </div>
-                        {% if user.is_authenticated %}
-                            <div class="card-body align-items-center d-flex justify-content-center">
-                                <a class="btn btn-outline-success" href="/plant-list/{{ plant.slug }}/add-image"
-                                   role="button">add a new image</a>
-                            </div>
-                        {% endif %}
                     </div>
-                </div>
+                {% endif %}
+                {% if not image %}
+                    {% if user.is_authenticated %}
+                        <div class="card-body align-items-center d-flex justify-content-center">
+                            <a class="btn btn-outline-success" href="/plant-list/{{ plant.slug }}/add-image"
+                               role="button">add a new image</a>
+                        </div>
+                    {% endif %}
+                {% endif %}
             </div>
         <br>
 
@@ -175,6 +184,13 @@
                     {% for comment in comments %}
                         <div class="card border-info mb-3">
                             <div class="card-header">
+                                {% for user in user_profiles %}
+                                    {% ifequal user.user comment.user %}
+                                        {% if user.picture %}
+                                            <img src="{% static user.picture %}" style="width: 50px; height: 50px; border-radius: 50%">
+                                        {% endif %}
+                                    {% endifequal %}
+                                {% endfor %}
                                 {{ comment.user }} commented on {{ comment.created_date }}
                             </div>
                             <div class="card-body text-primary">

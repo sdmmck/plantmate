@@ -14,10 +14,13 @@
     </div>
 
     <div class="background_space_medium_rare">
-        <input id="search-box" class="controls" type="text" placeholder="Search for a business here" style=" font-size: 20px;
-        text-overflow: ellipsis;">
-        <div id="map" style=" height: 400px; width: 800px;"></div>
 
+        <div id="map" style="width:600px;height:400px;left: 20%; right: 20%; "></div>
+
+         <div style="margin: 20px 20% 60px 30%;">
+        <input id="search-box" class="controls" type="text" placeholder="Search for a business here" style=" font-size: 14px; font-family: spartanmb-regular;
+        text-overflow: ellipsis; width: 300px">
+        </div>
         <div id="business_details" style="display: none">
             <form role="form" id="business_form" method="post" enctype="multipart/form-data"
                   action="{% url 'add_business' %}" class=form-inline">
@@ -54,7 +57,7 @@
             // Create the search box and link it to the UI element.
             var input = document.getElementById('search-box');
             var searchBox = new google.maps.places.SearchBox(input);
-            map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
+            {#map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(input);#}
 
             // Bias the SearchBox results towards current map's viewport.
             map.addListener('bounds_changed', function () {
